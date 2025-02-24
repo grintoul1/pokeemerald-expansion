@@ -21,14 +21,11 @@ DewfordTown_OnTransition:
 DewfordTown_EventScript_Briney::
 	lock
 	faceplayer
-	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, DewfordTown_EventScript_ReturnToPetalburgPrompt
-	message DewfordTown_Text_WhereAreWeBound
+	goto_if_unset FLAG_BADGE02_GET, DewfordTown_EventScript_NoReturnToPetalburgPrompt
+	msgbox DewfordTown_Text_WhereAreWeBound, MSGBOX_YESNO
 	waitmessage
-	multichoicedefault 21, 6, MULTI_BRINEY_ON_DEWFORD, 2, FALSE
-	switch VAR_RESULT
-	case 0, DewfordTown_EventScript_ChoosePetalburg
-	case 1, DewfordTown_EventScript_ChooseSlateport
-	case 2, DewfordTown_EventScript_CancelSailSelect
+	goto_if_eq VAR_RESULT, NO, DewfordTown_EventScript_CancelSailSelect
+	goto DewfordTown_EventScript_ChooseSlateport
 	case MULTI_B_PRESSED, DewfordTown_EventScript_CancelSailSelect
 	end
 
@@ -56,6 +53,11 @@ DewfordTown_EventScript_ReturnToPetalburgPrompt::
 	msgbox DewfordTown_Text_SetSailBackToPetalburg, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_SailBackToPetalburg
 	msgbox DewfordTown_Text_GoDeliverIllBeWaiting, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordTown_EventScript_NoReturnToPetalburgPrompt::
+	msgbox DewfordTown_Text_GoFightBrawly, MSGBOX_DEFAULT
 	release
 	end
 
@@ -194,6 +196,7 @@ DewfordTown_EventScript_SailToSlateport::
 
 DewfordTown_EventScript_LandedSlateportDeliverGoods::
 	msgbox DewfordTown_Text_BrineyLandedInSlateportDeliverGoods, MSGBOX_DEFAULT
+	setflag FLAG_RECOVERED_DEVON_GOODS
 	return
 
 DewfordTown_EventScript_LandedSlateport::
@@ -678,6 +681,10 @@ DewfordTown_Text_GoDeliverIllBeWaiting:
 	.string "MR. BRINEY: Then you go on and deliver\n"
 	.string "the LETTER. I'll be waiting.$"
 
+DewfordTown_Text_GoFightBrawly:
+	.string "MR. BRINEY: This is your change to\n"
+	.string "challenge Dewford gym. I'll be waiting.$"
+
 DewfordTown_Text_BrineyLandedInDewford:
 	.string "MR. BRINEY: Ahoy!\n"
 	.string "We've hit land in DEWFORD!\p"
@@ -686,8 +693,9 @@ DewfordTown_Text_BrineyLandedInDewford:
 
 DewfordTown_Text_WhereAreWeBound:
 	.string "MR. BRINEY: Ahoy!\n"
-	.string "For you, I'll go out to sea anytime!\p"
-	.string "Now, my friend, where are we bound?$"
+	.string "Time to move on, is it?\p"
+	.string "This is a one-way trip remember!$"
+
 
 DewfordTown_Text_PetalburgWereSettingSail:
 	.string "MR. BRINEY: PETALBURG, is it?\p"
@@ -695,7 +703,7 @@ DewfordTown_Text_PetalburgWereSettingSail:
 	.string "PEEKO, we're setting sail, my darling!$"
 
 DewfordTown_Text_SlateportWereSettingSail:
-	.string "MR. BRINEY: SLATEPORT, is it?\p"
+	.string "MR. BRINEY: SLATEPORT, it is!\p"
 	.string "Anchors aweigh!\n"
 	.string "PEEKO, we're setting sail, my darling!$"
 
@@ -801,3 +809,10 @@ DewfordTown_Text_YeahDefinitionOfInRightNow:
 	.string "Yeah, absolutely right!\p"
 	.string "“{STR_VAR_1}” is the\n"
 	.string "definition of “in” right now.$"
+
+
+DewfordTown_Text_BrineyLandedInSlateportDeliverGoods:
+	.string "MR. BRINEY: Ahoy!\n"
+	.string "We've made land in SLATEPORT!\p"
+	.string "Please do me a favour and visit CAPT.\n"
+	.string "STERN and deliver these DEVON GOODS?$"

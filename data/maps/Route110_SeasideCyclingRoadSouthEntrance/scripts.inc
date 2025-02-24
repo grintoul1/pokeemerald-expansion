@@ -13,6 +13,8 @@ Route110_SeasideCyclingRoadSouthEntrance_EventScript_BikeCheck::
 	specialvar VAR_RESULT, GetPlayerAvatarBike
 	goto_if_eq VAR_RESULT, 0, Route110_SeasideCyclingRoadSouthEntrance_EventScript_NoBike
 	setflag FLAG_SYS_CYCLING_ROAD
+	setflag FLAG_CYCLING_ROAD_CLEAR
+	addvar VAR_ROUTE110_STATE, 1
 	setvar VAR_TEMP_1, 1
 	releaseall
 	end
@@ -43,7 +45,7 @@ Route110_SeasideCyclingRoadSouthEntrance_Text_GoAllOutOnCyclingRoad:
 	.string "not to crash into anyone!$"
 
 Route110_SeasideCyclingRoadSouthEntrance_Text_TooDangerousToWalk:
-	.string "Sorry, you can't walk on CYCLING\n"
+	.string "Sorry, you can't go on CYCLING\n"
 	.string "ROAD. It's too dangerous.\p"
-	.string "Please come back with a BIKE.$"
+	.string "Please come back with a Mach Bike.$"
 

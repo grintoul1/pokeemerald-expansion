@@ -92,6 +92,7 @@ PetalburgCity_Gym_EventScript_ReturnFromWallyTutorial::
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox PetalburgCity_Gym_Text_DadGoCollectBadges, MSGBOX_DEFAULT
+	giveitem ITEM_ACRO_BIKE
 	setvar VAR_PETALBURG_GYM_STATE, 2
 	releaseall
 	end
@@ -382,9 +383,10 @@ PetalburgCity_Gym_EventScript_NormanBattle::
 	setvar VAR_PETALBURG_GYM_STATE, 7
 	setflag FLAG_BADGE05_GET
 	special ResetHealLocationFromDewford
-	call EventScript_HideMrBriney
 	setflag FLAG_HIDE_MAUVILLE_GYM_WATTSON
 	clearflag FLAG_HIDE_MAUVILLE_CITY_WATTSON
+	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	setvar VAR_0x8008, 5
 	call Common_EventScript_SetGymTrainers
 	clearflag FLAG_HIDE_DEWFORD_HALL_SLUDGE_BOMB_MAN
@@ -395,13 +397,6 @@ PetalburgCity_Gym_EventScript_NormanBattle::
 	msgbox PetalburgCity_Gym_Text_DadHappyAndSad, MSGBOX_DEFAULT
 	closemessage
 	delay 40
-	playse SE_DOOR
-	delay 10
-	addobject LOCALID_WALLYS_DAD
-	switch VAR_FACING
-	case DIR_NORTH, PetalburgCity_Gym_EventScript_WallysDadArrivesNorth
-	case DIR_WEST, PetalburgCity_Gym_EventScript_WallysDadArrivesWest
-	case DIR_EAST, PetalburgCity_Gym_EventScript_WallysDadArrivesEast
 	end
 
 PetalburgCity_Gym_EventScript_GiveFacade::
@@ -1217,19 +1212,23 @@ PetalburgCity_Gym_Text_WallyThankYouBye:
 PetalburgCity_Gym_Text_DadGoCollectBadges:
 	.string "DAD: Now…\p"
 	.string "{PLAYER}, if you want to become a\n"
-	.string "strong TRAINER, here's my advice.\p"
-	.string "Head for RUSTBORO CITY beyond this\n"
+	.string "strong trainer, here's my advice.\p"
+	.string "Head for Mauville City beyond this\n"
 	.string "town.\p"
 	.string "There, you should challenge\n"
-	.string "the GYM LEADER, ROXANNE.\p"
-	.string "After her, go on to other POKéMON\n"
-	.string "GYMS and defeat their LEADERS.\p"
-	.string "Collect BADGES from them,\n"
+	.string "the gym leader, Wattson.\p"
+	.string "After him, go on to Roxanne in\n"
+	.string "Rustboro City and defeat her.\p"
+	.string "Collect badges from them,\n"
 	.string "understood?\p"
-	.string "Of course, I'm a GYM LEADER, too.\n"
+	.string "Of course, I'm a gym leader, too.\n"
 	.string "We'll battle one day, {PLAYER}.\p"
-	.string "But that's only after you become\n"
-	.string "stronger.$"
+	.string "But that's only after you collect\n"
+	.string "2 badges.\p"
+	.string "Now, I know I'm away from home a\n"
+	.string "lot, so I have a gift for you.\p"
+	.string "With this you will be able to\n"
+	.string "visit me with ease at any time.$"
 
 PetalburgCity_Gym_Text_NormanGoToRustboro:
 	.string "DAD: Hm? Aren't you going to the\n"
@@ -1302,7 +1301,11 @@ PetalburgCity_Gym_Text_DadHappyAndSad:
 	.string "DAD: As the GYM LEADER, I can't\n"
 	.string "express how upset I am…\p"
 	.string "But as a father, it makes me both\n"
-	.string "happy and a little sad. It's odd…$"
+	.string "happy and a little sad. It's odd…\p"
+	.string "Anyway, I want you to continue to\n"
+	.string "grow as a trainer.\p"
+	.string "With the Balance badge, Mr. Briney\n"
+	.string "will take you to Dewford Town.$"
 
 PetalburgCity_Gym_Text_PleaseComeWithMe:
 	.string "Ah, there you are, {PLAYER}{KUN}!\p"

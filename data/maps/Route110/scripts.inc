@@ -394,6 +394,23 @@ Route110_EventScript_RivalScene::
 	releaseall
 	end
 
+Route110_EventScript_NorthBlock::
+	lockall
+	applymovement LOCALID_RIVAL, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_RIVAL, Common_Movement_Delay48
+	waitmovement 0
+	delay 30
+	msgbox Route110_Text_LetsCycleHome, MSGBOX_DEFAULT
+	applymovement OBJ_EVENT_ID_PLAYER Route110_Movement_NorthBlock
+	waitmovement 0
+	releaseall
+	end
+
+Route110_Movement_NorthBlock:
+	walk_up
+	step_end
+
 Route110_EventScript_PlayMayMusic::
 	playbgm MUS_ENCOUNTER_MAY, TRUE
 	return
@@ -758,6 +775,12 @@ Route110_Text_MyFirstJobInAqua:
 Route110_Text_AquaActionsBringSmiles:
 	.string "TEAM AQUA's actions should bring\n"
 	.string "smiles to people's faces!$"
+
+Route110_Text_LetsCycleHome:
+	.string "You know, {PLAYER}, I've never been\n"
+	.string "on the Cycling Road.\p"
+	.string "Why don't we check out the Mauville\n"
+	.string "bike shop and take that route home?\p"
 
 Route110_Text_MayLetsBattle:
 	.string "MAY: Hi, {PLAYER}{KUN}, long time no see!\p"

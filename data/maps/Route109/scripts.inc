@@ -275,7 +275,6 @@ Route109_Movement_BrineyExitBoat:
 Route109_EventScript_MrBriney::
 	lock
 	faceplayer
-	goto_if_unset FLAG_DELIVERED_DEVON_GOODS, Route109_EventScript_HaveNotDeliveredDevonGood
 	goto Route109_EventScript_DeliveredDevonGoods
 	end
 
@@ -284,6 +283,13 @@ Route109_EventScript_HaveNotDeliveredDevonGood::
 	msgbox Route109_Text_BrineySailToDewfordQuestion, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route109_EventScript_StayHere
 	goto Route109_EventScript_SailToDewford
+	end
+
+Route109_EventScript_OneWayTrip::
+	lock
+	faceplayer
+	msgbox Route109_Text_BrineyOneWayTrip, MSGBOX_DEFAULT
+	release
 	end
 
 Route109_EventScript_DeliveredDevonGoods::
@@ -476,12 +482,6 @@ Route109_EventScript_Elijah::
 	msgbox Route109_Text_ElijahPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-DewfordTown_Text_BrineyLandedInSlateportDeliverGoods:
-	.string "MR. BRINEY: Ahoy!\n"
-	.string "We've made land in SLATEPORT!\p"
-	.string "I suppose you're going to visit CAPT.\n"
-	.string "STERN and deliver the DEVON GOODS?$"
-
 Route109_Text_BrineySailToDewfordQuestion:
 	.string "MR. BRINEY: I thought you're supposed\n"
 	.string "to deliver the DEVON GOODS.\p"
@@ -502,6 +502,10 @@ DewfordTown_Text_BrineyLandedInSlateport:
 	.string "SLATEPORT!\p"
 	.string "You just go on and tell me whenever\n"
 	.string "you want to set sail again!$"
+
+Route109_Text_BrineyOneWayTrip:
+	.string "MR. BRINEY: I said it was one-way!\n"
+	.string "Best of luck on your travels kid!$"
 
 Route109_Text_BrineyWhereAreWeBound:
 	.string "MR. BRINEY: Ahoy!\n"

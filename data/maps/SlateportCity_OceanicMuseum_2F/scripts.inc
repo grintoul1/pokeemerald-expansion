@@ -30,17 +30,14 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern::
 	closemessage
 	applymovement LOCALID_GRUNT_2, SlateportCity_OceanicMuseum_2F_Movement_GruntApproachToBattle
 	waitmovement 0
+	applymovement LOCALID_GRUNT_1, SlateportCity_OceanicMuseum_2F_Movement_GruntApproachToBattle
+	waitmovement 0
 	call_if_eq VAR_FACING, DIR_SOUTH, SlateportCity_OceanicMuseum_2F_EventScript_PlayerApproachGruntSouth
 	call_if_eq VAR_FACING, DIR_WEST, SlateportCity_OceanicMuseum_2F_EventScript_PlayerApproachGruntWest
-	trainerbattle_no_intro TRAINER_GRUNT_MUSEUM_1, SlateportCity_OceanicMuseum_2F_Text_Grunt1Defeat
+	multi_2_vs_2 TRAINER_GRUNT_MUSEUM_1, SlateportCity_OceanicMuseum_2F_Text_Grunt1Defeat, TRAINER_GRUNT_MUSEUM_2, SlateportCity_OceanicMuseum_2F_Text_Grunt2Defeat, PARTNER_TEST
 	msgbox SlateportCity_OceanicMuseum_2F_Text_BossGoingToBeFurious, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_GRUNT_2, SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated
-	waitmovement 0
-	applymovement LOCALID_GRUNT_1, SlateportCity_OceanicMuseum_2F_Movement_GruntApproachToBattle
-	waitmovement 0
-	msgbox SlateportCity_OceanicMuseum_2F_Text_LetMeTakeCareOfThis, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_GRUNT_MUSEUM_2, SlateportCity_OceanicMuseum_2F_Text_Grunt2Defeat
 	applymovement LOCALID_GRUNT_1, SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated
 	waitmovement 0
 	applymovement LOCALID_GRUNT_1, Common_Movement_WalkInPlaceFasterDown
@@ -279,7 +276,7 @@ SlateportCity_OceanicMuseum_2F_Text_ThankYouForTheParts:
 	.string "Ah! Those must be the parts I ordered\n"
 	.string "from MR. STONE of DEVON.\p"
 	.string "Thank you! That's great!\n"
-	.string "We can prepare for our expedition now.$"
+	.string "We can set sail on our expedition now.$"
 
 SlateportCity_OceanicMuseum_2F_Text_WellTakeThoseParts:
 	.string "Hehehe, hold it!\n"

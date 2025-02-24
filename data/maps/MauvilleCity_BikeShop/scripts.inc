@@ -8,8 +8,8 @@ MauvilleCity_BikeShop_EventScript_Rydel::
 	goto_if_set FLAG_DECLINED_BIKE, MauvilleCity_BikeShop_EventScript_SkipGreeting
 	msgbox MauvilleCity_BikeShop_Text_RydelGreeting, MSGBOX_DEFAULT
 	msgbox MauvilleCity_BikeShop_Text_DidYouComeFromFarAway, MSGBOX_YESNO
-	goto_if_set FLAG_BADGE01, MauvilleCity_BikeShop_EventScript_YesFar
-	goto_if_unset FLAG_BADGE01, MauvilleCity_BikeShop_EventScript_NotFar
+	goto_if_set FLAG_BADGE01_GET, MauvilleCity_BikeShop_EventScript_YesFar
+	goto_if_unset FLAG_BADGE01_GET, MauvilleCity_BikeShop_EventScript_NotFar
 	end
 
 MauvilleCity_BikeShop_EventScript_SkipGreeting::
@@ -20,7 +20,7 @@ MauvilleCity_BikeShop_EventScript_SkipGreeting::
 
 MauvilleCity_BikeShop_EventScript_ChooseBike::
 	message MauvilleCity_BikeShop_Text_ExplainBikesChooseWhichOne
-	MauvilleCity_BikeShop_EventScript_GetMachBike
+	goto MauvilleCity_BikeShop_EventScript_GetMachBike
 	end
 
 MauvilleCity_BikeShop_EventScript_NotFar::

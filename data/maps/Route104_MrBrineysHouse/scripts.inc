@@ -26,9 +26,15 @@ Route104_MrBrineysHouse_EventScript_Briney::
 	lock
 	faceplayer
 	call_if_unset FLAG_MR_BRINEY_SAILING_INTRO, Route104_MrBrineysHouse_EventScript_SailingIntro
-	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, Route104_MrBrineysHouse_EventScript_SailBothDeliveries
-	goto_if_unset FLAG_DELIVERED_DEVON_GOODS, Route104_MrBrineysHouse_EventScript_SailDeliverPackage
+	goto_if_unset FLAG_BADGE05_GET, Route104_MrBrineysHouse_EventScript_NormanUndefeated
 	goto Route104_MrBrineysHouse_EventScript_WhereAreWeBound
+	end
+
+Route104_MrBrineysHouse_EventScript_NormanUndefeated::
+	lock
+	faceplayer
+	msgbox Route104_MrBrineysHouse_Text_MustDefeatNorman, MSGBOX_DEFAULT
+	release
 	end
 
 Route104_MrBrineysHouse_EventScript_SailingIntro::
@@ -102,19 +108,16 @@ Route104_MrBrineysHouse_Text_WaitUpPeeko:
 	.string "Wait up, PEEKO!$"
 
 Route104_MrBrineysHouse_Text_ItsYouLetsSailToDewford:
-	.string "Hm? You're {PLAYER}{KUN}!\n"
-	.string "You saved my darling PEEKO!\l"
-	.string "We owe so much to you!\p"
-	.string "What's that?\n"
 	.string "You want to sail with me?\p"
 	.string "Hmhm…\p"
-	.string "You have a LETTER bound for DEWFORD\n"
-	.string "and a package for SLATEPORT, then?\p"
-	.string "Quite the busy life you must lead!\p"
-	.string "But, certainly, what you're asking is\n"
-	.string "no problem at all.\p"
-	.string "You've come to the right man!\n"
-	.string "We'll set sail for DEWFORD.$"
+	.string "Certainly, what you're asking is no\n"
+	.string "problem at all.\p"
+	.string "I'm due to set sail to Slateport,\n"
+	.string "but I can dock in Dewford briefly.\p"
+	.string "This is a one-way trip though; I\n"
+	.string "won't be returning to Petalburg.\p"
+	.string "Anyway, you've come to the right\n"
+	.string "man! We'll set sail for Dewford.$"
 
 Route104_MrBrineysHouse_Text_SetSailForDewford:
 	.string "MR. BRINEY: DEWFORD it is, then!\p"
@@ -123,7 +126,7 @@ Route104_MrBrineysHouse_Text_SetSailForDewford:
 
 Route104_MrBrineysHouse_Text_DeclineDeliverySail:
 	.string "MR. BRINEY: Is that so?\n"
-	.string "Your deliveries can wait?\p"
+	.string "You can wait?\p"
 	.string "You just go on and tell me whenever\n"
 	.string "you want to set sail!$"
 
@@ -158,4 +161,12 @@ Route104_MrBrineysHouse_Text_TellMeWheneverYouWantToSail:
 
 Route104_MrBrineysHouse_Text_Peeko:
 	.string "PEEKO: Pii piihyoro!$"
+
+Route104_MrBrineysHouse_Text_MustDefeatNorman:
+	.string "MR. BRINEY: What's this?\n"
+	.string "Sorry kids; no sailing for you.\p"
+	.string "Norman won't be happy with me\n"
+	.string "if I take you to sea.\p"
+	.string "Come back with the Balance badge\n"
+	.string "and he'll have nothing to worry about!$"
 

@@ -107,7 +107,7 @@
     [PARTNER_TEST] =
     {
 #line 9
-        .trainerName = _("CHELLE"),
+        .trainerName = _("Emmie"),
 #line 10
         .trainerClass = TRAINER_CLASS_RIVAL,
 #line 11
