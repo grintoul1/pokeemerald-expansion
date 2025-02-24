@@ -18,8 +18,14 @@ Route102_EventScript_Boy::
 	end
 
 Route102_EventScript_Calvin::
-	trainerbattle_single TRAINER_CALVIN_1, Route102_Text_CalvinIntro, Route102_Text_CalvinDefeated, Route102_EventScript_CalvinRegisterMatchCallAfterBattle
-	specialvar VAR_RESULT, ShouldTryRematchBattle
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	special SavePlayerParty
+	fadescreen FADE_TO_BLACK
+	special ChooseHalfPartyForBattle
+	waitstate
+	special LoadPlayerParty
+	multi_2_vs_2 TRAINER_CALVIN_1, Route102_Text_CalvinDefeated, TRAINER_CALVIN_2, Route102_Text_CalvinDefeated, PARTNER_TEST
 	goto_if_eq VAR_RESULT, TRUE, Route102_EventScript_CalvinRematch
 	setvar VAR_0x8004, TRAINER_CALVIN_1
 	specialvar VAR_RESULT, IsTrainerRegistered
@@ -27,6 +33,8 @@ Route102_EventScript_Calvin::
 	msgbox Route102_Text_CalvinPostBattle, MSGBOX_DEFAULT
 	release
 	end
+
+
 
 Route102_EventScript_CalvinRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle

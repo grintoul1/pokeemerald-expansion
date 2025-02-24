@@ -14729,14 +14729,14 @@ F_TRAINER_FEMALE |
     [TRAINER_CALVIN_1] =
     {
 #line 5944
-        .trainerName = _("CALVIN"),
+        .trainerName = _("AMIKAM"),
 #line 5945
-        .trainerClass = TRAINER_CLASS_YOUNGSTER,
+        .trainerClass = TRAINER_CLASS_AQUA_LEADER,
 #line 5946
-        .trainerPic = TRAINER_PIC_YOUNGSTER,
+        .trainerPic = TRAINER_PIC_AQUA_LEADER_ARCHIE,
         .encounterMusic_gender =
 #line 5948
-            TRAINER_ENCOUNTER_MUSIC_MALE,
+            TRAINER_ENCOUNTER_MUSIC_MAGMA,
 #line 5949
         .doubleBattle = FALSE,
 #line 5950
@@ -14751,7 +14751,7 @@ F_TRAINER_FEMALE |
 #line 5954
             .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
 #line 5953
-            .lvl = 5,
+            .lvl = 7,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },
@@ -15156,14 +15156,14 @@ F_TRAINER_FEMALE |
     [TRAINER_CALVIN_2] =
     {
 #line 6121
-        .trainerName = _("CALVIN"),
+        .trainerName = _("MAGNATIX"),
 #line 6122
-        .trainerClass = TRAINER_CLASS_YOUNGSTER,
+        .trainerClass = TRAINER_CLASS_MAGMA_LEADER,
 #line 6123
-        .trainerPic = TRAINER_PIC_YOUNGSTER,
+        .trainerPic = TRAINER_PIC_MAGMA_LEADER_MAXIE,
         .encounterMusic_gender =
 #line 6125
-            TRAINER_ENCOUNTER_MUSIC_MALE,
+            TRAINER_ENCOUNTER_MUSIC_MAGMA,
 #line 6126
         .doubleBattle = FALSE,
 #line 6127
@@ -15173,12 +15173,12 @@ F_TRAINER_FEMALE |
         {
             {
 #line 6129
-            .species = SPECIES_MIGHTYENA,
-            .gender = TRAINER_MON_RANDOM_GENDER,
+                .species = SPECIES_POOCHYENA,
+                .gender = TRAINER_MON_RANDOM_GENDER,
 #line 6131
             .iv = TRAINER_PARTY_IVS(1, 1, 1, 1, 1, 1),
 #line 6130
-            .lvl = 27,
+            .lvl = 7,
             .nature = NATURE_HARDY,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             },

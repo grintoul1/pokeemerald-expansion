@@ -5941,11 +5941,11 @@ Level: 39
 IVs: 29 HP / 29 Atk / 29 Def / 29 SpA / 29 SpD / 29 Spe
 
 === TRAINER_CALVIN_1 ===
-Name: CALVIN
-Class: Youngster
-Pic: Youngster
+Name: MATT
+Class: Aqua Admin
+Pic: Aqua Admin M
 Gender: Male
-Music: Male
+Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
@@ -6118,11 +6118,11 @@ Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_CALVIN_2 ===
-Name: CALVIN
-Class: Youngster
-Pic: Youngster
+Name: TABITHA
+Class: Magma Admin
+Pic: Magma Admin
 Gender: Male
-Music: Male
+Music: Magma
 Double Battle: No
 AI: Check Bad Move
 
@@ -9510,9 +9510,13 @@ Music: Male
 Double Battle: No
 AI: Basic Trainer
 
-Treecko
+Skitty @ Sitrus Berry
 Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fake Out
+- Sucker Punch
+- Icy Wind
+- Encore
 
 === TRAINER_BRENDAN_ROUTE_110_MUDKIP ===
 Name: BRENDAN
@@ -9565,9 +9569,13 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Force Setup First Turn
 
-Torchic
+Skitty @ Sitrus Berry
 Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fake Out
+- Sucker Punch
+- Icy Wind
+- Encore
 
 === TRAINER_BRENDAN_ROUTE_110_TREECKO ===
 Name: BRENDAN
@@ -9620,9 +9628,13 @@ Music: Male
 Double Battle: No
 AI: Basic Trainer
 
-Mudkip
+Skitty @ Sitrus Berry
 Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fake Out
+- Sucker Punch
+- Icy Wind
+- Encore
 
 === TRAINER_BRENDAN_ROUTE_110_TORCHIC ===
 Name: BRENDAN
@@ -9675,9 +9687,13 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer
 
-Treecko
+Skitty @ Sitrus Berry
 Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fake Out
+- Sucker Punch
+- Icy Wind
+- Encore
 
 === TRAINER_MAY_ROUTE_110_MUDKIP ===
 Name: MAY
@@ -9730,9 +9746,13 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer
 
-Torchic
+Skitty @ Sitrus Berry
 Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fake Out
+- Sucker Punch
+- Icy Wind
+- Encore
 
 === TRAINER_MAY_ROUTE_110_TREECKO ===
 Name: MAY
@@ -9785,9 +9805,13 @@ Music: Female
 Double Battle: No
 AI: Basic Trainer
 
-Mudkip
+Skitty @ Sitrus Berry
 Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Fake Out
+- Sucker Punch
+- Icy Wind
+- Encore
 
 === TRAINER_MAY_ROUTE_110_TORCHIC ===
 Name: MAY
