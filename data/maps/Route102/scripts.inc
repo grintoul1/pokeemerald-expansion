@@ -1,3 +1,8 @@
+.set LOCALID_CALVIN, 2
+.set LOCALID_RICK, 3
+.set LOCALID_ALLEN, 9
+.set LOCALID_TIANA, 4
+
 Route102_MapScripts::
 	.byte 0
 
@@ -17,53 +22,68 @@ Route102_EventScript_Boy::
 	msgbox Route102_Text_CatchWholeBunchOfPokemon, MSGBOX_NPC
 	end
 
-Route102_EventScript_Calvin::
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
+Route102_EventScript_CalvinRick::
+	lockall
+	setvar VAR_0x8008, LOCALID_CALVIN
+	playse SE_PIN
+	applymovement VAR_0x8008, Common_Movement_ExclamationMark
 	waitmovement 0
+	playbgm MUS_ENCOUNTER_MALE, TRUE
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox Route102_Text_CalvinIntro MSGBOX_AUTOCLOSE
+	setvar VAR_0x8008, LOCALID_RICK
+	playse SE_PIN
+	applymovement VAR_0x8008, Common_Movement_ExclamationMark
+	waitmovement 0
+	playbgm MUS_ENCOUNTER_MALE, TRUE
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox Route102_Text_RickIntro MSGBOX_AUTOCLOSE
+	msgbox Route102_Text_ReadyToFight MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, Route102_EventScript_CalvinRick_ChoosePartyForMultiBattle
+	msgbox Route102_Text_ComeBackWhenReady, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Route102_Movement_CalvinRick_NotReady
+	waitmovement 0
+	playbgm MUS_ROUTE101, TRUE
+	releaseall
+	end	
+
+Route102_EventScript_CalvinRick_ChoosePartyForMultiBattle::
 	special SavePlayerParty
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
-	special LoadPlayerParty
-	multi_2_vs_2 TRAINER_CALVIN_1, Route102_Text_CalvinDefeated, TRAINER_CALVIN_2, Route102_Text_CalvinDefeated, PARTNER_TEST
-	goto_if_eq VAR_RESULT, TRUE, Route102_EventScript_CalvinRematch
-	setvar VAR_0x8004, TRAINER_CALVIN_1
-	specialvar VAR_RESULT, IsTrainerRegistered
-	goto_if_eq VAR_RESULT, FALSE, Route102_EventScript_CalvinTryRegister
-	msgbox Route102_Text_CalvinPostBattle, MSGBOX_DEFAULT
-	release
-	end
-
-
-
-Route102_EventScript_CalvinRegisterMatchCallAfterBattle::
-	special PlayerFaceTrainerAfterBattle
+	goto_if_ne VAR_RESULT, 0, Route102_EventScript_CalvinRickDoMultiBattle
+	msgbox Route102_Text_ComeBackWhenReady, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Route102_Movement_CalvinRick_NotReady
 	waitmovement 0
-	goto_if_set FLAG_HAS_MATCH_CALL, Route102_EventScript_CalvinRegisterMatchCall
-	release
+	playbgm MUS_ROUTE101, TRUE
+	releaseall
+	end	
+
+Route102_EventScript_CalvinRickDoMultiBattle::
+	playbgm MUS_ROUTE101, TRUE
+	multi_2_vs_2 TRAINER_CALVIN_1, Route102_Text_CalvinDefeated, TRAINER_RICK, Route102_Text_RickDefeated, PARTNER_TEST
+	special LoadPlayerParty
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox Route102_Text_CalvinPostBattle, MSGBOX_AUTOCLOSE
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox Route102_Text_RickPostBattle, MSGBOX_AUTOCLOSE
+	addvar VAR_ROUTE102_STATE, 1
 	end
 
-Route102_EventScript_CalvinRegisterMatchCall::
-	msgbox Route102_Text_CalvinRegisterShort, MSGBOX_DEFAULT
-	register_matchcall TRAINER_CALVIN_1
-	release
-	end
+Route102_Movement_CalvinRick_NotReady:
+	walk_right
+	step_end
 
-Route102_EventScript_CalvinTryRegister::
-	goto_if_set FLAG_HAS_MATCH_CALL, Route102_EventScript_CalvinRegister
-	msgbox Route102_Text_CalvinPostBattle, MSGBOX_DEFAULT
-	release
-	end
-
-Route102_EventScript_CalvinRegister::
-	msgbox Route102_Text_CalvinRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_CALVIN_1
-	release
-	end
-
-Route102_EventScript_CalvinRematch::
-	trainerbattle_rematch TRAINER_CALVIN_1, Route102_Text_CalvinRematchIntro, Route102_Text_CalvinRematchDefeated
-	msgbox Route102_Text_CalvinRematchPostBattle, MSGBOX_AUTOCLOSE
+Route102_EventScript_Calvin::
+	trainerbattle_single TRAINER_CALVIN_1, Route102_Text_CalvinIntro, Route102_Text_CalvinDefeated
+	msgbox Route102_Text_CalvinPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route102_EventScript_Rick::
@@ -115,3 +135,9 @@ Route102_Text_RouteSignOldale:
 Route102_Text_RouteSignPetalburg:
 	.string "ROUTE 102\n"
 	.string "{LEFT_ARROW} PETALBURG CITY$"
+
+Route102_Text_ReadyToFight:
+	.string "Are you ready?$"
+
+Route102_Text_ComeBackWhenReady:
+	.string "Come back when you're ready.$"

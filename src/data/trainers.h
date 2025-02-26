@@ -14731,12 +14731,12 @@ F_TRAINER_FEMALE |
 #line 5944
         .trainerName = _("AMIKAM"),
 #line 5945
-        .trainerClass = TRAINER_CLASS_AQUA_LEADER,
+        .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 5946
-        .trainerPic = TRAINER_PIC_AQUA_LEADER_ARCHIE,
+        .trainerPic = TRAINER_PIC_YOUNGSTER,
         .encounterMusic_gender =
 #line 5948
-            TRAINER_ENCOUNTER_MUSIC_MAGMA,
+        TRAINER_ENCOUNTER_MUSIC_MALE,
 #line 5949
         .doubleBattle = FALSE,
 #line 5950
@@ -15158,12 +15158,12 @@ F_TRAINER_FEMALE |
 #line 6121
         .trainerName = _("MAGNATIX"),
 #line 6122
-        .trainerClass = TRAINER_CLASS_MAGMA_LEADER,
+        .trainerClass = TRAINER_CLASS_YOUNGSTER,
 #line 6123
-        .trainerPic = TRAINER_PIC_MAGMA_LEADER_MAXIE,
+        .trainerPic = TRAINER_PIC_YOUNGSTER,
         .encounterMusic_gender =
 #line 6125
-            TRAINER_ENCOUNTER_MUSIC_MAGMA,
+        TRAINER_ENCOUNTER_MUSIC_MALE,
 #line 6126
         .doubleBattle = FALSE,
 #line 6127
