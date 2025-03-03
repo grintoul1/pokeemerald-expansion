@@ -1,4 +1,8 @@
-.set LOCALID_RIVAL, 2
+.set LOCALID_ANDREW, 6
+.set LOCALID_MIGUEL, 12
+.set LOCALID_AMY, 5
+.set LOCALID_RHETT, 16
+.set LOCALID_MARCOS, 17
 
 Route103_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route103_OnTransition
@@ -206,41 +210,101 @@ Route103_EventScript_Daisy::
 	msgbox Route103_Text_DaisyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route103_EventScript_AmyLiv::
+lockall
+setvar VAR_0x8008, LOCALID_AMY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_TWINS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route103_Text_AmyIntro MSGBOX_AUTOCLOSE
+go to Route103_EventScript_AmyLivDoMultiBattle
+releaseall
+end
+
+Route103_EventScript_AmyLivDoMultiBattle::
+playbgm MUS_ROUTE101, TRUE
+multi_2p_vs_1 TRAINER_AMY, Route103_Text_AmyDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route103_Text_AmyPostBattle, MSGBOX_AUTOCLOSE
+msgbox Route103_Text_LivPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route103_STATE, 1
+end
+
 Route103_EventScript_Amy::
-	trainerbattle_double TRAINER_AMY_AND_LIV_1, Route103_Text_AmyIntro, Route103_Text_AmyDefeated, Route103_Text_AmyNotEnoughPokemon, Route102_EventScript_AmyRegisterMatchCallAfterBattle
+	trainerbattle_double TRAINER_AMY_AND_LIV_1, Route103_Text_AmyIntro, Route103_Text_AmyDefeated, Route103_Text_AmyNotEnoughPokemon, Route103_EventScript_AmyRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route102_EventScript_AmyRematch
+	goto_if_eq VAR_RESULT, TRUE, Route103_EventScript_AmyRematch
 	msgbox Route103_Text_AmyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route102_EventScript_AmyRegisterMatchCallAfterBattle::
+Route103_EventScript_AmyRegisterMatchCallAfterBattle::
 	msgbox Route103_Text_AmyLivRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_AMY_AND_LIV_1
 	release
 	end
 
-Route102_EventScript_AmyRematch::
+Route103_EventScript_AmyRematch::
 	trainerbattle_rematch_double TRAINER_AMY_AND_LIV_1, Route103_Text_AmyRematchIntro, Route103_Text_AmyRematchDefeated, Route103_Text_AmyRematchNotEnoughPokemon
 	msgbox Route103_Text_AmyRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route103_EventScript_Liv::
-	trainerbattle_double TRAINER_AMY_AND_LIV_1, Route103_Text_LivIntro, Route103_Text_LivDefeated, Route103_Text_LivNotEnoughPokemon, Route102_EventScript_LivRegisterMatchCallAfterBattle
+	trainerbattle_double TRAINER_AMY_AND_LIV_1, Route103_Text_LivIntro, Route103_Text_LivDefeated, Route103_Text_LivNotEnoughPokemon, Route103_EventScript_LivRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route102_EventScript_LivRematch
+	goto_if_eq VAR_RESULT, TRUE, Route103_EventScript_LivRematch
 	msgbox Route103_Text_LivPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route102_EventScript_LivRegisterMatchCallAfterBattle::
+Route103_EventScript_LivRegisterMatchCallAfterBattle::
 	msgbox Route103_Text_AmyLivRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_AMY_AND_LIV_1
 	release
 	end
 
-Route102_EventScript_LivRematch::
+Route103_EventScript_LivRematch::
 	trainerbattle_rematch_double TRAINER_AMY_AND_LIV_1, Route103_Text_LivRematchIntro, Route103_Text_LivRematchDefeated, Route103_Text_LivRematchNotEnoughPokemon
 	msgbox Route103_Text_LivRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+Route103_EventScript_AndrewMiguel::
+lockall
+setvar VAR_0x8008, LOCALID_ANDREW
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route103_Text_AndrewIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_MIGUEL
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route103_Text_MiguelIntro MSGBOX_AUTOCLOSE
+go to Route103_EventScript_AndrewMiguelDoMultiBattle
+releaseall
+end
+
+Route103_EventScript_AndrewMiguelDoMultiBattle::
+playbgm MUS_ROUTE101, TRUE
+multi_2p_vs_2 TRAINER_ANDREW, Route103_Text_AndrewDefeated, TRAINER_MIGUEL, Route103_Text_MiguelDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route103_Text_AndrewPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route103_Text_MiguelPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route103_STATE, 1
+end
 
 Route103_EventScript_Andrew::
 	trainerbattle_single TRAINER_ANDREW, Route103_Text_AndrewIntro, Route103_Text_AndrewDefeated
@@ -248,14 +312,14 @@ Route103_EventScript_Andrew::
 	end
 
 Route103_EventScript_Miguel::
-	trainerbattle_single TRAINER_MIGUEL_1, Route103_Text_MiguelIntro, Route103_Text_MiguelDefeated, Route102_EventScript_MiguelRegisterMatchCallAfterBattle
+	trainerbattle_single TRAINER_MIGUEL_1, Route103_Text_MiguelIntro, Route103_Text_MiguelDefeated, Route103_EventScript_MiguelRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route103_EventScript_MiguelRematch
 	msgbox Route103_Text_MiguelPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
-Route102_EventScript_MiguelRegisterMatchCallAfterBattle::
+Route103_EventScript_MiguelRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route103_Text_MiguelRegister, MSGBOX_DEFAULT
@@ -267,6 +331,41 @@ Route103_EventScript_MiguelRematch::
 	trainerbattle_rematch TRAINER_MIGUEL_1, Route103_Text_MiguelRematchIntro, Route103_Text_MiguelRematchDefeated
 	msgbox Route103_Text_MiguelRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+Route103_EventScript_MarcosRhett::
+lockall
+setvar VAR_0x8008, LOCALID_MARCOS
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route103_Text_MarcosIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_RHETT
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route103_Text_RhettIntro MSGBOX_AUTOCLOSE
+go to Route103_EventScript_MarcosRhettDoMultiBattle
+releaseall
+end
+
+Route103_EventScript_MarcosRhettDoMultiBattle::
+playbgm MUS_ROUTE101, TRUE
+multi_2p_vs_2 TRAINER_MARCOS, Route103_Text_MarcosDefeated, TRAINER_RHETT, Route103_Text_RhettDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route103_Text_MarcosPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route103_Text_RhettPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route103_STATE, 1
+end
 
 Route103_EventScript_Marcos::
 	trainerbattle_single TRAINER_MARCOS, Route103_Text_MarcosIntro, Route103_Text_MarcosDefeated
@@ -353,3 +452,8 @@ Route103_Text_RouteSign:
 	.string "ROUTE 103\n"
 	.string "{DOWN_ARROW} OLDALE TOWN$"
 
+Route103_Text_ReadyToFight:
+	.string "Are you ready?$"
+
+Route103_Text_ComeBackWhenReady:
+	.string "Come back when you're ready.$"

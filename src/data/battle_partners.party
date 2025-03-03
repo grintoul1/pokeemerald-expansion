@@ -42,12 +42,32 @@ EVs: 252 Atk / 252 SpA / 6 SpD
 - Solar Beam
 - Dragon Claw
 
-=== PARTNER_TEST ===
-Name: STEVEN
+=== PARTNER_EMMIE ===
+Name: EMMIE
 Class: Rival
-Pic: Steven
-Gender: Male
-Music: Male
+Pic: Leaf
+Gender: Female
+Music: Female
+
+Aggron
+Adamant Nature
+Level: 44
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 SpA / 6 SpD
+- Thunder
+- Protect
+- Solar Beam
+- Dragon Claw
+
+Aggron
+Adamant Nature
+Level: 44
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+EVs: 252 Atk / 252 SpA / 6 SpD
+- Thunder
+- Protect
+- Solar Beam
+- Dragon Claw
 
 Aggron
 Adamant Nature

@@ -104,7 +104,7 @@
         },
     },
 
-    [PARTNER_TEST] =
+    [PARTNER_EMMIE] =
     {
 #line 9
         .trainerName = _("Emmie"),
@@ -115,7 +115,7 @@
         .encounterMusic_gender =
 #line 13
             TRAINER_ENCOUNTER_MUSIC_MALE,
-        .partySize = 1,
+        .partySize = 3,
         .party = (const struct TrainerMon[])
         {
             {
@@ -130,7 +130,6 @@
             .lvl = 8,
 #line 16
             .nature = NATURE_JOLLY,
-            .ability = ABILITY_PIXILATE,
             .dynamaxLevel = MAX_DYNAMAX_LEVEL,
             .moves = {
 #line 20
@@ -140,5 +139,47 @@
                 MOVE_ICY_WIND,
             },
         },
+        {
+        #line 15
+                    .species = SPECIES_DELCATTY,
+                    .gender = TRAINER_MON_RANDOM_GENDER,
+        #line 19
+                    .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+        #line 18
+                    .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+        #line 17
+                    .lvl = 8,
+        #line 16
+                    .nature = NATURE_JOLLY,
+                    .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                    .moves = {
+        #line 20
+                        MOVE_FAKE_OUT,
+                        MOVE_SUCKER_PUNCH,
+                        MOVE_HELPING_HAND,
+                        MOVE_ICY_WIND,
+                    },
+                },
+        {
+        #line 15
+                    .species = SPECIES_DELCATTY,
+                    .gender = TRAINER_MON_RANDOM_GENDER,
+        #line 19
+                    .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+        #line 18
+                    .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+        #line 17
+                    .lvl = 8,
+        #line 16
+                    .nature = NATURE_JOLLY,
+                    .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                    .moves = {
+        #line 20
+                        MOVE_FAKE_OUT,
+                        MOVE_SUCKER_PUNCH,
+                        MOVE_HELPING_HAND,
+                        MOVE_ICY_WIND,
+                    },
+                },
     },
 },

@@ -23,59 +23,39 @@ Route102_EventScript_Boy::
 	end
 
 Route102_EventScript_CalvinRick::
-	lockall
-	setvar VAR_0x8008, LOCALID_CALVIN
-	playse SE_PIN
-	applymovement VAR_0x8008, Common_Movement_ExclamationMark
-	waitmovement 0
-	playbgm MUS_ENCOUNTER_MALE, TRUE
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	msgbox Route102_Text_CalvinIntro MSGBOX_AUTOCLOSE
-	setvar VAR_0x8008, LOCALID_RICK
-	playse SE_PIN
-	applymovement VAR_0x8008, Common_Movement_ExclamationMark
-	waitmovement 0
-	playbgm MUS_ENCOUNTER_MALE, TRUE
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
-	msgbox Route102_Text_RickIntro MSGBOX_AUTOCLOSE
-	msgbox Route102_Text_ReadyToFight MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, Route102_EventScript_CalvinRick_ChoosePartyForMultiBattle
-	msgbox Route102_Text_ComeBackWhenReady, MSGBOX_DEFAULT
-	closemessage
-	applymovement OBJ_EVENT_ID_PLAYER, Route102_Movement_CalvinRick_NotReady
-	waitmovement 0
-	playbgm MUS_ROUTE101, TRUE
-	releaseall
-	end	
-
-Route102_EventScript_CalvinRick_ChoosePartyForMultiBattle::
-	special SavePlayerParty
-	fadescreen FADE_TO_BLACK
-	special ChooseHalfPartyForBattle
-	waitstate
-	goto_if_ne VAR_RESULT, 0, Route102_EventScript_CalvinRickDoMultiBattle
-	msgbox Route102_Text_ComeBackWhenReady, MSGBOX_DEFAULT
-	closemessage
-	applymovement OBJ_EVENT_ID_PLAYER, Route102_Movement_CalvinRick_NotReady
-	waitmovement 0
-	playbgm MUS_ROUTE101, TRUE
-	releaseall
-	end	
+lockall
+setvar VAR_0x8008, LOCALID_CALVIN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route102_Text_CalvinIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_RICK
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route102_Text_RickIntro MSGBOX_AUTOCLOSE
+go to Route102_EventScript_CalvinRickDoMultiBattle
+releaseall
+end
 
 Route102_EventScript_CalvinRickDoMultiBattle::
-	playbgm MUS_ROUTE101, TRUE
-	multi_2_vs_2 TRAINER_CALVIN_1, Route102_Text_CalvinDefeated, TRAINER_RICK, Route102_Text_RickDefeated, PARTNER_TEST
-	special LoadPlayerParty
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	msgbox Route102_Text_CalvinPostBattle, MSGBOX_AUTOCLOSE
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
-	msgbox Route102_Text_RickPostBattle, MSGBOX_AUTOCLOSE
-	addvar VAR_ROUTE102_STATE, 1
-	end
+playbgm MUS_ROUTE101, TRUE
+multi_2p_vs_2 TRAINER_CALVIN, Route102_Text_CalvinDefeated, TRAINER_RICK, Route102_Text_RickDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route102_Text_CalvinPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route102_Text_RickPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route102_STATE, 1
+end
 
 Route102_Movement_CalvinRick_NotReady:
 	walk_right
@@ -90,6 +70,41 @@ Route102_EventScript_Rick::
 	trainerbattle_single TRAINER_RICK, Route102_Text_RickIntro, Route102_Text_RickDefeated
 	msgbox Route102_Text_RickPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+Route102_EventScript_AllenTiana::
+lockall
+setvar VAR_0x8008, LOCALID_ALLEN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route102_Text_AllenIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_TIANA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_FEMALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route102_Text_TianaIntro MSGBOX_AUTOCLOSE
+go to Route102_EventScript_AllenTianaDoMultiBattle
+releaseall
+end
+
+Route102_EventScript_AllenTianaDoMultiBattle::
+playbgm MUS_ROUTE101, TRUE
+multi_2p_vs_2 TRAINER_ALLEN, Route102_Text_AllenDefeated, TRAINER_TIANA, Route102_Text_TianaDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route102_Text_AllenPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route102_Text_TianaPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route102_STATE, 1
+end
 
 Route102_EventScript_Tiana::
 	trainerbattle_single TRAINER_TIANA, Route102_Text_TianaIntro, Route102_Text_TianaDefeated
