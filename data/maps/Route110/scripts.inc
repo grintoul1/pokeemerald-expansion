@@ -165,6 +165,41 @@ Route110_EventScript_PlayerRidingAcroBike::
 	release
 	end
 
+Route110_EventScript_TimmyEdward::
+lockall
+setvar VAR_0x8008, LOCALID_TIMMY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route110_Text_TimmyIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_EDWARD
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route110_Text_EdwardIntro MSGBOX_AUTOCLOSE
+go to Route110_EventScript_TimmyEdwardDoMultiBattle
+releaseall
+end
+
+Route110_EventScript_TimmyEdwardDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_TIMMY, Route110_Text_TimmyDefeated, TRAINER_EDWARD, Route110_Text_EdwardDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route110_Text_TimmyPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route110_Text_EdwardPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route110_STATE, 1
+end
+
 Route110_EventScript_Edward::
 	trainerbattle_single TRAINER_EDWARD, Route110_Text_EdwardIntro, Route110_Text_EdwardDefeated
 	msgbox Route110_Text_EdwardPostBattle, MSGBOX_AUTOCLOSE
@@ -206,6 +241,41 @@ Route110_EventScript_Jacob::
 	msgbox Route110_Text_JacobPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route110_EventScript_AnthonyAbigail::
+lockall
+setvar VAR_0x8008, LOCALID_ANTHONY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route110_Text_AnthonyIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_ABIGAIL
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route110_Text_AbigailIntro MSGBOX_AUTOCLOSE
+go to Route110_EventScript_AnthonyAbigailDoMultiBattle
+releaseall
+end
+
+Route110_EventScript_AnthonyAbigailDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_ANTHONY, Route110_Text_AnthonyDefeated, TRAINER_ABIGAIL, Route110_Text_AbigailDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route110_Text_AnthonyPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route110_Text_AbigailPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route110_STATE, 1
+end
+
 Route110_EventScript_Anthony::
 	trainerbattle_single TRAINER_ANTHONY, Route110_Text_AnthonyIntro, Route110_Text_AnthonyDefeated
 	msgbox Route110_Text_AnthonyPostBattle, MSGBOX_AUTOCLOSE
@@ -232,6 +302,41 @@ Route110_EventScript_BenjaminRematch::
 	msgbox Route110_Text_BenjaminRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route110_EventScript_JasmineJacob::
+lockall
+setvar VAR_0x8008, LOCALID_JASMINE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route110_Text_JasmineIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_JACOB
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route110_Text_JacobIntro MSGBOX_AUTOCLOSE
+go to Route110_EventScript_JasmineJacobDoMultiBattle
+releaseall
+end
+
+Route110_EventScript_JasmineJacobDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_JASMINE, Route110_Text_JasmineDefeated, TRAINER_JACOB, Route110_Text_JacobDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route110_Text_JasminePostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route110_Text_JacobPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route110_STATE, 1
+end
+
 Route110_EventScript_Jasmine::
 	trainerbattle_single TRAINER_JASMINE, Route110_Text_JasmineIntro, Route110_Text_JasmineDefeated
 	msgbox Route110_Text_JasminePostBattle, MSGBOX_AUTOCLOSE
@@ -257,6 +362,41 @@ Route110_EventScript_AbigailRematch::
 	trainerbattle_rematch TRAINER_ABIGAIL_1, Route110_Text_AbigailRematchIntro, Route110_Text_AbigailRematchDefeated
 	msgbox Route110_Text_AbigailRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+Route110_EventScript_IsabelKaleb::
+lockall
+setvar VAR_0x8008, LOCALID_ISABEL
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_TWINS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route110_Text_IsabelIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_KALEB
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route110_Text_KalebIntro MSGBOX_AUTOCLOSE
+go to Route110_EventScript_IsabelKalebDoMultiBattle
+releaseall
+end
+
+Route110_EventScript_IsabelKalebDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_ISABEL, Route110_Text_IsabelDefeated, TRAINER_KALEB, Route110_Text_KalebDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route110_Text_IsabelPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route110_Text_KalebPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route110_STATE, 1
+end
 
 Route110_EventScript_Isabel::
 	trainerbattle_single TRAINER_ISABEL_1, Route110_Text_IsabelIntro, Route110_Text_IsabelDefeated, Route110_EventScript_IsabelRegisterMatchCallAfterBattle
@@ -292,10 +432,80 @@ Route110_EventScript_Kaleb::
 	msgbox Route110_Text_KalebPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route110_EventScript_JosephEdwin::
+lockall
+setvar VAR_0x8008, LOCALID_JOSEPH
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route110_Text_JosephIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_EDWIN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_SUSPICIOUS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route110_Text_EdwinIntro MSGBOX_AUTOCLOSE
+go to Route110_EventScript_JosephEdwinDoMultiBattle
+releaseall
+end
+
+Route110_EventScript_JosephEdwinDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_JOSEPH, Route110_Text_JosephDefeated, TRAINER_EDWIN, Route110_Text_EdwinDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route110_Text_JosephPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route110_Text_EdwinPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route110_STATE, 1
+end
+
 Route110_EventScript_Joseph::
 	trainerbattle_single TRAINER_JOSEPH, Route110_Text_JosephIntro, Route110_Text_JosephDefeated
 	msgbox Route110_Text_JosephPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+Route110_EventScript_AlyssaBenjamin::
+lockall
+setvar VAR_0x8008, LOCALID_ALYSSA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route110_Text_AlyssaIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_BENJAMIN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route110_Text_BenjaminIntro MSGBOX_AUTOCLOSE
+go to Route110_EventScript_AlyssaBenjaminDoMultiBattle
+releaseall
+end
+
+Route110_EventScript_AlyssaBenjaminDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_ALYSSA, Route110_Text_AlyssaDefeated, TRAINER_BENJAMIN, Route110_Text_BenjaminDefeated, PARTNER_EMMIE
+special LoadPlayerParty
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route110_Text_AlyssaPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route110_Text_BenjaminPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_Route110_STATE, 1
+end
 
 Route110_EventScript_Alyssa::
 	trainerbattle_single TRAINER_ALYSSA, Route110_Text_AlyssaIntro, Route110_Text_AlyssaDefeated
