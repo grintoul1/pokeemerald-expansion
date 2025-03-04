@@ -671,6 +671,15 @@
       "var": "VAR_ROUTE110_STATE",
       "var_value": "7",
       "script": "Route110_EventScript_NorthBlock"
+    },
+    {
+      "type": "trigger",
+      "x": 38,
+      "y": 18,
+      "elevation": 0,
+      "var": "VAR_ROUTE110_STATE",
+      "var_value": "8",
+      "script": "Route110_EventScript_MayBattle"
     }
   ],
   "bg_events": [

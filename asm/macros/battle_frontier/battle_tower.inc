@@ -138,7 +138,6 @@
 	waitstate
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_SAVE_PARTY
 	special CallFrontierUtilFunc
-	special LoadPlayerParty
 	.endm
 
 	.macro multi_2_vs_1 trainer1Id:req, trainer1LoseText:req, partnerId:req
