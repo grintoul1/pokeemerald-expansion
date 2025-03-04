@@ -1,3 +1,9 @@
+.set LOCALID_WATTSON, 1
+.set LOCALID_SHAWN, 2
+.set LOCALID_ANGELO, 6
+.set LOCALID_KIRK, 4
+.set LOCALID_VIVIAN, 3
+
 MauvilleCity_Gym_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, MauvilleCity_Gym_OnLoad
 	.byte 0
@@ -73,15 +79,50 @@ MauvilleCity_Gym_EventScript_DeactivatePuzzle::
 	special MauvilleGymDeactivatePuzzle
 	end
 
-MauvilleCity_Gym_EventScript_Wattson::
-	trainerbattle_single TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_Gym_EventScript_WattsonRematch
-	goto_if_unset FLAG_RECEIVED_TM_SHOCK_WAVE, MauvilleCity_Gym_EventScript_GiveShockWave2
+MauvilleCity_Gym_EventScript_Wattson2::
 	goto_if_eq VAR_NEW_MAUVILLE_STATE, 2, MauvilleCity_Gym_EventScript_CompletedNewMauville
-	msgbox MauvilleCity_Gym_Text_WattsonPostBattle, MSGBOX_DEFAULT
 	release
 	end
+
+MauvilleCity_Gym_EventScript_Wattson::
+lockall
+setvar VAR_0x8008, LOCALID_WATTSON
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_ELITE_FOUR, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox MauvilleCity_Gym_Text_WattsonIntro MSGBOX_AUTOCLOSE
+msgbox MauvilleCity_Gym_Text_ReadyToFight MSGBOX_YESNO
+goto_if_eq VAR_RESULT, YES, MauvilleCity_Gym_EventScript_WattsonDoMultiBattle
+msgbox MauvilleCity_Gym_Text_ComeBackWhenReady, MSGBOX_DEFAULT
+closemessage
+applymovement OBJ_EVENT_ID_PLAYER, MauvilleCity_Gym_Movement_Wattson_NotReady
+waitmovement 0
+playbgm MUS_GYM, TRUE
+releaseall
+end
+
+MauvilleCity_Gym_EventScript_WattsonDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonDefeated, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, MauvilleCity_Gym_EventScript_WattsonVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+MauvilleCity_Gym_EventScript_WattsonVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+addvar VAR_MAUVILLECITY_GYM_STATE, 1
+goto MauvilleCity_Gym_EventScript_WattsonDefeated
+end
+
+MauvilleCity_Gym_Movement_Wattson_NotReady:
+walk_down
+step_end
 
 MauvilleCity_Gym_EventScript_WattsonDefeated::
 	message MauvilleCity_Gym_Text_ReceivedDynamoBadge
@@ -133,7 +174,7 @@ MauvilleCity_Gym_EventScript_CompletedNewMauville::
 	end
 
 MauvilleCity_Gym_EventScript_WattsonRematch::
-	trainerbattle_rematch_double TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonPreRematch, MauvilleCity_Gym_Text_WattsonRematchDefeat, MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons
+	trainerbattle_rematch_double TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonPreRematch, MauvilleCity_Gym_Text_WattsonRematchDefeated, MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons
 	msgbox MauvilleCity_Gym_Text_WattsonPostRematch, MSGBOX_AUTOCLOSE
 	end
 
@@ -197,28 +238,110 @@ MauvilleCity_Gym_EventScript_ClearBarriersAltState::
 	releaseall
 	end
 
+MauvilleCity_Gym_EventScript_KirkVivian::
+lockall
+setvar VAR_0x8008, LOCALID_KIRK
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox MauvilleCity_Gym_Text_KirkIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_VIVIAN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox MauvilleCity_Gym_Text_VivianIntro MSGBOX_AUTOCLOSE
+goto MauvilleCity_Gym_EventScript_KirkVivianDoMultiBattle
+releaseall
+end
+
+MauvilleCity_Gym_EventScript_KirkVivianDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_2 TRAINER_KIRK, MauvilleCity_Gym_Text_KirkDefeated, TRAINER_VIVIAN, MauvilleCity_Gym_Text_VivianDefeated, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, MauvilleCity_Gym_EventScript_KirkVivianVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+MauvilleCity_Gym_EventScript_KirkVivianVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox MauvilleCity_Gym_Text_KirkPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox MauvilleCity_Gym_Text_VivianPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_MAUVILLECITY_GYM_STATE, 1
+end
+
 MauvilleCity_Gym_EventScript_Kirk::
-	trainerbattle_single TRAINER_KIRK, MauvilleCity_Gym_Text_KirkIntro, MauvilleCity_Gym_Text_KirkDefeat
+	trainerbattle_single TRAINER_KIRK, MauvilleCity_Gym_Text_KirkIntro, MauvilleCity_Gym_Text_KirkDefeated
 	msgbox MauvilleCity_Gym_Text_KirkPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+MauvilleCity_Gym_EventScript_ShawnAngelo::
+lockall
+setvar VAR_0x8008, LOCALID_SHAWN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MauvilleCity_Gym_Text_ShawnIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_ANGELO
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_SUSPICIOUS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MauvilleCity_Gym_Text_AngeloIntro MSGBOX_AUTOCLOSE
+goto MauvilleCity_Gym_EventScript_ShawnAngeloDoMultiBattle
+releaseall
+end
+
+MauvilleCity_Gym_EventScript_ShawnAngeloDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_2 TRAINER_SHAWN, MauvilleCity_Gym_Text_ShawnDefeated, TRAINER_ANGELO, MauvilleCity_Gym_Text_AngeloDefeated, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, MauvilleCity_Gym_EventScript_ShawnAngeloVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+MauvilleCity_Gym_EventScript_ShawnAngeloVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MauvilleCity_Gym_Text_ShawnPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MauvilleCity_Gym_Text_AngeloPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_MAUVILLECITY_GYM_STATE, 1
+end
+
 MauvilleCity_Gym_EventScript_Shawn::
-	trainerbattle_single TRAINER_SHAWN, MauvilleCity_Gym_Text_ShawnIntro, MauvilleCity_Gym_Text_ShawnDefeat
+	trainerbattle_single TRAINER_SHAWN, MauvilleCity_Gym_Text_ShawnIntro, MauvilleCity_Gym_Text_ShawnDefeated
 	msgbox MauvilleCity_Gym_Text_ShawnPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 MauvilleCity_Gym_EventScript_Ben::
-	trainerbattle_single TRAINER_BEN, MauvilleCity_Gym_Text_BenIntro, MauvilleCity_Gym_Text_BenDefeat
+	trainerbattle_single TRAINER_BEN, MauvilleCity_Gym_Text_BenIntro, MauvilleCity_Gym_Text_BenDefeated
 	msgbox MauvilleCity_Gym_Text_BenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 MauvilleCity_Gym_EventScript_Vivian::
-	trainerbattle_single TRAINER_VIVIAN, MauvilleCity_Gym_Text_VivianIntro, MauvilleCity_Gym_Text_VivianDefeat
+	trainerbattle_single TRAINER_VIVIAN, MauvilleCity_Gym_Text_VivianIntro, MauvilleCity_Gym_Text_VivianDefeated
 	msgbox MauvilleCity_Gym_Text_VivianPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 MauvilleCity_Gym_EventScript_Angelo::
-	trainerbattle_single TRAINER_ANGELO, MauvilleCity_Gym_Text_AngeloIntro, MauvilleCity_Gym_Text_AngeloDefeat
+	trainerbattle_single TRAINER_ANGELO, MauvilleCity_Gym_Text_AngeloIntro, MauvilleCity_Gym_Text_AngeloDefeated
 	msgbox MauvilleCity_Gym_Text_AngeloPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -276,7 +399,7 @@ MauvilleCity_Gym_Text_KirkIntro:
 	.string "My electric soul, it'll shatter your\n"
 	.string "dreams whole, whoa-yeahah!$"
 
-MauvilleCity_Gym_Text_KirkDefeat:
+MauvilleCity_Gym_Text_KirkDefeated:
 	.string "That was plugged in, amped up,\n"
 	.string "over-driven electric, man!$"
 
@@ -288,7 +411,7 @@ MauvilleCity_Gym_Text_ShawnIntro:
 	.string "I trained under WATTSON!\n"
 	.string "There ain't no way I'll lose easily!$"
 
-MauvilleCity_Gym_Text_ShawnDefeat:
+MauvilleCity_Gym_Text_ShawnDefeated:
 	.string "Unplugged and turned off…$"
 
 MauvilleCity_Gym_Text_ShawnPostBattle:
@@ -301,7 +424,7 @@ MauvilleCity_Gym_Text_BenIntro:
 	.string "This GYM's got puzzles!\n"
 	.string "Isn't it fun?$"
 
-MauvilleCity_Gym_Text_BenDefeat:
+MauvilleCity_Gym_Text_BenDefeated:
 	.string "It's no fun to lose…$"
 
 MauvilleCity_Gym_Text_BenPostBattle:
@@ -312,7 +435,7 @@ MauvilleCity_Gym_Text_VivianIntro:
 	.string "With my charm and my POKéMON's moves,\n"
 	.string "you'll be shocked!$"
 
-MauvilleCity_Gym_Text_VivianDefeat:
+MauvilleCity_Gym_Text_VivianDefeated:
 	.string "I'm shocked by your power!$"
 
 MauvilleCity_Gym_Text_VivianPostBattle:
@@ -325,7 +448,7 @@ MauvilleCity_Gym_Text_VivianPostBattle:
 MauvilleCity_Gym_Text_AngeloIntro:
 	.string "I love shiny things!$"
 
-MauvilleCity_Gym_Text_AngeloDefeat:
+MauvilleCity_Gym_Text_AngeloDefeated:
 	.string "Oh…\n"
 	.string "My eyes are frazzled…$"
 
@@ -346,7 +469,7 @@ MauvilleCity_Gym_Text_WattsonIntro:
 	.string "Then, I, WATTSON, the LEADER of\n"
 	.string "MAUVILLE GYM, shall electrify you!$"
 
-MauvilleCity_Gym_Text_WattsonDefeat:
+MauvilleCity_Gym_Text_WattsonDefeated:
 	.string "Wahahahah!\n"
 	.string "Fine, I lost!\p"
 	.string "You ended up giving me a thrill!\n"
@@ -398,7 +521,7 @@ MauvilleCity_Gym_Text_WattsonPreRematch:
 	.string "I'll make sparks fly from you!\n"
 	.string "Don't say I didn't warn you!$"
 
-MauvilleCity_Gym_Text_WattsonRematchDefeat:
+MauvilleCity_Gym_Text_WattsonRematchDefeated:
 	.string "Oof…\n"
 	.string "Our batteries ran dry…$"
 
@@ -420,3 +543,9 @@ MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons:
 	.string "Come see me with two or more\n"
 	.string "POKéMON, all right?$"
 
+MauvilleCity_Gym_Text_ReadyToFight:
+	.string "Are you ready, kids?$"
+
+MauvilleCity_Gym_Text_ComeBackWhenReady:
+	.string "Wahahahaha! Okay!\n"
+	.string "Come back when you're ready!$"
