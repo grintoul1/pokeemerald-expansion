@@ -1,7 +1,20 @@
 .set LOCALID_CHALLENGE_BIKER, 21
-.set LOCALID_RIVAL, 28
-.set LOCALID_RIVAL_ON_BIKE, 29
 .set LOCALID_BIRCH, 36
+.set LOCALID_ISABEL, 28
+.set LOCALID_KALEB, 29
+.set LOCALID_JOSEPH, 31
+.set LOCALID_EDWIN, 14
+.set LOCALID_ISABEL, 28
+.set LOCALID_TIMMY, 27
+.set LOCALID_EDWARD, 12
+.set LOCALID_ANTHONY, 9
+.set LOCALID_ABIGAIL, 10
+.set LOCALID_ALYSSA, 30
+.set LOCALID_ISABEL, 28
+.set LOCALID_BENJAMIN, 11
+.set LOCALID_JASMINE, 8
+.set LOCALID_JACOB, 26
+
 
 Route110_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route110_OnResume
@@ -183,7 +196,7 @@ playbgm MUS_ENCOUNTER_INTENSE, TRUE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox Route110_Text_EdwardIntro MSGBOX_AUTOCLOSE
-go to Route110_EventScript_TimmyEdwardDoMultiBattle
+goto Route110_EventScript_TimmyEdwardDoMultiBattle
 releaseall
 end
 
@@ -197,7 +210,7 @@ msgbox Route110_Text_TimmyPostBattle, MSGBOX_AUTOCLOSE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox Route110_Text_EdwardPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_Route110_STATE, 1
+addvar VAR_ROUTE110_STATE, 1
 end
 
 Route110_EventScript_Edward::
@@ -259,13 +272,13 @@ playbgm MUS_ENCOUNTER_COOL, TRUE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 waitmovement 0
 msgbox Route110_Text_AbigailIntro MSGBOX_AUTOCLOSE
-go to Route110_EventScript_AnthonyAbigailDoMultiBattle
+goto Route110_EventScript_AnthonyAbigailDoMultiBattle
 releaseall
 end
 
 Route110_EventScript_AnthonyAbigailDoMultiBattle::
 playbgm MUS_ROUTE110, TRUE
-multi_2p_vs_2 TRAINER_ANTHONY, Route110_Text_AnthonyDefeated, TRAINER_ABIGAIL, Route110_Text_AbigailDefeated, PARTNER_EMMIE
+multi_2p_vs_2 TRAINER_ANTHONY, Route110_Text_AnthonyDefeated, TRAINER_ABIGAIL_1, Route110_Text_AbigailDefeated, PARTNER_EMMIE
 special LoadPlayerParty
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 waitmovement 0
@@ -273,7 +286,7 @@ msgbox Route110_Text_AnthonyPostBattle, MSGBOX_AUTOCLOSE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 waitmovement 0
 msgbox Route110_Text_AbigailPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_Route110_STATE, 1
+addvar VAR_ROUTE110_STATE, 1
 end
 
 Route110_EventScript_Anthony::
@@ -320,7 +333,7 @@ playbgm MUS_ENCOUNTER_COOL, TRUE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 waitmovement 0
 msgbox Route110_Text_JacobIntro MSGBOX_AUTOCLOSE
-go to Route110_EventScript_JasmineJacobDoMultiBattle
+goto Route110_EventScript_JasmineJacobDoMultiBattle
 releaseall
 end
 
@@ -334,7 +347,7 @@ msgbox Route110_Text_JasminePostBattle, MSGBOX_AUTOCLOSE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 waitmovement 0
 msgbox Route110_Text_JacobPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_Route110_STATE, 1
+addvar VAR_ROUTE110_STATE, 1
 end
 
 Route110_EventScript_Jasmine::
@@ -381,13 +394,13 @@ playbgm MUS_ENCOUNTER_MALE, TRUE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 waitmovement 0
 msgbox Route110_Text_KalebIntro MSGBOX_AUTOCLOSE
-go to Route110_EventScript_IsabelKalebDoMultiBattle
+goto Route110_EventScript_IsabelKalebDoMultiBattle
 releaseall
 end
 
 Route110_EventScript_IsabelKalebDoMultiBattle::
 playbgm MUS_ROUTE110, TRUE
-multi_2p_vs_2 TRAINER_ISABEL, Route110_Text_IsabelDefeated, TRAINER_KALEB, Route110_Text_KalebDefeated, PARTNER_EMMIE
+multi_2p_vs_2 TRAINER_ISABEL_1, Route110_Text_IsabelDefeated, TRAINER_KALEB, Route110_Text_KalebDefeated, PARTNER_EMMIE
 special LoadPlayerParty
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
@@ -395,7 +408,7 @@ msgbox Route110_Text_IsabelPostBattle, MSGBOX_AUTOCLOSE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 waitmovement 0
 msgbox Route110_Text_KalebPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_Route110_STATE, 1
+addvar VAR_ROUTE110_STATE, 1
 end
 
 Route110_EventScript_Isabel::
@@ -450,13 +463,13 @@ playbgm MUS_ENCOUNTER_SUSPICIOUS, TRUE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 waitmovement 0
 msgbox Route110_Text_EdwinIntro MSGBOX_AUTOCLOSE
-go to Route110_EventScript_JosephEdwinDoMultiBattle
+goto Route110_EventScript_JosephEdwinDoMultiBattle
 releaseall
 end
 
 Route110_EventScript_JosephEdwinDoMultiBattle::
 playbgm MUS_ROUTE110, TRUE
-multi_2p_vs_2 TRAINER_JOSEPH, Route110_Text_JosephDefeated, TRAINER_EDWIN, Route110_Text_EdwinDefeated, PARTNER_EMMIE
+multi_2p_vs_2 TRAINER_JOSEPH, Route110_Text_JosephDefeated, TRAINER_EDWIN_1, Route110_Text_EdwinDefeated, PARTNER_EMMIE
 special LoadPlayerParty
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 waitmovement 0
@@ -464,7 +477,7 @@ msgbox Route110_Text_JosephPostBattle, MSGBOX_AUTOCLOSE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 waitmovement 0
 msgbox Route110_Text_EdwinPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_Route110_STATE, 1
+addvar VAR_ROUTE110_STATE, 1
 end
 
 Route110_EventScript_Joseph::
@@ -490,13 +503,13 @@ playbgm MUS_ENCOUNTER_COOL, TRUE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 waitmovement 0
 msgbox Route110_Text_BenjaminIntro MSGBOX_AUTOCLOSE
-go to Route110_EventScript_AlyssaBenjaminDoMultiBattle
+goto Route110_EventScript_AlyssaBenjaminDoMultiBattle
 releaseall
 end
 
 Route110_EventScript_AlyssaBenjaminDoMultiBattle::
 playbgm MUS_ROUTE110, TRUE
-multi_2p_vs_2 TRAINER_ALYSSA, Route110_Text_AlyssaDefeated, TRAINER_BENJAMIN, Route110_Text_BenjaminDefeated, PARTNER_EMMIE
+multi_2p_vs_2 TRAINER_ALYSSA, Route110_Text_AlyssaDefeated, TRAINER_BENJAMIN_1, Route110_Text_BenjaminDefeated, PARTNER_EMMIE
 special LoadPlayerParty
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 waitmovement 0
@@ -504,7 +517,7 @@ msgbox Route110_Text_AlyssaPostBattle, MSGBOX_AUTOCLOSE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 waitmovement 0
 msgbox Route110_Text_BenjaminPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_Route110_STATE, 1
+addvar VAR_ROUTE110_STATE, 1
 end
 
 Route110_EventScript_Alyssa::

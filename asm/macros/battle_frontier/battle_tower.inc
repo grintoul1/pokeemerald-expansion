@@ -147,7 +147,7 @@
 	multi_do MULTI_BATTLE_2_VS_1, \partnerId
 	.endm
 
-	.macro multi_2_vs_1 trainer1Id:req, trainer1LoseText:req, partnerId:req
+	.macro multi_2p_vs_1 trainer1Id:req, trainer1LoseText:req, partnerId:req
 	special SavePlayerParty
 	trainerbattle TRAINER_BATTLE_SET_TRAINER_A, \trainer1Id, 0, NULL, \trainer1LoseText @ set first trainer mons
 	multi_do_p MULTI_BATTLE_2_VS_1, \partnerId

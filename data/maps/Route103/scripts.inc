@@ -220,19 +220,19 @@ playbgm MUS_ENCOUNTER_TWINS, TRUE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox Route103_Text_AmyIntro MSGBOX_AUTOCLOSE
-go to Route103_EventScript_AmyLivDoMultiBattle
+goto Route103_EventScript_AmyLivDoMultiBattle
 releaseall
 end
 
 Route103_EventScript_AmyLivDoMultiBattle::
 playbgm MUS_ROUTE101, TRUE
-multi_2p_vs_1 TRAINER_AMY, Route103_Text_AmyDefeated, PARTNER_EMMIE
+multi_2p_vs_1 TRAINER_AMY_AND_LIV_1, Route103_Text_AmyDefeated, PARTNER_EMMIE
 special LoadPlayerParty
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox Route103_Text_AmyPostBattle, MSGBOX_AUTOCLOSE
 msgbox Route103_Text_LivPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_Route103_STATE, 1
+addvar VAR_ROUTE103_STATE, 1
 end
 
 Route103_EventScript_Amy::
@@ -289,13 +289,13 @@ playbgm MUS_ENCOUNTER_COOL, TRUE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 waitmovement 0
 msgbox Route103_Text_MiguelIntro MSGBOX_AUTOCLOSE
-go to Route103_EventScript_AndrewMiguelDoMultiBattle
+goto Route103_EventScript_AndrewMiguelDoMultiBattle
 releaseall
 end
 
 Route103_EventScript_AndrewMiguelDoMultiBattle::
 playbgm MUS_ROUTE101, TRUE
-multi_2p_vs_2 TRAINER_ANDREW, Route103_Text_AndrewDefeated, TRAINER_MIGUEL, Route103_Text_MiguelDefeated, PARTNER_EMMIE
+multi_2p_vs_2 TRAINER_ANDREW, Route103_Text_AndrewDefeated, TRAINER_MIGUEL_1, Route103_Text_MiguelDefeated, PARTNER_EMMIE
 special LoadPlayerParty
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
@@ -303,7 +303,7 @@ msgbox Route103_Text_AndrewPostBattle, MSGBOX_AUTOCLOSE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 waitmovement 0
 msgbox Route103_Text_MiguelPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_Route103_STATE, 1
+addvar VAR_ROUTE103_STATE, 1
 end
 
 Route103_EventScript_Andrew::
@@ -350,7 +350,7 @@ playbgm MUS_ENCOUNTER_INTENSE, TRUE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 waitmovement 0
 msgbox Route103_Text_RhettIntro MSGBOX_AUTOCLOSE
-go to Route103_EventScript_MarcosRhettDoMultiBattle
+goto Route103_EventScript_MarcosRhettDoMultiBattle
 releaseall
 end
 
@@ -364,7 +364,7 @@ msgbox Route103_Text_MarcosPostBattle, MSGBOX_AUTOCLOSE
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 waitmovement 0
 msgbox Route103_Text_RhettPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_Route103_STATE, 1
+addvar VAR_ROUTE103_STATE, 1
 end
 
 Route103_EventScript_Marcos::
