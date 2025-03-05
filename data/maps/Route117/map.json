@@ -126,7 +126,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Dylan",
       "flag": "0"
     },
     {
@@ -139,7 +139,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Lydia",
       "flag": "0"
     },
     {
@@ -152,7 +152,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Isaac",
       "flag": "0"
     },
     {
@@ -230,7 +230,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Maria",
       "flag": "0"
     },
     {
@@ -243,7 +243,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Derek",
       "flag": "0"
     },
     {
@@ -256,7 +256,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Anna",
       "flag": "0"
     },
     {
@@ -269,7 +269,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Meg",
       "flag": "0"
     },
     {
@@ -295,7 +295,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Brandi",
       "flag": "0"
     },
     {
@@ -308,7 +308,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Aisha",
       "flag": "0"
     },
     {
@@ -321,7 +321,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Route117_EventScript_Melina",
       "flag": "0"
     },
     {
