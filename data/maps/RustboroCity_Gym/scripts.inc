@@ -1,10 +1,52 @@
+.set LOCALID_TOMMY, 3
+.set LOCALID_JOSH, 2
+.set LOCALID_ROXANNE, 1
+
+
 RustboroCity_Gym_MapScripts::
 	.byte 0
 
 RustboroCity_Gym_EventScript_Roxanne::
-	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
+lockall
+setvar VAR_0x8008, LOCALID_ROXANNE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_ELITE_FOUR, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox RustboroCity_Gym_Text_RoxanneIntro MSGBOX_AUTOCLOSE
+msgbox RustboroCity_Gym_Text_ReadyToFight MSGBOX_YESNO
+goto_if_eq VAR_RESULT, YES, RustboroCity_Gym_EventScript_RoxanneDoMultiBattle
+msgbox RustboroCity_Gym_Text_ComeBackWhenReady, MSGBOX_DEFAULT
+closemessage
+applymovement OBJ_EVENT_ID_PLAYER, RustboroCity_Gym_Movement_Roxanne_NotReady
+waitmovement 0
+playbgm MUS_GYM, TRUE
+releaseall
+end
+
+RustboroCity_Gym_EventScript_RoxanneDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, RustboroCity_Gym_EventScript_RoxanneVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+RustboroCity_Gym_EventScript_RoxanneVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+addvar VAR_RUSTBOROCITY_GYM_STATE, 1
+goto RustboroCity_Gym_EventScript_RoxanneDefeated
+end
+
+RustboroCity_Gym_Movement_Roxanne_NotReady:
+walk_down
+step_end
+
+RustboroCity_Gym_EventScript_Roxanne2::
 	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
 	msgbox RustboroCity_Gym_Text_RoxannePostBattle, MSGBOX_DEFAULT
 	release
@@ -39,13 +81,52 @@ RustboroCity_Gym_EventScript_RoxanneRematch::
 	msgbox RustboroCity_Gym_Text_RoxannePostRematch, MSGBOX_AUTOCLOSE
 	end
 
+RustboroCity_Gym_EventScript_JoshTommy::
+lockall
+setvar VAR_0x8008, LOCALID_JOSH
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox RustboroCity_Gym_Text_JoshIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_TOMMY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox RustboroCity_Gym_Text_TommyIntro MSGBOX_AUTOCLOSE
+goto RustboroCity_Gym_EventScript_JoshTommyDoMultiBattle
+releaseall
+end
+
+RustboroCity_Gym_EventScript_JoshTommyDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_2 TRAINER_JOSH, RustboroCity_Gym_Text_JoshDefeat, TRAINER_TOMMY, RustboroCity_Gym_Text_TommyDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, RustboroCity_Gym_EventScript_JoshTommyVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+RustboroCity_Gym_EventScript_JoshTommyVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox RustboroCity_Gym_Text_JoshPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox RustboroCity_Gym_Text_TommyPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_RUSTBOROCITY_GYM_STATE, 1
+end
+
 RustboroCity_Gym_EventScript_Josh::
-	trainerbattle_single TRAINER_JOSH, RustboroCity_Gym_Text_JoshIntro, RustboroCity_Gym_Text_JoshDefeat
 	msgbox RustboroCity_Gym_Text_JoshPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 RustboroCity_Gym_EventScript_Tommy::
-	trainerbattle_single TRAINER_TOMMY, RustboroCity_Gym_Text_TommyIntro, RustboroCity_Gym_Text_TommyDefeat
 	msgbox RustboroCity_Gym_Text_TommyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -282,3 +363,9 @@ RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons:
 	.string "You only have one POKéMON with you?\p"
 	.string "Please return with at least one more\n"
 	.string "POKéMON.$"
+
+RustboroCity_Gym_Text_ReadyToFight:
+	.string "Are you ready?$"
+
+RustboroCity_Gym_Text_ComeBackWhenReady:
+	.string "Come back when you're ready.$"

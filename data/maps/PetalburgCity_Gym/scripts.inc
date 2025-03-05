@@ -1,4 +1,11 @@
 .set LOCALID_NORMAN, 1
+.set LOCALID_MARY, 2
+.set LOCALID_RANDALL, 3
+.set LOCALID_GEORGE, 6
+.set LOCALID_ALEXIA, 5
+.set LOCALID_PARKER, 4
+.set LOCALID_BERKE, 8
+.set LOCALID_JODY, 7
 .set LOCALID_WALLY, 10
 .set LOCALID_WALLYS_DAD, 11
 
@@ -10,8 +17,11 @@ PetalburgCity_Gym_MapScripts::
 	.byte 0
 
 PetalburgCity_Gym_OnLoad:
-	goto_if_eq VAR_PETALBURG_GYM_STATE, 6, PetalburgCity_Gym_EventScript_OpenUnlockedDoors
-	call_if_ge VAR_PETALBURG_GYM_STATE, 7, PetalburgCity_Gym_EventScript_UnlockAllDoors
+	goto_if_eq VAR_PETALBURG_GYM_STATE, 6, PetalburgCity_Gym_EventScript_UnlockAllDoors
+	goto_if_eq VAR_PETALBURG_GYM_STATE, 7, PetalburgCity_Gym_EventScript_UnlockAllDoors
+	goto_if_eq VAR_PETALBURG_GYM_STATE, 8, PetalburgCity_Gym_EventScript_UnlockAllDoors
+	goto_if_eq VAR_PETALBURG_GYM_STATE, 9, PetalburgCity_Gym_EventScript_UnlockAllDoors
+	call_if_ge VAR_PETALBURG_GYM_STATE, 10, PetalburgCity_Gym_EventScript_UnlockAllDoors
 	end
 
 @ NOTE: Strength and OHKO rooms are misleading. Both are more accurately Critical-Hit
@@ -104,6 +114,46 @@ PetalburgCity_Gym_Movement_WallyExitGym:
 	delay_16
 	step_end
 
+PetalburgCity_Gym_EventScript_NormanBattle::
+lockall
+setvar VAR_0x8008, LOCALID_NORMAN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_ELITE_FOUR, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_NormanIntro MSGBOX_AUTOCLOSE
+msgbox PetalburgCity_Gym_Text_ReadyToFight MSGBOX_YESNO
+goto_if_eq VAR_RESULT, YES, PetalburgCity_Gym_EventScript_NormanDoMultiBattle
+msgbox PetalburgCity_Gym_Text_ComeBackWhenReady, MSGBOX_DEFAULT
+closemessage
+applymovement OBJ_EVENT_ID_PLAYER, PetalburgCity_Gym_Movement_Norman_NotReady
+waitmovement 0
+playbgm MUS_GYM, TRUE
+releaseall
+end
+
+PetalburgCity_Gym_EventScript_NormanDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_NORMAN_1, PetalburgCity_Gym_Text_NormanDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgCity_Gym_EventScript_NormanVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgCity_Gym_EventScript_NormanVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+addvar VAR_PETALBURG_GYM_STATE, 1
+goto PetalburgCity_Gym_EventScript_NormanDefeated
+end
+
+PetalburgCity_Gym_Movement_Norman_NotReady:
+walk_down
+step_end
+
 PetalburgCity_Gym_EventScript_Norman::
 	lock
 	faceplayer
@@ -112,9 +162,9 @@ PetalburgCity_Gym_EventScript_Norman::
 	case 3, PetalburgCity_Gym_EventScript_NormanOneBadge
 	case 4, PetalburgCity_Gym_EventScript_NormanTwoBadges
 	case 5, PetalburgCity_Gym_EventScript_NormanThreeBadges
-	case 6, PetalburgCity_Gym_EventScript_NormanBattle
-	case 7, PetalburgCity_Gym_EventScript_NormanPostBattle
-	case 8, PetalburgCity_Gym_EventScript_NormanRematch
+	case 9, PetalburgCity_Gym_EventScript_NormanBattle
+	case 10, PetalburgCity_Gym_EventScript_NormanPostBattle
+	case 11, PetalburgCity_Gym_EventScript_NormanRematch
 	msgbox PetalburgCity_Gym_Text_DadYoureHereWithYourPokemon, MSGBOX_DEFAULT
 	closemessage
 	switch VAR_FACING
@@ -372,15 +422,12 @@ PetalburgCity_Gym_EventScript_GiveEnigmaBerry::
 	release
 	end
 
-PetalburgCity_Gym_EventScript_NormanBattle::
-	msgbox PetalburgCity_Gym_Text_NormanIntro, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_NORMAN_1, PetalburgCity_Gym_Text_NormanDefeat
+PetalburgCity_Gym_EventScript_NormanDefeated::
 	message PetalburgCity_Gym_Text_ReceivedBalanceBadge
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
 	msgbox PetalburgCity_Gym_Text_ExplainBalanceBadgeTakeThis, MSGBOX_DEFAULT
 	setflag FLAG_DEFEATED_PETALBURG_GYM
-	setvar VAR_PETALBURG_GYM_STATE, 7
 	setflag FLAG_BADGE05_GET
 	special ResetHealLocationFromDewford
 	setflag FLAG_HIDE_MAUVILLE_GYM_WATTSON
@@ -769,7 +816,6 @@ PetalburgCity_Gym_EventScript_AccuracyRoomDoor::
 
 PetalburgCity_Gym_EventScript_ConfusionRoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_RANDALL, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 7
 	setvar VAR_0x8009, 46
 	msgbox PetalburgCity_Gym_Text_EnterConfusionRoom, MSGBOX_YESNO
@@ -779,7 +825,6 @@ PetalburgCity_Gym_EventScript_ConfusionRoomDoor::
 
 PetalburgCity_Gym_EventScript_LeftDefenseRoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_RANDALL, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 1
 	setvar VAR_0x8009, 59
 	msgbox PetalburgCity_Gym_Text_EnterDefenseRoom, MSGBOX_YESNO
@@ -789,7 +834,6 @@ PetalburgCity_Gym_EventScript_LeftDefenseRoomDoor::
 
 PetalburgCity_Gym_EventScript_RightDefenseRoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_MARY, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 7
 	setvar VAR_0x8009, 59
 	msgbox PetalburgCity_Gym_Text_EnterDefenseRoom, MSGBOX_YESNO
@@ -799,7 +843,6 @@ PetalburgCity_Gym_EventScript_RightDefenseRoomDoor::
 
 PetalburgCity_Gym_EventScript_RecoveryRoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_MARY, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 1
 	setvar VAR_0x8009, 72
 	msgbox PetalburgCity_Gym_Text_EnterRecoveryRoom, MSGBOX_YESNO
@@ -809,7 +852,6 @@ PetalburgCity_Gym_EventScript_RecoveryRoomDoor::
 
 PetalburgCity_Gym_EventScript_LeftStrengthRoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_PARKER, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 1
 	setvar VAR_0x8009, 20
 	msgbox PetalburgCity_Gym_Text_EnterStrengthRoom, MSGBOX_YESNO
@@ -819,7 +861,6 @@ PetalburgCity_Gym_EventScript_LeftStrengthRoomDoor::
 
 PetalburgCity_Gym_EventScript_RightStrengthRoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_ALEXIA, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 7
 	setvar VAR_0x8009, 20
 	msgbox PetalburgCity_Gym_Text_EnterStrengthRoom, MSGBOX_YESNO
@@ -829,7 +870,6 @@ PetalburgCity_Gym_EventScript_RightStrengthRoomDoor::
 
 PetalburgCity_Gym_EventScript_LeftOHKORoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_ALEXIA, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 1
 	setvar VAR_0x8009, 33
 	msgbox PetalburgCity_Gym_Text_EnterOHKORoom, MSGBOX_YESNO
@@ -839,7 +879,6 @@ PetalburgCity_Gym_EventScript_LeftOHKORoomDoor::
 
 PetalburgCity_Gym_EventScript_RightOHKORoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_GEORGE, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 7
 	setvar VAR_0x8009, 33
 	msgbox PetalburgCity_Gym_Text_EnterOHKORoom, MSGBOX_YESNO
@@ -849,7 +888,6 @@ PetalburgCity_Gym_EventScript_RightOHKORoomDoor::
 
 PetalburgCity_Gym_EventScript_LeftGymLeadersRoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_JODY, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 1
 	setvar VAR_0x8009, 7
 	msgbox PetalburgCity_Gym_Text_EnterGymLeadersRoom, MSGBOX_YESNO
@@ -859,7 +897,6 @@ PetalburgCity_Gym_EventScript_LeftGymLeadersRoomDoor::
 
 PetalburgCity_Gym_EventScript_RightGymLeadersRoomDoor::
 	lockall
-	goto_if_not_defeated TRAINER_BERKE, PetalburgCity_Gym_EventScript_DoorLocked
 	setvar VAR_0x8008, 7
 	setvar VAR_0x8009, 7
 	msgbox PetalburgCity_Gym_Text_EnterGymLeadersRoom, MSGBOX_YESNO
@@ -868,7 +905,37 @@ PetalburgCity_Gym_EventScript_RightGymLeadersRoomDoor::
 	end
 
 PetalburgCity_Gym_EventScript_Randall::
-	trainerbattle_single TRAINER_RANDALL, PetalburgCity_Gym_Text_RandallIntro, PetalburgCity_Gym_Text_RandallDefeat, PetalburgCity_Gym_EventScript_SlideOpenSpeedRoomDoors
+lockall
+setvar VAR_0x8008, LOCALID_RANDALL
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_RandallIntro MSGBOX_AUTOCLOSE
+goto PetalburgCity_Gym_EventScript_RandallDoMultiBattle
+releaseall
+end
+
+PetalburgCity_Gym_EventScript_RandallDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_RANDALL, PetalburgCity_Gym_Text_RandallDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgCity_Gym_EventScript_RandallVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgCity_Gym_EventScript_RandallVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_RandallPostBattle, MSGBOX_AUTOCLOSE
+call PetalburgCity_Gym_EventScript_UnlockAllDoors
+addvar VAR_PETALBURG_GYM_STATE, 1
+end
+
+PetalburgCity_Gym_EventScript_Randall2::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_RandallPostBadge
 	msgbox PetalburgCity_Gym_Text_RandallPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -885,7 +952,36 @@ PetalburgCity_Gym_EventScript_RandallPostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Parker::
-	trainerbattle_single TRAINER_PARKER, PetalburgCity_Gym_Text_ParkerIntro, PetalburgCity_Gym_Text_ParkerDefeat, PetalburgCity_Gym_EventScript_SlideOpenConfusionRoomDoors
+lockall
+setvar VAR_0x8008, LOCALID_PARKER
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_ParkerIntro MSGBOX_AUTOCLOSE
+goto PetalburgCity_Gym_EventScript_ParkerDoMultiBattle
+releaseall
+end
+
+PetalburgCity_Gym_EventScript_ParkerDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_PARKER, PetalburgCity_Gym_Text_ParkerDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgCity_Gym_EventScript_ParkerVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgCity_Gym_EventScript_ParkerVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_ParkerPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_PETALBURG_GYM_STATE, 1
+end
+
+PetalburgCity_Gym_EventScript_Parker2::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_ParkerPostBadge
 	msgbox PetalburgCity_Gym_Text_ParkerPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -902,7 +998,36 @@ PetalburgCity_Gym_EventScript_ParkerPostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_George::
-	trainerbattle_single TRAINER_GEORGE, PetalburgCity_Gym_Text_GeorgeIntro, PetalburgCity_Gym_Text_GeorgeDefeat, PetalburgCity_Gym_EventScript_SlideOpenRecoveryRoomDoors
+lockall
+setvar VAR_0x8008, LOCALID_GEORGE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_GeorgeIntro MSGBOX_AUTOCLOSE
+goto PetalburgCity_Gym_EventScript_GeorgeDoMultiBattle
+releaseall
+end
+
+PetalburgCity_Gym_EventScript_GeorgeDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_GEORGE, PetalburgCity_Gym_Text_GeorgeDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgCity_Gym_EventScript_GeorgeVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgCity_Gym_EventScript_GeorgeVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_GeorgePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_PETALBURG_GYM_STATE, 1
+end
+
+PetalburgCity_Gym_EventScript_George2::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_GeorgePostBadge
 	msgbox PetalburgCity_Gym_Text_GeorgePostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -919,7 +1044,36 @@ PetalburgCity_Gym_EventScript_GeorgePostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Berke::
-	trainerbattle_single TRAINER_BERKE, PetalburgCity_Gym_Text_BerkeIntro, PetalburgCity_Gym_Text_BerkeDefeat, PetalburgCity_Gym_EventScript_SlideOpenOHKORoomDoors
+lockall
+setvar VAR_0x8008, LOCALID_BERKE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_BerkeIntro MSGBOX_AUTOCLOSE
+goto PetalburgCity_Gym_EventScript_BerkeDoMultiBattle
+releaseall
+end
+
+PetalburgCity_Gym_EventScript_BerkeDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_BERKE, PetalburgCity_Gym_Text_BerkeDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgCity_Gym_EventScript_BerkeVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgCity_Gym_EventScript_BerkeVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_BerkePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_PETALBURG_GYM_STATE, 1
+end
+
+PetalburgCity_Gym_EventScript_Berke2::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_BerkePostBadge
 	msgbox PetalburgCity_Gym_Text_BerkePostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -936,7 +1090,37 @@ PetalburgCity_Gym_EventScript_BerkePostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Mary::
-	trainerbattle_single TRAINER_MARY, PetalburgCity_Gym_Text_MaryIntro, PetalburgCity_Gym_Text_MaryDefeat, PetalburgCity_Gym_EventScript_SlideOpenAccuracyRoomDoors
+lockall
+setvar VAR_0x8008, LOCALID_MARY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_MaryIntro MSGBOX_AUTOCLOSE
+goto PetalburgCity_Gym_EventScript_MaryDoMultiBattle
+releaseall
+end
+
+PetalburgCity_Gym_EventScript_MaryDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_MARY, PetalburgCity_Gym_Text_MaryDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgCity_Gym_EventScript_MaryVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgCity_Gym_EventScript_MaryVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_MaryPostBattle, MSGBOX_AUTOCLOSE
+call PetalburgCity_Gym_EventScript_UnlockAllDoors
+addvar VAR_PETALBURG_GYM_STATE, 1
+end
+
+PetalburgCity_Gym_EventScript_Mary2::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_MaryPostBadge
 	msgbox PetalburgCity_Gym_Text_MaryPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -953,7 +1137,36 @@ PetalburgCity_Gym_EventScript_MaryPostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Alexia::
-	trainerbattle_single TRAINER_ALEXIA, PetalburgCity_Gym_Text_AlexiaIntro, PetalburgCity_Gym_Text_AlexiaDefeat, PetalburgCity_Gym_EventScript_SlideOpenDefenseRoomDoors
+lockall
+setvar VAR_0x8008, LOCALID_ALEXIA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_AlexiaIntro MSGBOX_AUTOCLOSE
+goto PetalburgCity_Gym_EventScript_AlexiaDoMultiBattle
+releaseall
+end
+
+PetalburgCity_Gym_EventScript_AlexiaDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_ALEXIA, PetalburgCity_Gym_Text_AlexiaDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgCity_Gym_EventScript_AlexiaVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgCity_Gym_EventScript_AlexiaVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_AlexiaPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_PETALBURG_GYM_STATE, 1
+end
+
+PetalburgCity_Gym_EventScript_Alexia2::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_AlexiaPostBadge
 	msgbox PetalburgCity_Gym_Text_AlexiaPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -970,7 +1183,36 @@ PetalburgCity_Gym_EventScript_AlexiaPostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Jody::
-	trainerbattle_single TRAINER_JODY, PetalburgCity_Gym_Text_JodyIntro, PetalburgCity_Gym_Text_JodyDefeat, PetalburgCity_Gym_EventScript_SlideOpenStrengthRoomDoors
+lockall
+setvar VAR_0x8008, LOCALID_JODY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_JodyIntro MSGBOX_AUTOCLOSE
+goto PetalburgCity_Gym_EventScript_JodyDoMultiBattle
+releaseall
+end
+
+PetalburgCity_Gym_EventScript_JodyDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_JODY, PetalburgCity_Gym_Text_JodyDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgCity_Gym_EventScript_JodyVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgCity_Gym_EventScript_JodyVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgCity_Gym_Text_JodyPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_PETALBURG_GYM_STATE, 1
+end
+
+PetalburgCity_Gym_EventScript_Jody2::
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_JodyPostBadge
 	msgbox PetalburgCity_Gym_Text_JodyPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -1332,22 +1574,23 @@ PetalburgCity_Gym_Text_DadNoAmountOfTrainingIsEnough:
 	.string "training would ever be enough.$"
 
 PetalburgCity_Gym_Text_GymGuideAdvice:
-	.string "Hey, how's it going, CHAMPION-\n"
-	.string "bound {PLAYER}?\p"
-	.string "The doors in this GYM open when you\n"
-	.string "beat the awaiting TRAINERS.\p"
-	.string "Whoops! The doors in this room are\n"
-	.string "already open, so don't attack me!\p"
-	.string "The TRAINERS of PETALBURG GYM\n"
-	.string "use all kinds of items.\p"
+	.string "Hey, how's it going, kids?\p"
+	.string "Norman has decided to open every\n"
+	.string "door in the gym for you.\p"
+	.string "You will have to defeat three\n"
+	.string "trainers before facing Norman.\p"
 	.string "The door at the left leads to\n"
 	.string "the SPEED ROOM.\p"
 	.string "The door at the right leads to\n"
 	.string "the ACCURACY ROOM.\p"
-	.string "The room's name will be on\n"
-	.string "the door, so choose carefully.\p"
-	.string "Once you've chosen the door…\n"
-	.string "Well, hey, go for it!$"
+	.string "Once you defeat either trainer, you\n"
+	.string "may progress through either room.\p"
+	.string "This means you can face any of the\n"
+	.string "three trainers in the next rooms.\p"
+	.string "Every battle in the gym will be a\n"
+	.string "two vs one double battle.\p"
+	.string "Choose your doors carefully, and\n"
+	.string "best of luck!$"
 
 PetalburgCity_Gym_Text_GymGuidePostVictory:
 	.string "{PLAYER}! Whoa! You've overcome even\n"
@@ -1596,3 +1839,8 @@ PetalburgCity_Gym_Text_NormanRematchNeedTwoMons:
 	.string "Sorry, but you'll have to come back\n"
 	.string "with at least two POKéMON.$"
 
+PetalburgCity_Gym_Text_ReadyToFight:
+	.string "Are you ready, kids?$"
+
+PetalburgCity_Gym_Text_ComeBackWhenReady:
+	.string "Don't leave me waiting too long!$"

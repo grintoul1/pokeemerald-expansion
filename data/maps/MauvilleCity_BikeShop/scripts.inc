@@ -14,8 +14,8 @@ MauvilleCity_BikeShop_EventScript_Rydel::
 
 MauvilleCity_BikeShop_EventScript_SkipGreeting::
 	msgbox MauvilleCity_BikeShop_Text_DidYouComeFromFarAway, MSGBOX_DEFAULT
-	goto_if_eq VAR_RESULT, YES, MauvilleCity_BikeShop_EventScript_YesFar
-	goto_if_eq VAR_RESULT, NO, MauvilleCity_BikeShop_EventScript_NotFar
+	goto_if_set FLAG_BADGE01_GET, MauvilleCity_BikeShop_EventScript_YesFar
+	goto_if_unset FLAG_BADGE01_GET, MauvilleCity_BikeShop_EventScript_NotFar
 	end
 
 MauvilleCity_BikeShop_EventScript_ChooseBike::
@@ -31,7 +31,7 @@ MauvilleCity_BikeShop_EventScript_NotFar::
 
 MauvilleCity_BikeShop_EventScript_YesFar::
 	setflag FLAG_RECEIVED_BIKE
-	goto MauvilleCity_BikeShop_EventScript_ChooseBike
+	goto MauvilleCity_BikeShop_EventScript_GetMachBike
 	end
 
 MauvilleCity_BikeShop_EventScript_GetMachBike::
