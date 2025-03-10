@@ -63,6 +63,8 @@ static void ItemUseOnFieldCB_Bike(u8);
 static void ItemUseOnFieldCB_Rod(u8);
 static void ItemUseOnFieldCB_Itemfinder(u8);
 static void ItemUseOnFieldCB_Berry(u8);
+static void ItemUseCB_PokeVial(u8);
+static void ItemUseCB_Repellent(u8);
 static void ItemUseOnFieldCB_WailmerPailBerry(u8);
 static void ItemUseOnFieldCB_WailmerPailSudowoodo(u8);
 static bool8 TryToWaterSudowoodo(void);
@@ -673,6 +675,55 @@ void ItemUseOutOfBattle_PokeblockCase(u8 taskId)
     }
 }
 
+extern u8 PokeVialHealScript[];
+
+void ItemUseOutOfBattle_PokeVial(u8 taskId)
+{
+    if (!gTasks[taskId].tUsingRegisteredKeyItem)
+    {
+        sItemUseOnFieldCB = ItemUseCB_PokeVial;
+        gFieldCallback = FieldCB_UseItemOnField;
+        gBagMenu->newScreenCallback = CB2_ReturnToField;
+        Task_FadeAndCloseBagMenu(taskId);
+    }
+    else{
+        sItemUseOnFieldCB = ItemUseCB_PokeVial;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+}
+
+void ItemUseCB_PokeVial(u8 taskId)
+{
+        LockPlayerFieldControls();
+        ScriptContext_SetupScript(PokeVialHealScript);
+        DestroyTask(taskId);
+}
+
+extern u8 RepellentUse[];
+
+void ItemUseOutOfBattle_Repellent(u8 taskId)
+{
+    if (!gTasks[taskId].tUsingRegisteredKeyItem)
+    {
+        sItemUseOnFieldCB = ItemUseCB_Repellent;
+        gFieldCallback = FieldCB_UseItemOnField;
+        gBagMenu->newScreenCallback = CB2_ReturnToField;
+        Task_FadeAndCloseBagMenu(taskId);
+    }
+    else{
+        sItemUseOnFieldCB = ItemUseCB_Repellent;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+}
+
+void ItemUseCB_Repellent(u8 taskId)
+{
+    if (REPEL_STEP_COUNT == 0)
+    gTasks[taskId].func = Task_StartUseRepel;
+    else 
+    VarSet(VAR_REPEL_STEP_COUNT, 0);
+}
+
 static void CB2_OpenPokeblockFromBag(void)
 {
     OpenPokeblockCase(PBLOCK_CASE_FIELD, CB2_ReturnToBagMenuPocket);
@@ -856,6 +907,12 @@ void ItemUseOutOfBattle_PPUp(u8 taskId)
 void ItemUseOutOfBattle_RareCandy(u8 taskId)
 {
     gItemUseCB = ItemUseCB_RareCandy;
+    SetUpItemUseCallback(taskId);
+}
+
+void ItemUseOutOfBattle_InfiniteCandy (u8 taskId)
+{
+    gItemUseCB = ItemUseCB_InfiniteCandy;
     SetUpItemUseCallback(taskId);
 }
 

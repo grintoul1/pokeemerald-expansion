@@ -67,12 +67,12 @@ PetalburgCity_Gym_EventScript_CheckNormanForRematch::
 	setorcopyvar VAR_TRAINER_BATTLE_OPPONENT_A, TRAINER_NORMAN_1
 	specialvar VAR_RESULT, IsTrainerReadyForRematch
 	goto_if_eq VAR_RESULT, TRUE, PetalburgCity_Gym_EventScript_DontMoveNormanToFront
-	goto_if_eq VAR_PETALBURG_GYM_STATE, 8, PetalburgCity_Gym_EventScript_DontMoveNormanToFront
+	goto_if_eq VAR_PETALBURG_GYM_STATE, 11, PetalburgCity_Gym_EventScript_DontMoveNormanToFront
 	setobjectxyperm LOCALID_NORMAN, 4, 107
 	return
 
 PetalburgCity_Gym_EventScript_DontMoveNormanToFront::
-	setvar VAR_PETALBURG_GYM_STATE, 8
+	setvar VAR_PETALBURG_GYM_STATE, 11
 	end
 
 PetalburgCity_Gym_OnWarp:
@@ -434,6 +434,7 @@ PetalburgCity_Gym_EventScript_NormanDefeated::
 	clearflag FLAG_HIDE_MAUVILLE_CITY_WATTSON
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
+	setvar VAR_BRINEY_HOUSE_STATE, 1
 	setvar VAR_0x8008, 5
 	call Common_EventScript_SetGymTrainers
 	clearflag FLAG_HIDE_DEWFORD_HALL_SLUDGE_BOMB_MAN
@@ -978,7 +979,8 @@ PetalburgCity_Gym_EventScript_ParkerVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_ParkerPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_PETALBURG_GYM_STATE, 1
+setvar VAR_PETALBURG_GYM_STATE, 8
+call PetalburgCity_Gym_EventScript_UnlockAllDoors
 end
 
 PetalburgCity_Gym_EventScript_Parker2::
@@ -1024,7 +1026,8 @@ PetalburgCity_Gym_EventScript_GeorgeVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_GeorgePostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_PETALBURG_GYM_STATE, 1
+setvar VAR_PETALBURG_GYM_STATE, 8
+call PetalburgCity_Gym_EventScript_UnlockAllDoors
 end
 
 PetalburgCity_Gym_EventScript_George2::
@@ -1070,6 +1073,7 @@ PetalburgCity_Gym_EventScript_BerkeVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_BerkePostBattle, MSGBOX_AUTOCLOSE
+call PetalburgCity_Gym_EventScript_UnlockAllDoors
 addvar VAR_PETALBURG_GYM_STATE, 1
 end
 
@@ -1163,7 +1167,8 @@ PetalburgCity_Gym_EventScript_AlexiaVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_AlexiaPostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_PETALBURG_GYM_STATE, 1
+setvar VAR_PETALBURG_GYM_STATE, 8
+call PetalburgCity_Gym_EventScript_UnlockAllDoors
 end
 
 PetalburgCity_Gym_EventScript_Alexia2::
@@ -1209,6 +1214,7 @@ PetalburgCity_Gym_EventScript_JodyVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_JodyPostBattle, MSGBOX_AUTOCLOSE
+call PetalburgCity_Gym_EventScript_UnlockAllDoors
 addvar VAR_PETALBURG_GYM_STATE, 1
 end
 

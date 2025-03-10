@@ -1941,7 +1941,7 @@ const struct Item gItemsInfo[] =
             "one."),
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_RareCandy,
+        .fieldUseFunc = ItemUseOutOfBattle_InfiniteCandy,
         .effect = gItemEffect_RareCandy,
         .iconPic = gItemIcon_RareCandy,
         .iconPalette = gItemIconPalette_RareCandy,
@@ -14110,4 +14110,34 @@ const struct Item gItemsInfo[] =
         .iconPic = gItemIcon_PokeshiDoll,
         .iconPalette = gItemIconPalette_PokeshiDoll,
     },
-};
+
+    [ITEM_POKE_VIAL] =
+    {
+        .name = _("Poké Vial"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Restores party\n"
+            "entirely."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_PokeVial,
+        .iconPic = gItemIcon_LargePotion,
+        .iconPalette = gItemIconPalette_FullRestore,
+    },
+
+    [ITEM_REPELLENT] =
+    {
+        .name = _("Repellent"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Repels weak wild\n"
+            "Pokémon."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Repellent,
+        .iconPic = gItemIcon_Repel,
+        .iconPalette = gItemIconPalette_MaxRepel,
+    },
+}; 

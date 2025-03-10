@@ -52,7 +52,7 @@ DewfordTown_EventScript_CancelSailSelect::
 DewfordTown_EventScript_ReturnToPetalburgPrompt::
 	msgbox DewfordTown_Text_SetSailBackToPetalburg, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_SailBackToPetalburg
-	msgbox DewfordTown_Text_GoDeliverIllBeWaiting, MSGBOX_DEFAULT
+	msgbox DewfordTown_Text_GoFightBrawly, MSGBOX_DEFAULT
 	release
 	end
 
@@ -682,7 +682,7 @@ DewfordTown_Text_GoDeliverIllBeWaiting:
 	.string "the LETTER. I'll be waiting.$"
 
 DewfordTown_Text_GoFightBrawly:
-	.string "MR. BRINEY: This is your change to\n"
+	.string "MR. BRINEY: This is your chance to\n"
 	.string "challenge Dewford gym. I'll be waiting.$"
 
 DewfordTown_Text_BrineyLandedInDewford:

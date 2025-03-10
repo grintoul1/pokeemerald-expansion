@@ -114,8 +114,8 @@ Route104_MrBrineysHouse_Text_ItsYouLetsSailToDewford:
 	.string "problem at all.\p"
 	.string "I'm due to set sail to Slateport,\n"
 	.string "but I can dock in Dewford briefly.\p"
-	.string "This is a one-way trip though; I\n"
-	.string "won't be returning to Petalburg.\p"
+	.string "This is a one-way trip though.\n"
+	.string "I won't be returning to Petalburg.\p"
 	.string "Anyway, you've come to the right\n"
 	.string "man! We'll set sail for Dewford.$"
 

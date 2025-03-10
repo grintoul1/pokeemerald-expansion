@@ -183,3 +183,403 @@
                 },
     },
 },
+
+[PARTNER_TABITHA] =
+{
+#line 9
+    .trainerName = _("Tabitha"),
+#line 10
+    .trainerClass = TRAINER_CLASS_MAGMA_ADMIN,
+#line 11
+    .trainerPic = TRAINER_PIC_MAGMA_ADMIN,
+    .encounterMusic_gender =
+#line 13
+        TRAINER_ENCOUNTER_MUSIC_MALE,
+    .partySize = 3,
+    .party = (const struct TrainerMon[])
+    {
+        {
+#line 15
+        .species = SPECIES_DELCATTY,
+        .gender = TRAINER_MON_RANDOM_GENDER,
+#line 19
+        .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+#line 18
+        .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 17
+        .lvl = 8,
+#line 16
+        .nature = NATURE_JOLLY,
+        .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+        .moves = {
+#line 20
+            MOVE_FAKE_OUT,
+            MOVE_SUCKER_PUNCH,
+            MOVE_HELPING_HAND,
+            MOVE_ICY_WIND,
+        },
+    },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+},
+},
+
+[PARTNER_MATT] =
+{
+#line 9
+    .trainerName = _("Matt"),
+#line 10
+    .trainerClass = TRAINER_CLASS_AQUA_ADMIN,
+#line 11
+    .trainerPic = TRAINER_PIC_AQUA_ADMIN_M,
+    .encounterMusic_gender =
+#line 13
+        TRAINER_ENCOUNTER_MUSIC_MALE,
+    .partySize = 3,
+    .party = (const struct TrainerMon[])
+    {
+        {
+#line 15
+        .species = SPECIES_DELCATTY,
+        .gender = TRAINER_MON_RANDOM_GENDER,
+#line 19
+        .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+#line 18
+        .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 17
+        .lvl = 8,
+#line 16
+        .nature = NATURE_JOLLY,
+        .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+        .moves = {
+#line 20
+            MOVE_FAKE_OUT,
+            MOVE_SUCKER_PUNCH,
+            MOVE_HELPING_HAND,
+            MOVE_ICY_WIND,
+        },
+    },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+},
+},
+
+[PARTNER_SHELLY] =
+{
+#line 9
+    .trainerName = _("Shelly"),
+#line 10
+    .trainerClass = TRAINER_CLASS_AQUA_ADMIN,
+#line 11
+    .trainerPic = TRAINER_PIC_AQUA_ADMIN_F,
+    .encounterMusic_gender =
+#line 13
+        TRAINER_ENCOUNTER_MUSIC_MALE,
+    .partySize = 3,
+    .party = (const struct TrainerMon[])
+    {
+        {
+#line 15
+        .species = SPECIES_DELCATTY,
+        .gender = TRAINER_MON_RANDOM_GENDER,
+#line 19
+        .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+#line 18
+        .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 17
+        .lvl = 8,
+#line 16
+        .nature = NATURE_JOLLY,
+        .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+        .moves = {
+#line 20
+            MOVE_FAKE_OUT,
+            MOVE_SUCKER_PUNCH,
+            MOVE_HELPING_HAND,
+            MOVE_ICY_WIND,
+        },
+    },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+},
+},
+
+[PARTNER_ARCHIE] =
+{
+#line 9
+    .trainerName = _("Archie"),
+#line 10
+    .trainerClass = TRAINER_CLASS_AQUA_LEADER,
+#line 11
+    .trainerPic = TRAINER_PIC_AQUA_LEADER_ARCHIE,
+    .encounterMusic_gender =
+#line 13
+        TRAINER_ENCOUNTER_MUSIC_MALE,
+    .partySize = 3,
+    .party = (const struct TrainerMon[])
+    {
+        {
+#line 15
+        .species = SPECIES_DELCATTY,
+        .gender = TRAINER_MON_RANDOM_GENDER,
+#line 19
+        .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+#line 18
+        .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 17
+        .lvl = 8,
+#line 16
+        .nature = NATURE_JOLLY,
+        .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+        .moves = {
+#line 20
+            MOVE_FAKE_OUT,
+            MOVE_SUCKER_PUNCH,
+            MOVE_HELPING_HAND,
+            MOVE_ICY_WIND,
+        },
+    },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+},
+},
+
+[PARTNER_MAXIE] =
+{
+#line 9
+    .trainerName = _("Maxie"),
+#line 10
+    .trainerClass = TRAINER_CLASS_MAGMA_LEADER,
+#line 11
+    .trainerPic = TRAINER_PIC_MAGMA_LEADER_MAXIE,
+    .encounterMusic_gender =
+#line 13
+        TRAINER_ENCOUNTER_MUSIC_MALE,
+    .partySize = 3,
+    .party = (const struct TrainerMon[])
+    {
+        {
+#line 15
+        .species = SPECIES_DELCATTY,
+        .gender = TRAINER_MON_RANDOM_GENDER,
+#line 19
+        .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+#line 18
+        .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+#line 17
+        .lvl = 8,
+#line 16
+        .nature = NATURE_JOLLY,
+        .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+        .moves = {
+#line 20
+            MOVE_FAKE_OUT,
+            MOVE_SUCKER_PUNCH,
+            MOVE_HELPING_HAND,
+            MOVE_ICY_WIND,
+        },
+    },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+    {
+    #line 15
+                .species = SPECIES_DELCATTY,
+                .gender = TRAINER_MON_RANDOM_GENDER,
+    #line 19
+                .ev = TRAINER_PARTY_EVS(0, 252, 252, 0, 6, 0),
+    #line 18
+                .iv = TRAINER_PARTY_IVS(31, 31, 31, 31, 31, 31),
+    #line 17
+                .lvl = 8,
+    #line 16
+                .nature = NATURE_JOLLY,
+                .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+                .moves = {
+    #line 20
+                    MOVE_FAKE_OUT,
+                    MOVE_SUCKER_PUNCH,
+                    MOVE_HELPING_HAND,
+                    MOVE_ICY_WIND,
+                },
+            },
+},
+},

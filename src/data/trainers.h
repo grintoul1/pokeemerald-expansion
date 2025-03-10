@@ -11873,6 +11873,8 @@ F_TRAINER_FEMALE |
         .doubleBattle = FALSE,
 #line 4799
         .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .mugshotEnabled = TRUE,
+        .mugshotColor = MUGSHOT_COLOR_PINK,
         .partySize = 3,
         .party = (const struct TrainerMon[])
         {
@@ -11952,6 +11954,8 @@ F_TRAINER_FEMALE |
         .doubleBattle = FALSE,
 #line 4833
         .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .mugshotEnabled = TRUE,
+        .mugshotColor = MUGSHOT_COLOR_BLUE,
         .partySize = 3,
         .party = (const struct TrainerMon[])
         {
@@ -12031,6 +12035,8 @@ F_TRAINER_FEMALE |
         .doubleBattle = FALSE,
 #line 4867
         .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .mugshotEnabled = TRUE,
+        .mugshotColor = MUGSHOT_COLOR_YELLOW,
         .partySize = 4,
         .party = (const struct TrainerMon[])
         {
@@ -12130,6 +12136,8 @@ F_TRAINER_FEMALE |
         .doubleBattle = FALSE,
 #line 4909
         .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .mugshotEnabled = TRUE,
+        .mugshotColor = MUGSHOT_COLOR_PURPLE,
         .partySize = 4,
         .party = (const struct TrainerMon[])
         {
@@ -12227,6 +12235,8 @@ F_TRAINER_FEMALE |
         .doubleBattle = FALSE,
 #line 4951
         .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .mugshotEnabled = TRUE,
+        .mugshotColor = MUGSHOT_COLOR_GREEN,
         .partySize = 4,
         .party = (const struct TrainerMon[])
         {
@@ -12326,6 +12336,8 @@ F_TRAINER_FEMALE |
         .doubleBattle = FALSE,
 #line 4993
         .aiFlags = AI_FLAG_BASIC_TRAINER | AI_FLAG_RISKY,
+        .mugshotEnabled = TRUE,
+        .mugshotColor = MUGSHOT_COLOR_GREEN,
         .partySize = 5,
         .party = (const struct TrainerMon[])
         {
@@ -12441,6 +12453,8 @@ F_TRAINER_FEMALE |
         .doubleBattle = TRUE,
 #line 5043
         .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .mugshotEnabled = TRUE,
+        .mugshotColor = MUGSHOT_COLOR_PINK,
         .partySize = 4,
         .party = (const struct TrainerMon[])
         {
@@ -12540,6 +12554,8 @@ F_TRAINER_FEMALE |
         .doubleBattle = FALSE,
 #line 5085
         .aiFlags = AI_FLAG_BASIC_TRAINER,
+        .mugshotEnabled = TRUE,
+        .mugshotColor = MUGSHOT_COLOR_BLUE,
         .partySize = 5,
         .party = (const struct TrainerMon[])
         {

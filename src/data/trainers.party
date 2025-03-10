@@ -4791,6 +4791,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_ROXANNE_1 ===
 Name: ROXANNE
 Class: Leader
+Mugshot: Pink
 Pic: Leader Roxanne
 Gender: Female
 Music: Female
@@ -4825,6 +4826,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 === TRAINER_BRAWLY_1 ===
 Name: BRAWLY
 Class: Leader
+Mugshot: Blue
 Pic: Leader Brawly
 Gender: Male
 Music: Male
@@ -4859,6 +4861,7 @@ IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 === TRAINER_WATTSON_1 ===
 Name: WATTSON
 Class: Leader
+Mugshot: Yellow
 Pic: Leader Wattson
 Gender: Male
 Music: Male
@@ -4901,6 +4904,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 === TRAINER_FLANNERY_1 ===
 Name: FLANNERY
 Class: Leader
+Mugshot: Purple
 Pic: Leader Flannery
 Gender: Female
 Music: Female
@@ -4943,6 +4947,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 === TRAINER_NORMAN_1 ===
 Name: NORMAN
 Class: Leader
+Mugshot: Green
 Pic: Leader Norman
 Gender: Male
 Music: Male
@@ -4985,6 +4990,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 === TRAINER_WINONA_1 ===
 Name: WINONA
 Class: Leader
+Mugshot: Green
 Pic: Leader Winona
 Gender: Female
 Music: Female
@@ -5035,6 +5041,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_TATE_AND_LIZA_1 ===
 Name: TATE&LIZA
 Class: Leader
+Mugshot: Pink
 Pic: Leader Tate And Liza
 Gender: Male
 Music: Female
@@ -5077,6 +5084,7 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 === TRAINER_JUAN_1 ===
 Name: JUAN
 Class: Leader
+Mugshot: Blue
 Pic: Leader Juan
 Gender: Male
 Music: Male
