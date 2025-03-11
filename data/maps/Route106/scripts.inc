@@ -1,3 +1,6 @@
+.set LOCALID_ELLIOT, 3
+.set LOCALID_NED, 4
+
 Route106_MapScripts::
 	.byte 0
 
@@ -15,10 +18,48 @@ Route106_EventScript_Kyla::
 	msgbox Route106_Text_KylaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route106_EventScript_NedElliot::
+lockall
+setvar VAR_0x8008, LOCALID_NED
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route106_Text_NedIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_ELLIOT
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route106_Text_ElliotIntro MSGBOX_AUTOCLOSE
+goto Route106_EventScript_NedElliotDoMultiBattle
+releaseall
+end
+
+Route106_EventScript_NedElliotDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_NED, Route106_Text_NedDefeated, TRAINER_ELLIOT_1, Route106_Text_ElliotDefeated, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route106_EventScript_NedElliotVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route106_EventScript_NedElliotVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route106_Text_NedPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route106_Text_ElliotPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE106_STATE, 1
+end
+
 Route106_EventScript_Elliot::
-	trainerbattle_single TRAINER_ELLIOT_1, Route106_Text_ElliotIntro, Route106_Text_ElliotDefeated, Route106_EventScript_ElliotRegisterMatchCallAfterBattle
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route106_EventScript_ElliotRematch
 	msgbox Route106_Text_ElliotPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -32,7 +73,6 @@ Route106_EventScript_ElliotRegisterMatchCallAfterBattle::
 	end
 
 Route106_EventScript_ElliotRematch::
-	trainerbattle_rematch TRAINER_ELLIOT_1, Route106_Text_ElliotRematchIntro, Route106_Text_ElliotRematchDefeated
 	msgbox Route106_Text_ElliotRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 

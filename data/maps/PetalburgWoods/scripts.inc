@@ -1,8 +1,52 @@
-.set LOCALID_GRUNT, 3
-.set LOCALID_DEVON_EMPLOYEE, 4
+.set LOCALID_MATT, 3
+.set LOCALID_SHELLY, 4
+.set LOCALID_JAMES, 10
+.set LOCALID_LYLE, 9
 
 PetalburgWoods_MapScripts::
 	.byte 0
+
+PetalburgWoods_EventScript_MattShelly::
+lockall
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox PetalburgWoods_Text_MattIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_MATT
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+setvar VAR_0x8008, LOCALID_SHELLY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+setvar VAR_0x8008, LOCALID_MATT
+applymovement VAR_0x8008, Common_Movement_WalkInPlaceFasterUp
+setvar VAR_0x8008, LOCALID_SHELLY
+applymovement VAR_0x8008, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox PetalburgWoods_Text_ShellyIntro MSGBOX_AUTOCLOSE
+goto PetalburgWoods_EventScript_MattShellyDoMultiBattle
+releaseall
+end
+
+PetalburgWoods_EventScript_MattShellyDoMultiBattle::
+playbgm MUS_PETALBURG_WOODS, TRUE
+multi_2p_vs_2 TRAINER_MATT_PETALBURG_WOODS, PetalburgWoods_Text_MattDefeat, TRAINER_SHELLY_PETALBURG_WOODS, PetalburgWoods_Text_ShellyDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgWoods_EventScript_MattShellyVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgWoods_EventScript_MattShellyVictory::
+msgbox PetalburgWoods_Text_MattPostBattle, MSGBOX_AUTOCLOSE
+applymovement LOCALID_MATT, PetalburgWoods_Movement_AquaRunAway
+applymovement LOCALID_SHELLY, PetalburgWoods_Movement_AquaRunAway
+waitmovement 0
+removeobject LOCALID_MATT
+removeobject LOCALID_SHELLY
+addvar VAR_PETALBURG_WOODS_STATE, 1
+end
 
 PetalburgWoods_EventScript_DevonResearcherLeft::
 	lockall
@@ -214,12 +258,7 @@ PetalburgWoods_Movement_AquaBackOff:
 	step_end
 
 PetalburgWoods_Movement_AquaRunAway:
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	delay_16
+	walk_down
 	delay_16
 	step_end
 
@@ -273,17 +312,51 @@ PetalburgWoods_EventScript_Sign2::
 	end
 
 PetalburgWoods_EventScript_Lyle::
-	trainerbattle_single TRAINER_LYLE, PetalburgWoods_Text_GoBugPokemonTeam, PetalburgWoods_Text_ICouldntWin
 	msgbox PetalburgWoods_Text_ImOutOfPokeBalls, MSGBOX_AUTOCLOSE
 	end
 
+PetalburgWoods_EventScript_JamesLyle::
+lockall
+setvar VAR_0x8008, LOCALID_JAMES
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox PetalburgWoods_Text_JamesIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_LYLE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox PetalburgWoods_Text_LyleIntro MSGBOX_AUTOCLOSE
+goto PetalburgWoods_EventScript_JamesLyleDoMultiBattle
+releaseall
+end
+
+PetalburgWoods_EventScript_JamesLyleDoMultiBattle::
+playbgm MUS_PETALBURG_WOODS, TRUE
+multi_2p_vs_2 TRAINER_JAMES_1, PetalburgWoods_Text_JamesDefeat, TRAINER_LYLE, PetalburgWoods_Text_LyleDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, PetalburgWoods_EventScript_JamesLyleVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+PetalburgWoods_EventScript_JamesLyleVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox PetalburgWoods_Text_PeopleRespectYou, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox PetalburgWoods_Text_ImOutOfPokeBalls, MSGBOX_AUTOCLOSE
+addvar VAR_PETALBURG_WOODS_STATE, 1
+end
+
 PetalburgWoods_EventScript_James::
-	trainerbattle_single TRAINER_JAMES_1, PetalburgWoods_Text_InstantlyPopularWithBugPokemon, PetalburgWoods_Text_CantBePopularIfILose, PetalburgWoods_EventScript_TryRegisterJames
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_JamesRematch
-	setvar VAR_0x8004, TRAINER_JAMES_1
-	specialvar VAR_RESULT, IsTrainerRegistered
-	goto_if_eq VAR_RESULT, FALSE, PetalburgWoods_EventScript_TryRegisterJames2
 	msgbox PetalburgWoods_Text_PeopleRespectYou, MSGBOX_DEFAULT
 	release
 	end
@@ -383,7 +456,7 @@ PetalburgWoods_Text_YoureLoadedWithItems:
 	.string "You're loaded with items.\n"
 	.string "I can't give you this GREAT BALL.$"
 
-PetalburgWoods_Text_GoBugPokemonTeam:
+PetalburgWoods_Text_LyleIntro:
 	.string "I caught a whole bunch of POKéMON!\p"
 	.string "Go, go, go!\n"
 	.string "My BUG POKéMON team!$"
@@ -396,7 +469,7 @@ PetalburgWoods_Text_ImOutOfPokeBalls:
 	.string "I caught a bunch of POKéMON.\n"
 	.string "Now I'm out of POKé BALLS.$"
 
-PetalburgWoods_Text_InstantlyPopularWithBugPokemon:
+PetalburgWoods_Text_JamesIntro:
 	.string "If you take BUG POKéMON to school,\n"
 	.string "you get to be instantly popular!$"
 
@@ -474,3 +547,32 @@ PetalburgWoods_Text_TrainerTipsPP:
 	.string "If a POKéMON runs out of PP, it must be\n"
 	.string "taken to a POKéMON CENTER.$"
 
+PetalburgWoods_Text_MattIntro:
+	.string "Matt: What was that idiot thinking\n"
+	.string "taking that old man's Wingull?\p"
+	.string "Shelly: Just what we needed. Attention\n"
+	.string "before we execute our Slateport plans.$"
+
+PetalburgWoods_Text_ShellyIntro:
+	.string "Shelly: Now what do we have here?\p"
+	.string "Matt: Children that need to be taught\n"
+	.string "a lesson about private conversations.$"
+
+PetalburgWoods_Text_MattDefeat:
+	.string "Next time I see you punks\n"
+	.string "you're in for a beating!$"
+
+PetalburgWoods_Text_ShellyDefeat:
+	.string "You heard nothing.\n"
+	.string "Just stay out the way…$"
+
+PetalburgWoods_Text_MattPostBattle:
+	.string "Matt: We haven't got time for this.\p"
+	.string "Shelly: You kids better stay out of\n"
+	.string "Team Aqua's affairs!$"
+
+PetalburgWoods_Text_JamesDefeat:
+	.string "Maybe Bugs-only isn't the way.$"
+
+PetalburgWoods_Text_LyleDefeat:
+	.string "I will never diversify!$"

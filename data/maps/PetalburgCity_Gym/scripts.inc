@@ -1552,8 +1552,11 @@ PetalburgCity_Gym_Text_DadHappyAndSad:
 	.string "happy and a little sad. It's odd…\p"
 	.string "Anyway, I want you to continue to\n"
 	.string "grow as a trainer.\p"
-	.string "With the Balance badge, Mr. Briney\n"
-	.string "will take you to Dewford Town.$"
+	.string "I've heard that Mr. Briney and his\n"
+	.string "Wingull, Peeko, have been reunited.\p"
+	.string "I'm sure if you go speak with him\n"
+	.string "at his house to the west, he will\p"
+	.string "take you kids on to Dewford Town.$"
 
 PetalburgCity_Gym_Text_PleaseComeWithMe:
 	.string "Ah, there you are, {PLAYER}{KUN}!\p"

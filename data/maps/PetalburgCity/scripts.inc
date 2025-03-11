@@ -235,6 +235,10 @@ PetalburgCity_EventScript_Gentleman::
 	msgbox PetalburgCity_Text_FullPartyExplanation, MSGBOX_NPC
 	end
 
+PetalburgCity_EventScript_Reporters::
+	msgbox PetalburgCity_Text_Reporters, MSGBOX_NPC
+	end
+
 PetalburgCity_EventScript_WallyHouseSign::
 	msgbox PetalburgCity_Text_WallyHouseSign, MSGBOX_SIGN
 	end
@@ -764,3 +768,9 @@ PetalburgCity_Text_ImLookingForTalentedTrainers:
 	.string "I'm roaming the land in search of\n"
 	.string "talented TRAINERS.\p"
 	.string "I'm sorry to have taken your time.$"
+
+PetalburgCity_Text_Reporters:
+	.string "We are covering an ongoing incident\n"
+	.string "with Team Aqua and a missing Wingull.\p"
+	.string "Apologies but we cannot let you\n"
+	.string "through at this time.$"
