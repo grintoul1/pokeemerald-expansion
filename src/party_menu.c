@@ -7611,7 +7611,7 @@ static void Task_WaitAfterMultiPartnerPartySlideIn(u8 taskId)
     s16 *data = gTasks[taskId].data;
 
     // data[0] used as a timer afterwards rather than the x pos
-    if (++data[0] == 96)
+    if (++data[0] == 80)
         Task_ClosePartyMenu(taskId);
 }
 

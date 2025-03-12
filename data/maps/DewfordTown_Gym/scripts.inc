@@ -178,7 +178,6 @@ DewfordTown_Gym_EventScript_Brawly::
 	end
 
 DewfordTown_Gym_EventScript_BrawlyDefeated::
-	call DewfordTown_Gym_EventScript_AnimateFlashFullBrightness
 	message DewfordTown_Gym_Text_ReceivedKnuckleBadge
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
@@ -437,8 +436,6 @@ DewfordTown_Gym_Text_GymGuideAdvice:
 	.string "so be careful!\p"
 	.string "What's worse, the GYM is as dark as\n"
 	.string "the ocean floor.\p"
-	.string "But it will get brighter after defeating\n"
-	.string "the TRAINERS in your way.\p"
 	.string "Hey, okay, go for it!$"
 
 DewfordTown_Gym_Text_GymGuidePostVictory:
