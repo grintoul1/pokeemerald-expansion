@@ -1,6 +1,14 @@
 @ NOTE: Route 109's sail to Dewford script references local IDs from Dewford's map.
 @  These are labeled in DewfordTown/scripts.inc
 
+.set LOCALID_HAILEY, 21
+.set LOCALID_RICKY, 7
+.set LOCALID_HUEY, 5
+.set LOCALID_EDMOND, 6
+.set LOCALID_LOLA, 8
+.set LOCALID_CHANDLER, 11
+
+
 Route109_MapScripts::
 	.byte 0
 
@@ -293,6 +301,7 @@ Route109_EventScript_OneWayTrip::
 	end
 
 Route109_EventScript_DeliveredDevonGoods::
+	goto_if_unset FLAG_DELIVERED_DEVON_GOODS, Route109_EventScript_OneWayTrip
 	message Route109_Text_BrineyWhereAreWeBound
 	waitmessage
 	multichoicedefault 21, 8, MULTI_BRINEY_OFF_DEWFORD, 1, FALSE
@@ -390,20 +399,56 @@ Route109_EventScript_Alice::
 	msgbox Route109_Text_AlicePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route109_EventScript_EdmondHuey::
+lockall
+setvar VAR_0x8008, LOCALID_EDMOND
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route109_Text_EdmondIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_HUEY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route109_Text_HueyIntro MSGBOX_AUTOCLOSE
+goto Route109_EventScript_EdmondHueyDoMultiBattle
+releaseall
+end
+
+Route109_EventScript_EdmondHueyDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_EDMOND, Route109_Text_EdmondDefeated, TRAINER_HUEY, Route109_Text_HueyDefeated, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route109_EventScript_EdmondHueyVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route109_EventScript_EdmondHueyVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route109_Text_EdmondPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route109_Text_HueyPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE109_STATE, 1
+end
+
 Route109_EventScript_Huey::
-	trainerbattle_single TRAINER_HUEY, Route109_Text_HueyIntro, Route109_Text_HueyDefeated
 	msgbox Route109_Text_HueyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Edmond::
-	trainerbattle_single TRAINER_EDMOND, Route109_Text_EdmondIntro, Route109_Text_EdmondDefeated
 	msgbox Route109_Text_EdmondPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Ricky::
-	trainerbattle_single TRAINER_RICKY_1, Route109_Text_RickyIntro, Route109_Text_RickyDefeated, Route109_EventScript_RickyRegisterMatchCallAfterBattle
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route109_EventScript_RickyRematch
 	msgbox Route109_Text_RickyPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -421,10 +466,48 @@ Route109_EventScript_RickyRematch::
 	msgbox Route109_Text_RickyRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route109_EventScript_LolaChandler::
+lockall
+setvar VAR_0x8008, LOCALID_LOLA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_TWINS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route109_Text_LolaIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_CHANDLER
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_TWINS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route109_Text_ChandlerIntro MSGBOX_AUTOCLOSE
+goto Route109_EventScript_LolaChandlerDoMultiBattle
+releaseall
+end
+
+Route109_EventScript_LolaChandlerDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_LOLA_1, Route109_Text_LolaDefeated, TRAINER_CHANDLER, Route109_Text_ChandlerDefeated, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route109_EventScript_LolaChandlerVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route109_EventScript_LolaChandlerVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route109_Text_LolaPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route109_Text_ChandlerPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE109_STATE, 1
+end
+
 Route109_EventScript_Lola::
-	trainerbattle_single TRAINER_LOLA_1, Route109_Text_LolaIntro, Route109_Text_LolaDefeated, Route109_EventScript_LolaRegisterMatchCallAfterBattle
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route109_EventScript_LolaRematch
 	msgbox Route109_Text_LolaPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -468,12 +551,51 @@ Route109_EventScript_Mel::
 	end
 
 Route109_EventScript_Chandler::
-	trainerbattle_single TRAINER_CHANDLER, Route109_Text_ChandlerIntro, Route109_Text_ChandlerDefeated
 	msgbox Route109_Text_ChandlerPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route109_EventScript_HaileyRicky::
+lockall
+setvar VAR_0x8008, LOCALID_HAILEY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_TWINS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route109_Text_HaileyIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_RICKY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_TWINS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route109_Text_RickyIntro MSGBOX_AUTOCLOSE
+goto Route109_EventScript_HaileyRickyDoMultiBattle
+releaseall
+end
+
+Route109_EventScript_HaileyRickyDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_HAILEY, Route109_Text_HaileyDefeated, TRAINER_RICKY_1, Route109_Text_RickyDefeated, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route109_EventScript_HaileyRickyVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route109_EventScript_HaileyRickyVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route109_Text_HaileyPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route109_Text_RickyPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE109_STATE, 1
+end
+
 Route109_EventScript_Hailey::
-	trainerbattle_single TRAINER_HAILEY, Route109_Text_HaileyIntro, Route109_Text_HaileyDefeated
 	msgbox Route109_Text_HaileyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
