@@ -1,3 +1,11 @@
+.set LOCALID_LAURA, 4
+.set LOCALID_BRENDEN, 8
+.set LOCALID_CRISTIAN, 6
+.set LOCALID_TAKAO, 2
+.set LOCALID_LILITH, 7
+.set LOCALID_JOCELYN, 3
+.set LOCALID_BRAWLY, 1
+
 DewfordTown_Gym_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, DewfordTown_Gym_OnTransition
 	.byte 0
@@ -7,17 +15,8 @@ DewfordTown_Gym_OnTransition:
 	end
 
 DewfordTown_Gym_EventScript_SetFlashLevel::
-	goto_if_defeated TRAINER_BRAWLY_1, DewfordTown_Gym_EventScript_SetLightsOn
-	call DewfordTown_Gym_EventScript_CountTrainersDefeated
-	copyvar VAR_0x8001, VAR_0x8000
-	goto_if_eq VAR_0x8000, 0, DewfordTown_Gym_EventScript_SetFlashLevel7
-	goto_if_eq VAR_0x8000, 1, DewfordTown_Gym_EventScript_SetFlashLevel6
-	goto_if_eq VAR_0x8000, 2, DewfordTown_Gym_EventScript_SetFlashLevel5
-	goto_if_eq VAR_0x8000, 3, DewfordTown_Gym_EventScript_SetFlashLevel4
-	goto_if_eq VAR_0x8000, 4, DewfordTown_Gym_EventScript_SetFlashLevel3
-	goto_if_eq VAR_0x8000, 5, DewfordTown_Gym_EventScript_SetFlashLevel2
-	goto DewfordTown_Gym_EventScript_SetFlashLevel1
-
+	goto DewfordTown_Gym_EventScript_SetLightsOn
+	
 DewfordTown_Gym_EventScript_SetLightsOn::
 	setflashlevel 0
 	return
@@ -132,10 +131,47 @@ DewfordTown_Gym_EventScript_CheckLilith::
 DewfordTown_Gym_EventScript_StopCountingTrainers::
 	return
 
+DewfordTown_Gym_EventScript_Brawly2::
+lockall
+setvar VAR_0x8008, LOCALID_BRAWLY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_ELITE_FOUR, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox DewfordTown_Gym_Text_BrawlyIntro MSGBOX_AUTOCLOSE
+msgbox DewfordTown_Gym_Text_ReadyToFight MSGBOX_YESNO
+goto_if_eq VAR_RESULT, YES, DewfordTown_Gym_EventScript_BrawlyDoMultiBattle
+msgbox DewfordTown_Gym_Text_ComeBackWhenReady, MSGBOX_DEFAULT
+closemessage
+applymovement OBJ_EVENT_ID_PLAYER, DewfordTown_Gym_Movement_Brawly_NotReady
+waitmovement 0
+playbgm MUS_GYM, TRUE
+releaseall
+end
+
+DewfordTown_Gym_EventScript_BrawlyDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, DewfordTown_Gym_EventScript_BrawlyVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+DewfordTown_Gym_EventScript_BrawlyVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+addvar VAR_DEWFORD_TOWN_STATE, 1
+goto DewfordTown_Gym_EventScript_BrawlyDefeated
+end
+
+DewfordTown_Gym_Movement_Brawly_NotReady:
+walk_down
+step_end
+
 DewfordTown_Gym_EventScript_Brawly::
-	trainerbattle_single TRAINER_BRAWLY_1, DewfordTown_Gym_Text_BrawlyIntro, DewfordTown_Gym_Text_BrawlyDefeat, DewfordTown_Gym_EventScript_BrawlyDefeated, NO_MUSIC
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, DewfordTown_Gym_EventScript_BrawlyRematch
 	goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp2
 	msgbox DewfordTown_Gym_Text_BrawlyPostBattle, MSGBOX_DEFAULT
 	release
@@ -154,14 +190,6 @@ DewfordTown_Gym_EventScript_BrawlyDefeated::
 	call DewfordTown_Gym_EventScript_GiveBulkUp
 	closemessage
 	delay 30
-	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox DewfordTown_Gym_Text_RegisteredBrawly, MSGBOX_DEFAULT
-	waitfanfare
-	closemessage
-	delay 30
-	setflag FLAG_ENABLE_BRAWLY_MATCH_CALL
-	setvar VAR_ROXANNE_CALL_STEP_COUNTER, 0
-	setflag FLAG_ENABLE_ROXANNE_FIRST_CALL
 	release
 	end
 
@@ -186,7 +214,6 @@ DewfordTown_Gym_EventScript_BrawlyRematch::
 	end
 
 DewfordTown_Gym_EventScript_Takao::
-	trainerbattle_single TRAINER_TAKAO, DewfordTown_Gym_Text_TakaoIntro, DewfordTown_Gym_Text_TakaoDefeat, DewfordTown_Gym_EventScript_TakaoBrightenRoom
 	msgbox DewfordTown_Gym_Text_TakaoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -196,7 +223,6 @@ DewfordTown_Gym_EventScript_TakaoBrightenRoom::
 	end
 
 DewfordTown_Gym_EventScript_Jocelyn::
-	trainerbattle_single TRAINER_JOCELYN, DewfordTown_Gym_Text_JocelynIntro, DewfordTown_Gym_Text_JocelynDefeat, DewfordTown_Gym_EventScript_JocelynBrightenRoom
 	msgbox DewfordTown_Gym_Text_JocelynPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -205,8 +231,48 @@ DewfordTown_Gym_EventScript_JocelynBrightenRoom::
 	release
 	end
 
+DewfordTown_Gym_EventScript_LauraBrenden::
+lockall
+setvar VAR_0x8008, LOCALID_LAURA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox DewfordTown_Gym_Text_LauraIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_BRENDEN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox DewfordTown_Gym_Text_BrendenIntro MSGBOX_AUTOCLOSE
+goto DewfordTown_Gym_EventScript_LauraBrendenDoMultiBattle
+releaseall
+end
+
+DewfordTown_Gym_EventScript_LauraBrendenDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_2 TRAINER_LAURA, DewfordTown_Gym_Text_LauraDefeat, TRAINER_BRENDEN, DewfordTown_Gym_Text_BrendenDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, DewfordTown_Gym_EventScript_LauraBrendenVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+DewfordTown_Gym_EventScript_LauraBrendenVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox DewfordTown_Gym_Text_LauraPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox DewfordTown_Gym_Text_BrendenPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_DEWFORD_TOWN_STATE, 1
+end
+
 DewfordTown_Gym_EventScript_Laura::
-	trainerbattle_single TRAINER_LAURA, DewfordTown_Gym_Text_LauraIntro, DewfordTown_Gym_Text_LauraDefeat, DewfordTown_Gym_EventScript_LauraBrightenRoom
 	msgbox DewfordTown_Gym_Text_LauraPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -216,7 +282,6 @@ DewfordTown_Gym_EventScript_LauraBrightenRoom::
 	end
 
 DewfordTown_Gym_EventScript_Brenden::
-	trainerbattle_single TRAINER_BRENDEN, DewfordTown_Gym_Text_BrendenIntro, DewfordTown_Gym_Text_BrendenDefeat, DewfordTown_Gym_EventScript_BrendenBrightenRoom
 	msgbox DewfordTown_Gym_Text_BrendenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -225,8 +290,48 @@ DewfordTown_Gym_EventScript_BrendenBrightenRoom::
 	release
 	end
 
+DewfordTown_Gym_EventScript_CristianTakao::
+lockall
+setvar VAR_0x8008, LOCALID_CRISTIAN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox DewfordTown_Gym_Text_CristianIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_TAKAO
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox DewfordTown_Gym_Text_TakaoIntro MSGBOX_AUTOCLOSE
+goto DewfordTown_Gym_EventScript_CristianTakaoDoMultiBattle
+releaseall
+end
+
+DewfordTown_Gym_EventScript_CristianTakaoDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_2 TRAINER_CRISTIAN, DewfordTown_Gym_Text_CristianDefeat, TRAINER_TAKAO, DewfordTown_Gym_Text_TakaoDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, DewfordTown_Gym_EventScript_CristianTakaoVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+DewfordTown_Gym_EventScript_CristianTakaoVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox DewfordTown_Gym_Text_CristianPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox DewfordTown_Gym_Text_TakaoPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_DEWFORD_TOWN_STATE, 1
+end
+
 DewfordTown_Gym_EventScript_Cristian::
-	trainerbattle_single TRAINER_CRISTIAN, DewfordTown_Gym_Text_CristianIntro, DewfordTown_Gym_Text_CristianDefeat, DewfordTown_Gym_EventScript_CristianBrightenRoom
 	msgbox DewfordTown_Gym_Text_CristianPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -235,8 +340,48 @@ DewfordTown_Gym_EventScript_CristianBrightenRoom::
 	release
 	end
 
+DewfordTown_Gym_EventScript_LilithJocelyn::
+lockall
+setvar VAR_0x8008, LOCALID_LILITH
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox DewfordTown_Gym_Text_LilithIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_JOCELYN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox DewfordTown_Gym_Text_JocelynIntro MSGBOX_AUTOCLOSE
+goto DewfordTown_Gym_EventScript_LilithJocelynDoMultiBattle
+releaseall
+end
+
+DewfordTown_Gym_EventScript_LilithJocelynDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_2 TRAINER_LILITH, DewfordTown_Gym_Text_LilithDefeat, TRAINER_JOCELYN, DewfordTown_Gym_Text_JocelynDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, DewfordTown_Gym_EventScript_LilithJocelynVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+DewfordTown_Gym_EventScript_LilithJocelynVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox DewfordTown_Gym_Text_LilithPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox DewfordTown_Gym_Text_JocelynPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_DEWFORD_TOWN_STATE, 1
+end
+
 DewfordTown_Gym_EventScript_Lilith::
-	trainerbattle_single TRAINER_LILITH, DewfordTown_Gym_Text_LilithIntro, DewfordTown_Gym_Text_LilithDefeat, DewfordTown_Gym_EventScript_LilithBrightenRoom
 	msgbox DewfordTown_Gym_Text_LilithPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -455,3 +600,9 @@ DewfordTown_Gym_Text_BrawlyRematchNeedTwoMons:
 	.string "that can battle.\p"
 	.string "I'm sorry, but I'd like you to come back\n"
 	.string "with at least two POKéMON.$"
+
+DewfordTown_Gym_Text_ReadyToFight:
+	.string "Think you can beat me?$"
+
+DewfordTown_Gym_Text_ComeBackWhenReady:
+	.string "Hah! Come back when you're ready!$"

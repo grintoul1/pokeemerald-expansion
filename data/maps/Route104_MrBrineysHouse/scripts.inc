@@ -89,6 +89,8 @@ Route104_MrBrineysHouse_EventScript_SailToDewford::
 	setflag FLAG_HIDE_ROUTE_104_RIVAL
 	warp MAP_ROUTE104, 13, 51
 	waitstate
+	msgbox Route104_MrBrineysHouse_Text_ArrivedInDewford, MSGBOX_DEFAULT
+	giveitem ITEM_LETTER
 	releaseall
 	end
 
@@ -113,6 +115,10 @@ Route104_MrBrineysHouse_Text_ItsYouLetsSailToDewford:
 	.string "problem at all.\p"
 	.string "I'm due to set sail to Slateport,\n"
 	.string "but I can dock in Dewford briefly.\p"
+	.string "In fact, you can do me a favour and\n"
+	.string "deliver a letter for me.\p"
+	.string "It's for the son of the president of\n"
+	.string "Rustboro City's Devon Corporation.\p" 
 	.string "This is a one-way trip though.\n"
 	.string "I won't be returning to Petalburg.\p"
 	.string "Anyway, you've come to the right\n"
@@ -163,9 +169,12 @@ Route104_MrBrineysHouse_Text_Peeko:
 
 Route104_MrBrineysHouse_Text_MustDefeatNorman:
 	.string "MR. BRINEY: What's this?\n"
-	.string "Sorry kids; no sailing for you.\p"
-	.string "Norman won't be happy with me\n"
+	.string "Sorry kids but no sailing for you.\p"
+	.string "Norman wouldn't be happy with me\n"
 	.string "if I take you to sea.\p"
 	.string "Come back with the Balance badge\n"
 	.string "and he'll have nothing to worry about!$"
 
+Route104_MrBrineysHouse_Text_ArrivedInDewford:
+	.string "MR. BRINEY: Here we are, Dewford Town!\n"
+	.string "Please remember to deliver the letter.\p"

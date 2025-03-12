@@ -22,6 +22,7 @@ DewfordTown_EventScript_Briney::
 	lock
 	faceplayer
 	goto_if_unset FLAG_BADGE02_GET, DewfordTown_EventScript_NoReturnToPetalburgPrompt
+	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, DewfordTown_EventScript_PleaseDeliverLetter
 	msgbox DewfordTown_Text_WhereAreWeBound, MSGBOX_YESNO
 	waitmessage
 	goto_if_eq VAR_RESULT, NO, DewfordTown_EventScript_CancelSailSelect
@@ -58,6 +59,11 @@ DewfordTown_EventScript_ReturnToPetalburgPrompt::
 
 DewfordTown_EventScript_NoReturnToPetalburgPrompt::
 	msgbox DewfordTown_Text_GoFightBrawly, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordTown_EventScript_PleaseDeliverLetter::
+	msgbox DewfordTown_Text_PleaseDeliverLetter, MSGBOX_DEFAULT
 	release
 	end
 
@@ -816,3 +822,9 @@ DewfordTown_Text_BrineyLandedInSlateportDeliverGoods:
 	.string "We've made land in SLATEPORT!\p"
 	.string "Please do me a favour and visit CAPT.\n"
 	.string "STERN and deliver these DEVON GOODS?$"
+
+DewfordTown_Text_PleaseDeliverLetter:
+	.string "I can't set sail until that letter has\n"
+	.string "been delivered.\p"
+	.string "If you can't find young Steven in town,\n"
+	.string "maybe check Granite Cave to the north.$"

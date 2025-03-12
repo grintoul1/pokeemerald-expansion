@@ -519,6 +519,8 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex::
 	giveitem ITEM_SUPER_ROD
 	giveitem ITEM_INFINITE_CANDY
 	giveitem ITEM_POKE_VIAL
+	setflag FLAG_SYS_POKENAV_GET
+	setflag FLAG_RECEIVED_POKENAV
 	applymovement LOCALID_RIVAL, LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer
 	waitmovement 0
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight

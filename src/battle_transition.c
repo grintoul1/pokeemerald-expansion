@@ -2406,7 +2406,7 @@ static bool8 Mugshot_WaitPlayerSlide(struct Task *task)
     sTransitionData->BG0HOFS_Lower -= 8;
     sTransitionData->BG0HOFS_Upper += 8;
 
-    if (IsTrainerPicSlideDone(task->tPlayerSpriteId))
+    if (IsTrainerPicSlideDone(task->tPartnerSpriteId))
     {
         sTransitionData->VBlank_DMA = FALSE;
         SetVBlankCallback(NULL);

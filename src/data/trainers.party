@@ -4865,33 +4865,60 @@ Mugshot: Blue
 Pic: Leader Brawly
 Gender: Male
 Music: Male
-Items: Super Potion / Super Potion
 Double Battle: No
 AI: Basic Trainer
 
-Machop
-Level: 16
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Karate Chop
-- Low Kick
-- Seismic Toss
-- Bulk Up
+Urshifu @ Iapapa Berry
+Level: 30
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Brick Break
+- Faint Attack
+- Zen Headbutt
+- Mega Punch
 
-Meditite
-Level: 16
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Focus Punch
-- Light Screen
-- Reflect
-- Bulk Up
+Poliwhirl @ Wise Glasses
+Level: 30
+Ability: Water Absorb
+IVs: 31 HP / 31 Atk / 31 Def / 30 SpA / 31 SpD / 31 Spe
+- Bubble Beam
+- Ice Beam
+- Superpower
+- Hidden Power
 
-Makuhita @ Sitrus Berry
-Level: 19
-IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Arm Thrust
-- Vital Throw
-- Reversal
-- Bulk Up
+Lopunny @ Eject Button
+Level: 29
+Ability: Limber
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Drain Punch
+- Retaliate
+- Headbutt
+
+Hitmontop @ Muscle Band
+Level: 28
+Ability: Intimidate
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Mach Punch
+- Fake Out
+- Counter
+- Rock Slide
+
+Combusken @ Expert Belt
+Level: 28
+Ability: Speed Boost
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Incinerate
+- Thunder Punch
+- Double Kick
+- Work Up
+
+Scraggy @ Eviolite
+Level: 29
+Ability: Shed Skin
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Rock Tomb
+- Rest
+- Brick Break
+- Faint Attack
 
 === TRAINER_WATTSON_1 ===
 Name: WATTSON
