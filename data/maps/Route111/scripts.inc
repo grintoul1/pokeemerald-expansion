@@ -267,10 +267,16 @@ Route111_EventScript_SandstormTrigger::
 Route111_EventScript_Victor::
 	lock
 	faceplayer
+	goto_if_unset FLAG_BADGE02_GET, Route111_EventScript_WinstratesNotReady
 	setflag FLAG_LANDMARK_WINSTRATE_FAMILY
 	msgbox Route111_Text_BattleOurFamily, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, Route111_EventScript_BattleWinstrates
 	msgbox Route111_Text_IsThatSo, MSGBOX_DEFAULT
+	release
+	end
+
+Route111_EventScript_WinstratesNotReady::
+	msgbox Route111_Text_WinstratesNotReady, MSGBOX_DEFAULT
 	release
 	end
 
@@ -437,29 +443,104 @@ Route111_EventScript_RockSmashTipFatMan::
 	end
 
 Route111_EventScript_Drew::
-	trainerbattle_single TRAINER_DREW, Route111_Text_DrewIntro, Route111_Text_DrewDefeat
 	msgbox Route111_Text_DrewPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Heidi::
-	trainerbattle_single TRAINER_HEIDI, Route111_Text_HeidiIntro, Route111_Text_HeidiDefeat
 	msgbox Route111_Text_HeidiPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route111_EventScript_BeauHeidi::
+lockall
+setvar VAR_0x8008, LOCALID_BEAU
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_BeauIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_HEIDI
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_HeidiIntro MSGBOX_AUTOCLOSE
+goto Route111_EventScript_BeauHeidiDoMultiBattle
+releaseall
+end
+
+Route111_EventScript_BeauHeidiDoMultiBattle::
+playbgm MUS_DESERT, TRUE
+multi_2p_vs_2 TRAINER_BEAU, Route111_Text_BeauDefeat, TRAINER_HEIDI, Route111_Text_HeidiDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route111_EventScript_BeauHeidiVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route111_EventScript_BeauHeidiVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_BeauPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_HeidiPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE111_STATE, 1
+end
+
 Route111_EventScript_Beau::
-	trainerbattle_single TRAINER_BEAU, Route111_Text_BeauIntro, Route111_Text_BeauDefeat
 	msgbox Route111_Text_BeauPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route111_EventScript_BeckyDrew::
+lockall
+setvar VAR_0x8008, LOCALID_BECKY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route111_Text_BeckyIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_DREW
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route111_Text_DrewIntro MSGBOX_AUTOCLOSE
+goto Route111_EventScript_BeckyDrewDoMultiBattle
+releaseall
+end
+
+Route111_EventScript_BeckyDrewDoMultiBattle::
+playbgm MUS_DESERT, TRUE
+multi_2p_vs_2 TRAINER_BECKY, Route111_Text_BeckyDefeat, TRAINER_DREW, Route111_Text_DrewDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route111_EventScript_BeckyDrewVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route111_EventScript_BeckyDrewVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route111_Text_BeckyPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route111_Text_DrewPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE111_STATE, 1
+end
+
 Route111_EventScript_Becky::
-	trainerbattle_single TRAINER_BECKY, Route111_Text_BeckyIntro, Route111_Text_BeckyDefeat
 	msgbox Route111_Text_BeckyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Dusty::
-	trainerbattle_single TRAINER_DUSTY_1, Route111_Text_DustyIntro, Route111_Text_DustyDefeat, Route111_EventScript_RegisterDusty
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route111_EventScript_RematchDusty
 	msgbox Route111_Text_DustyPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -477,13 +558,52 @@ Route111_EventScript_RematchDusty::
 	msgbox Route111_Text_DustyPostRematch, MSGBOX_AUTOCLOSE
 	end
 
+Route111_EventScript_TravisIrene::
+lockall
+setvar VAR_0x8008, LOCALID_TRAVIS
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_TravisIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_IRENE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_IreneIntro MSGBOX_AUTOCLOSE
+goto Route111_EventScript_TravisIreneDoMultiBattle
+releaseall
+end
+
+Route111_EventScript_TravisIreneDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_TRAVIS, Route111_Text_TravisDefeat, TRAINER_IRENE, Route111_Text_IreneDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route111_EventScript_TravisIreneVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route111_EventScript_TravisIreneVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_TravisPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_IrenePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE111_STATE, 1
+end
+
 Route111_EventScript_Travis::
-	trainerbattle_single TRAINER_TRAVIS, Route111_Text_TravisIntro, Route111_Text_TravisDefeat
 	msgbox Route111_Text_TravisPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Irene::
-	trainerbattle_single TRAINER_IRENE, Route111_Text_IreneIntro, Route111_Text_IreneDefeat
 	msgbox Route111_Text_IrenePostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -492,10 +612,48 @@ Route111_EventScript_Daisuke::
 	msgbox Route111_Text_DaisukePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route111_EventScript_WiltonBrooke::
+lockall
+setvar VAR_0x8008, LOCALID_WILTON
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_WiltonIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_BROOKE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_BrookeIntro MSGBOX_AUTOCLOSE
+goto Route111_EventScript_WiltonBrookeDoMultiBattle
+releaseall
+end
+
+Route111_EventScript_WiltonBrookeDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_WILTON_1, Route111_Text_WiltonDefeat, TRAINER_BROOKE_1, Route111_Text_BrookeDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route111_EventScript_WiltonBrookeVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route111_EventScript_WiltonBrookeVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_WiltonPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_BrookePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE111_STATE, 1
+end
+
 Route111_EventScript_Wilton::
-	trainerbattle_single TRAINER_WILTON_1, Route111_Text_WiltonIntro, Route111_Text_WiltonDefeat, Route111_EventScript_RegisterWilton
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route111_EventScript_RematchWilton
 	msgbox Route111_Text_WiltonPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -514,9 +672,6 @@ Route111_EventScript_RematchWilton::
 	end
 
 Route111_EventScript_Brooke::
-	trainerbattle_single TRAINER_BROOKE_1, Route111_Text_BrookeIntro, Route111_Text_BrookeDefeat, Route111_EventScript_RegisterBrooke
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route111_EventScript_RematchBrooke
 	msgbox Route111_Text_BrookePostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -534,38 +689,195 @@ Route111_EventScript_RematchBrooke::
 	msgbox Route111_Text_BrookePostRematch, MSGBOX_AUTOCLOSE
 	end
 
+Route111_EventScript_HaydenBianca::
+lockall
+setvar VAR_0x8008, LOCALID_HAYDEN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_HaydenIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_BIANCA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_BiancaIntro MSGBOX_AUTOCLOSE
+goto Route111_EventScript_HaydenBiancaDoMultiBattle
+releaseall
+end
+
+Route111_EventScript_HaydenBiancaDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_HAYDEN, Route111_Text_HaydenDefeat, TRAINER_BIANCA, Route111_Text_BiancaDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route111_EventScript_HaydenBiancaVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route111_EventScript_HaydenBiancaVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_HaydenPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_BiancaPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE111_STATE, 1
+end
+
 Route111_EventScript_Hayden::
-	trainerbattle_single TRAINER_HAYDEN, Route111_Text_HaydenIntro, Route111_Text_HaydenDefeat
 	msgbox Route111_Text_HaydenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Bianca::
-	trainerbattle_single TRAINER_BIANCA, Route111_Text_BiancaIntro, Route111_Text_BiancaDefeat
 	msgbox Route111_Text_BiancaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Tyron::
-	trainerbattle_single TRAINER_TYRON, Route111_Text_TyronIntro, Route111_Text_TyronDefeat
 	msgbox Route111_Text_TyronPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route111_EventScript_CelinaTyron::
+lockall
+setvar VAR_0x8008, LOCALID_CELINA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_CelinaIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_TYRON
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_TyronIntro MSGBOX_AUTOCLOSE
+goto Route111_EventScript_CelinaTyronDoMultiBattle
+releaseall
+end
+
+Route111_EventScript_CelinaTyronDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_CELINA, Route111_Text_CelinaDefeat, TRAINER_TYRON, Route111_Text_TyronDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route111_EventScript_CelinaTyronVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route111_EventScript_CelinaTyronVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_CelinaPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_TyronPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE111_STATE, 1
+end
+
 Route111_EventScript_Celina::
-	trainerbattle_single TRAINER_CELINA, Route111_Text_CelinaIntro, Route111_Text_CelinaDefeat
 	msgbox Route111_Text_CelinaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route111_EventScript_Celia::
-	trainerbattle_single TRAINER_CELIA, Route111_Text_CeliaIntro, Route111_Text_CeliaDefeat
 	msgbox Route111_Text_CeliaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route111_EventScript_BryanDusty::
+lockall
+setvar VAR_0x8008, LOCALID_BRYAN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_BryanIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_DUSTY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_DustyIntro MSGBOX_AUTOCLOSE
+goto Route111_EventScript_BryanDustyDoMultiBattle
+releaseall
+end
+
+Route111_EventScript_BryanDustyDoMultiBattle::
+playbgm MUS_DESERT, TRUE
+multi_2p_vs_2 TRAINER_BRYAN, Route111_Text_BryanDefeat, TRAINER_DUSTY_1, Route111_Text_DustyDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route111_EventScript_BryanDustyVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route111_EventScript_BryanDustyVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route111_Text_BryanPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route111_Text_DustyPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE111_STATE, 1
+end
+
 Route111_EventScript_Bryan::
-	trainerbattle_single TRAINER_BRYAN, Route111_Text_BryanIntro, Route111_Text_BryanDefeat
 	msgbox Route111_Text_BryanPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route111_EventScript_CeliaBranden::
+lockall
+setvar VAR_0x8008, LOCALID_CELIA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route111_Text_CeliaIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_BRANDEN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route111_Text_BrandenIntro MSGBOX_AUTOCLOSE
+goto Route111_EventScript_CeliaBrandenDoMultiBattle
+releaseall
+end
+
+Route111_EventScript_CeliaBrandenDoMultiBattle::
+playbgm MUS_DESERT, TRUE
+multi_2p_vs_2 TRAINER_CELIA, Route111_Text_CeliaDefeat, TRAINER_BRANDEN, Route111_Text_BrandenDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route111_EventScript_CeliaBrandenVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route111_EventScript_CeliaBrandenVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route111_Text_CeliaPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route111_Text_BrandenPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE111_STATE, 1
+end
+
 Route111_EventScript_Branden::
-	trainerbattle_single TRAINER_BRANDEN, Route111_Text_BrandenIntro, Route111_Text_BrandenDefeat
 	msgbox Route111_Text_BrandenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -727,3 +1039,8 @@ Route111_Text_TrainerHillSign:
 	.string "“Scale the heights, you hot-blooded\n"
 	.string "TRAINERS!”$"
 
+Route111_Text_WinstratesNotReady:
+	.string "Hey, kids! How many badges do you\n"
+	.string "have?\p"
+	.string "Sorry, my family doesn't challenge\n"
+	.string "trainers with fewer than four badges!$"

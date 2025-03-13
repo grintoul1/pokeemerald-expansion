@@ -1408,14 +1408,15 @@ F_TRAINER_FEMALE |
 #line 629
         .trainerPic = TRAINER_PIC_AQUA_LEADER_ARCHIE,
         .encounterMusic_gender =
-#line 631
-            TRAINER_ENCOUNTER_MUSIC_AQUA,
 #line 632
-        .items = { ITEM_SUPER_POTION, ITEM_SUPER_POTION },
+            TRAINER_ENCOUNTER_MUSIC_AQUA,
 #line 633
         .doubleBattle = FALSE,
 #line 634
         .aiFlags = AI_FLAG_BASIC_TRAINER,
+#line 630
+        .mugshotEnabled = TRUE,
+        .mugshotColor = MUGSHOT_COLOR_BLUE,
         .partySize = 3,
         .party = (const struct TrainerMon[])
         {

@@ -1017,7 +1017,7 @@ Route110_Text_LetsCycleHome:
 	.string "You know, {PLAYER}, I've never been\n"
 	.string "on the Cycling Road.\p"
 	.string "Why don't we check out the Mauville\n"
-	.string "bike shop and take that route home?\p"
+	.string "bike shop and take that route home?$"
 
 Route110_Text_MayLetsBattle:
 	.string "MAY: Hi, {PLAYER}{KUN}, long time no see!\p"

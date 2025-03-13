@@ -3,6 +3,7 @@
 .set LOCALID_GRUNT, 6
 .set LOCALID_ARCHIE, 7
 .set LOCALID_SUBMARINE, 8
+.set LOCALID_GRUNT_2, 9
 
 SlateportCity_Harbor_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_Harbor_OnTransition
@@ -56,6 +57,7 @@ SlateportCity_Harbor_EventScript_AquaEscapeScene::
 	applymovement LOCALID_ARCHIE, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	applymovement LOCALID_GRUNT, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_GRUNT_2, Common_Movement_WalkInPlaceFasterRight
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox SlateportCity_Harbor_Text_ArchieYouAgainHideoutInLilycove, MSGBOX_DEFAULT
@@ -67,9 +69,13 @@ SlateportCity_Harbor_EventScript_AquaEscapeScene::
 	removeobject LOCALID_GRUNT
 	removeobject LOCALID_ARCHIE
 	removeobject LOCALID_SUBMARINE
+	fadescreen FADE_TO_BLACK
+	removeobject LOCALID_GRUNT_2
+	fadescreen FADE_FROM_BLACK
 	setvar VAR_SLATEPORT_HARBOR_STATE, 2
 	setflag FLAG_MET_TEAM_AQUA_HARBOR
 	setflag FLAG_HIDE_LILYCOVE_MOTEL_SCOTT
+	setflag FLAG_HIDE_ROUTE_110_TEAM_AQUA
 	call_if_eq VAR_0x8008, 0, SlateportCity_Harbor_EventScript_SternApproachPlayer0
 	call_if_eq VAR_0x8008, 1, SlateportCity_Harbor_EventScript_SternApproachPlayer1
 	call_if_eq VAR_0x8008, 2, SlateportCity_Harbor_EventScript_SternApproachPlayer
@@ -447,27 +453,27 @@ SlateportCity_Harbor_Text_SubTooSmallForMe:
 	.string "any room for the CAPTAIN…$"
 
 SlateportCity_Harbor_Text_SameThugsTriedToRobAtMuseum:
-	.string "CAPT. STERN: Those thugs…\p"
-	.string "They're the same lot who tried to rob\n"
-	.string "the DEVON GOODS at the MUSEUM.$"
+	.string "CAPT. STERN: Those thugs…\n"
+	.string "They're stealing the submarine!$"
 
 SlateportCity_Harbor_Text_ArchieYouAgainHideoutInLilycove:
-	.string "ARCHIE: Oh?\n"
-	.string "Not you again…\p"
-	.string "You are tenacious to track us here,\n"
-	.string "that much I will give you.\p"
-	.string "But now…\n"
-	.string "No one can stop us! No one!\p"
-	.string "Or, will you follow us back to our\n"
-	.string "HIDEOUT in LILYCOVE CITY?\p"
-	.string "Fwahahahaha…$"
+	.string "ARCHIE: I'm afraid you're too late!\p"
+	.string "We're taking this submarine back to\n"
+	.string "our Hideout in Lilycove City.\p"
+	.string "We are only doing this to safeguard\n"
+	.string "against Team Magma's plans.\p"
+	.string "One day you will thank us for this.\p"
+	.string "Shelly, Team Aqua have been seen\n"
+	.string "operating in the north.\p"
+	.string "Investigate their activities and\n"
+	.string "report back to me with your findings.$"
 
 SlateportCity_Harbor_Text_CaptSternWhyStealMySubmarine:
 	.string "CAPT. STERN: Why…\p"
-	.string "Why would TEAM AQUA steal my\n"
+	.string "Why would Team Aqua steal my\n"
 	.string "SUBMARINE EXPLORER 1?\p"
 	.string "They can't be after the slumbering\n"
-	.string "POKéMON at the bottom of the sea…\p"
+	.string "Pokémon at the bottom of the sea…\p"
 	.string "But even if I were to chase them,\n"
 	.string "I don't stand a chance against them…$"
 

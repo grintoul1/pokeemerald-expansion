@@ -567,49 +567,14 @@ SlateportCity_Pokemart_PowerTMs:
 @ Scene with Capt Sterns interview and Team Aqua announcing plans to steal Submarine
 SlateportCity_EventScript_CaptStern::
 	lockall
-	msgbox SlateportCity_Text_SternMoveAheadWithExploration, MSGBOX_DEFAULT
-	msgbox SlateportCity_Text_GabbyWonderfulThanksForInterview, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GABBY, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
-	delay 10
-	applymovement LOCALID_TY, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
-	delay 25
-	applymovement LOCALID_CAPT_STERN, SlateportCity_Movement_SternWatchGabbyAndTyExit
-	applymovement OBJ_EVENT_ID_PLAYER, SlateportCity_Movement_PlayerFaceStern
-	applymovement LOCALID_GABBY, SlateportCity_Movement_GabbyExit
-	applymovement LOCALID_TY, SlateportCity_Movement_TyExit
-	waitmovement 0
-	removeobject LOCALID_GABBY
-	removeobject LOCALID_TY
-	msgbox SlateportCity_Text_SternWhewFirstInterview, MSGBOX_DEFAULT
-	applymovement LOCALID_CAPT_STERN, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	msgbox SlateportCity_Text_OhPlayerWeMadeDiscovery, MSGBOX_DEFAULT
-	playbgm MUS_ENCOUNTER_AQUA, FALSE
-	msgbox SlateportCity_Text_AquaWillAssumeControlOfSubmarine, MSGBOX_DEFAULT
-	applymovement LOCALID_COOK, Common_Movement_WalkInPlaceFasterLeft
-	applymovement LOCALID_FAT_MAN, Common_Movement_WalkInPlaceFasterLeft
-	applymovement LOCALID_OLD_WOMAN, SlateportCity_Movement_OldWomanConcern
-	applymovement LOCALID_RICH_BOY, Common_Movement_QuestionMark
-	applymovement LOCALID_MAN_1, SlateportCity_Movement_ManConcern
-	waitmovement 0
-	applymovement LOCALID_CAPT_STERN, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0
-	msgbox SlateportCity_Text_SternWhatWasAllThat, MSGBOX_DEFAULT
 	playse SE_PIN
 	applymovement LOCALID_CAPT_STERN, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement LOCALID_CAPT_STERN, Common_Movement_Delay48
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	applymovement LOCALID_CAPT_STERN, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	msgbox SlateportCity_Text_FromHarborTryingToTakeSub, MSGBOX_DEFAULT
-	msgbox SlateportCity_Text_PleaseComeWithMe, MSGBOX_DEFAULT
+	msgbox SlateportCity_Text_SternMoveAheadWithExploration, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_CAPT_STERN, SlateportCity_Movement_SternEnterHarbor
-	applymovement OBJ_EVENT_ID_PLAYER, SlateportCity_Movement_PlayerEnterHarbor
 	waitmovement 0
 	removeobject LOCALID_CAPT_STERN
 	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_CAPTAIN_STERN
@@ -617,8 +582,6 @@ SlateportCity_EventScript_CaptStern::
 	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_AQUA_GRUNT
 	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_ARCHIE
 	setvar VAR_SLATEPORT_CITY_STATE, 2
-	warp MAP_SLATEPORT_CITY_HARBOR, 11, 14
-	waitstate
 	releaseall
 	end
 
@@ -679,6 +642,13 @@ SlateportCity_Movement_Unused:
 	step_end
 
 SlateportCity_Movement_SternEnterHarbor:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
 	walk_right
 	walk_up
 	walk_up
@@ -1169,8 +1139,7 @@ SlateportCity_Text_MostInvaluableExperience:
 	.string "invaluable experience…$"
 
 SlateportCity_Text_SternMoveAheadWithExploration:
-	.string "CAPT. STERN: Yes, indeed. We intend to\n"
-	.string "move ahead with our exploration.$"
+	.string "CAPT. STERN: This way {PLAYER}{KUN}!$"
 
 SlateportCity_Text_GabbyWonderfulThanksForInterview:
 	.string "GABBY: That's wonderful, CAPT. STERN!\n"

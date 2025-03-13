@@ -35,7 +35,7 @@ PetalburgCity_Gym_EventScript_OpenUnlockedDoors::
 	call_if_set FLAG_GEORGE_DEFEATED, PetalburgCity_Gym_EventScript_OpenRecoveryRoomDoors
 	call_if_set FLAG_JODY_DEFEATED, PetalburgCity_Gym_EventScript_OpenStrengthRoomDoors
 	call_if_set FLAG_BERKE_DEFEATED, PetalburgCity_Gym_EventScript_OpenOHKORoomDoors
-	end defeated
+	end
 
 PetalburgCity_Gym_EventScript_UnlockAllDoors::
 	setvar VAR_0x8005, 1

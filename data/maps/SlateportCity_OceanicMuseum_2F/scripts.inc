@@ -68,7 +68,6 @@ SlateportCity_OceanicMuseum_2F_EventScript_ArchieDoMultiBattle::
 SlateportCity_OceanicMuseum_2F_EventScript_ArchieVictory::
 	msgbox SlateportCity_OceanicMuseum_2F_Text_ArchieWarning, MSGBOX_DEFAULT
 	closemessage
-
 	savebgm MUS_DUMMY
 	fadedefaultbgm
 	fadescreen FADE_TO_BLACK
@@ -89,9 +88,15 @@ SlateportCity_OceanicMuseum_2F_EventScript_ArchieVictory::
 	special HealPlayerParty
 	callnative UpdateFollowingPokemon
 	removeobject LOCALID_CAPT_STERN
-	setflag FLAG_HIDE_ROUTE_110_TEAM_AQUA
 	setflag FLAG_DELIVERED_DEVON_GOODS
-	clearflag FLAG_HIDE_ROUTE_116_DEVON_EMPLOYEE
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
+	setflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
+	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
+	setvar VAR_SLATEPORT_HARBOR_STATE, 1
+	clearflag FLAG_HIDE_SLATEPORT_CITY_CAPTAIN_STERN
 	setflag FLAG_HIDE_RUSTBORO_CITY_DEVON_CORP_3F_EMPLOYEE
 	setvar VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1
 	clearflag FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION
@@ -212,7 +217,7 @@ SlateportCity_OceanicMuseum_2F_Movement_GruntMoveForArchie:
 	delay_16
 	delay_16
 	delay_8
-	walk_fast_down
+	walk_down
 	walk_in_place_faster_up
 	step_end
 
@@ -327,26 +332,28 @@ SlateportCity_OceanicMuseum_2F_Text_CameToSeeWhatsTakingSoLong:
 SlateportCity_OceanicMuseum_2F_Text_ArchieWarning:
 	.string "What makes you interfere with us?\p"
 	.string "…No! You can't be!\n"
-	.string "You're not one of TEAM MAGMA?\p"
+	.string "You're not one of Team Magma?\p"
 	.string "Wait, that can't be right.\n"
 	.string "You're not dressed for the part.\p"
 	.string "… … … … … …\n"
 	.string "… … … … … …\p"
 	.string "POKéMON, people… All life depends on\n"
 	.string "the sea.\p"
-	.string "So, TEAM AQUA is dedicated to\n"
+	.string "So, Team Aqua is dedicated to\n"
 	.string "the expansion of the sea.\p"
-	.string "Don't you agree? What we are doing\n"
-	.string "is a magnificent undertaking.\p"
+	.string "Our rivals Team Magma plan to reduce\n"
+	.string "sea levels and expand the land.\p"
+	.string "Our actions are solely a contingency\n"
+	.string "against their misguided plans.\p"
 	.string "Ah, fine…\n"
 	.string "You're still too young to understand\l"
 	.string "our noble objective.\p"
 	.string "This matters not. While we have been\n"
 	.string "wasting time here, Shelly and Matt\l"
-	.string "have secured the exploration ship\n"
+	.string "have secured the submarine.\n"
 	.string "at the Slateport harbor.\p"
 	.string "Those Devon parts aren't necessary.\n"
-	.string "The ship is all Team Aqua needs!$"
+	.string "The submarine is all Team Aqua needs!$"
 
 SlateportCity_OceanicMuseum_2F_Text_SternThankYouForSavingUs:
 	.string "CAPT. STERN: You're…\n"
@@ -359,7 +366,7 @@ SlateportCity_OceanicMuseum_2F_Text_SternThankYouForSavingUs:
 SlateportCity_OceanicMuseum_2F_Text_SternIveGotToGo:
 	.string "CAPT. STERN: We have to hurry!\p"
 	.string "We must get to the harbor and\n"
-	.string "stop them taking the ship!$"
+	.string "stop them taking the submarine!$"
 
 SlateportCity_OceanicMuseum_2F_Text_RemindsMeOfAbandonedShip:
 	.string "I saw a model of a ship here.\p"
@@ -438,7 +445,7 @@ SlateportCity_OceanicMuseum_2F_Text_TheseAreTheChildren:
 	.string "These are the children you encountered\n"
 	.string "in Petalburg Woods?\p"
 	.string "In which case, you two go to the\n"
-	.string "harbor and secure the ship.\l"
+	.string "harbor and secure the submarine.\l"
 	.string "These kids are no match for me.$"
 
 SlateportCity_OceanicMuseum_2F_Text_ArchieDefeat:
@@ -446,5 +453,5 @@ SlateportCity_OceanicMuseum_2F_Text_ArchieDefeat:
 	.string "meddling in Team Aqua's affairs?$"
 
 SlateportCity_OceanicMuseum_2F_Text_YouWereWarned:
-	.string "I understand you've been given\n"
-	.string "a fair warning.$"
+	.string "I understand that you have\n"
+	.string "been given a fair warning.$"
