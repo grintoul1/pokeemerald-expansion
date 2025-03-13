@@ -7,6 +7,7 @@ RustboroCity_Gym_MapScripts::
 	.byte 0
 
 RustboroCity_Gym_EventScript_Roxanne::
+goto_if_set FLAG_BADGE01_GET, RustboroCity_Gym_EventScript_RoxannePostBattle
 lockall
 setvar VAR_0x8008, LOCALID_ROXANNE
 playse SE_PIN
@@ -47,6 +48,12 @@ walk_down
 step_end
 
 RustboroCity_Gym_EventScript_Roxanne2::
+	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
+	msgbox RustboroCity_Gym_Text_RoxannePostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_Gym_EventScript_RoxannePostBattle::
 	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
 	msgbox RustboroCity_Gym_Text_RoxannePostBattle, MSGBOX_DEFAULT
 	release

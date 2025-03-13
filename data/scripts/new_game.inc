@@ -272,5 +272,13 @@ EventScript_ResetAllMapFlags::
 	setflag FLAG_HIDE_EVER_GRANDE_POKEMON_CENTER_1F_SCOTT
 	setflag FLAG_HIDE_SKY_PILLAR_WALLACE
 	setflag FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL
+	clearflag FLAG_MARY_DEFEATED    
+	clearflag FLAG_RANDALL_DEFEATED  
+	clearflag FLAG_GEORGE_DEFEATED   
+	clearflag FLAG_ALEXIA_DEFEATED   
+	clearflag FLAG_PARKER_DEFEATED   
+	clearflag FLAG_BERKE_DEFEATED    
+	clearflag FLAG_JODY_DEFEATED 
+	clearflag FLAG_CYCLING_ROAD_CLEAR
 	call EventScript_ResetAllBerries
 	end

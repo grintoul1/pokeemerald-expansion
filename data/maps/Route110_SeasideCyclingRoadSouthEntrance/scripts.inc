@@ -13,6 +13,12 @@ Route110_SeasideCyclingRoadSouthEntrance_EventScript_BikeCheck::
 	specialvar VAR_RESULT, GetPlayerAvatarBike
 	goto_if_eq VAR_RESULT, 0, Route110_SeasideCyclingRoadSouthEntrance_EventScript_NoBike
 	setflag FLAG_SYS_CYCLING_ROAD
+	goto_if_unset FLAG_CYCLING_ROAD_CLEAR, Route110_SeasideCyclingRoadSouthEntrance_EventScript_CyclingRoadClear
+	setvar VAR_TEMP_1, 1
+	releaseall
+	end
+
+Route110_SeasideCyclingRoadSouthEntrance_EventScript_CyclingRoadClear::
 	setflag FLAG_CYCLING_ROAD_CLEAR
 	addvar VAR_ROUTE110_STATE, 1
 	setvar VAR_TEMP_1, 1

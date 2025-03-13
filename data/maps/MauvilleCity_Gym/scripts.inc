@@ -85,7 +85,14 @@ MauvilleCity_Gym_EventScript_Wattson2::
 	release
 	end
 
+MauvilleCity_Gym_EventScript_WattsonPostBattle::
+	goto_if_eq VAR_NEW_MAUVILLE_STATE, 2, MauvilleCity_Gym_EventScript_CompletedNewMauville
+	msgbox MauvilleCity_Gym_Text_WattsonPostBattle MSGBOX_AUTOCLOSE
+	release
+	end
+
 MauvilleCity_Gym_EventScript_Wattson::
+goto_if_set FLAG_BADGE03_GET, MauvilleCity_Gym_EventScript_WattsonPostBattle
 lockall
 setvar VAR_0x8008, LOCALID_WATTSON
 playse SE_PIN

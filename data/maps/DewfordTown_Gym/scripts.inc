@@ -172,6 +172,7 @@ walk_down
 step_end
 
 DewfordTown_Gym_EventScript_Brawly::
+	goto_if_unset FLAG_BADGE02_GET, DewfordTown_Gym_EventScript_Brawly2
 	goto_if_unset FLAG_RECEIVED_TM_BULK_UP, DewfordTown_Gym_EventScript_GiveBulkUp2
 	msgbox DewfordTown_Gym_Text_BrawlyPostBattle, MSGBOX_DEFAULT
 	release

@@ -16,7 +16,7 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_WATTSON",
-      "x": 4,
+      "x": 5,
       "y": 3,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -24,7 +24,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MauvilleCity_Gym_EventScript_Wattson2",
+      "script": "MauvilleCity_Gym_EventScript_Wattson",
       "flag": "FLAG_HIDE_MAUVILLE_GYM_WATTSON"
     },
     {
@@ -163,15 +163,6 @@
       "var": "VAR_MAUVILLECITY_GYM_STATE",
       "var_value": "1",
       "script": "MauvilleCity_Gym_EventScript_ShawnAngelo"
-    },
-    {
-      "type": "trigger",
-      "x": 4,
-      "y": 4,
-      "elevation": 0,
-      "var": "VAR_MAUVILLECITY_GYM_STATE",
-      "var_value": "2",
-      "script": "MauvilleCity_Gym_EventScript_Wattson"
     }
   ],
   "bg_events": [

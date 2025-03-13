@@ -17,7 +17,7 @@ PetalburgCity_Gym_MapScripts::
 	.byte 0
 
 PetalburgCity_Gym_OnLoad:
-	goto_if_eq VAR_PETALBURG_GYM_STATE, 6, PetalburgCity_Gym_EventScript_UnlockAllDoors
+	goto_if_eq VAR_PETALBURG_GYM_STATE, 6, PetalburgCity_Gym_EventScript_OpenGymEntranceDoors
 	goto_if_eq VAR_PETALBURG_GYM_STATE, 7, PetalburgCity_Gym_EventScript_UnlockAllDoors
 	goto_if_eq VAR_PETALBURG_GYM_STATE, 8, PetalburgCity_Gym_EventScript_UnlockAllDoors
 	goto_if_eq VAR_PETALBURG_GYM_STATE, 9, PetalburgCity_Gym_EventScript_UnlockAllDoors
@@ -28,14 +28,14 @@ PetalburgCity_Gym_OnLoad:
 PetalburgCity_Gym_EventScript_OpenUnlockedDoors::
 	setvar VAR_0x8005, 1
 	call PetalburgCity_Gym_EventScript_OpenGymEntranceDoors
-	call_if_defeated TRAINER_RANDALL, PetalburgCity_Gym_EventScript_OpenSpeedRoomDoors
-	call_if_defeated TRAINER_MARY, PetalburgCity_Gym_EventScript_OpenAccuracyRoomDoors
-	call_if_defeated TRAINER_PARKER, PetalburgCity_Gym_EventScript_OpenConfusionRoomDoors
-	call_if_defeated TRAINER_ALEXIA, PetalburgCity_Gym_EventScript_OpenDefenseRoomDoors
-	call_if_defeated TRAINER_GEORGE, PetalburgCity_Gym_EventScript_OpenRecoveryRoomDoors
-	call_if_defeated TRAINER_JODY, PetalburgCity_Gym_EventScript_OpenStrengthRoomDoors
-	call_if_defeated TRAINER_BERKE, PetalburgCity_Gym_EventScript_OpenOHKORoomDoors
-	end
+	call_if_set FLAG_RANDALL_DEFEATED, PetalburgCity_Gym_EventScript_OpenSpeedRoomDoors
+	call_if_set FLAG_MARY_DEFEATED, PetalburgCity_Gym_EventScript_OpenAccuracyRoomDoors
+	call_if_set FLAG_PARKER_DEFEATED, PetalburgCity_Gym_EventScript_OpenConfusionRoomDoors
+	call_if_set FLAG_ALEXIA_DEFEATED, PetalburgCity_Gym_EventScript_OpenDefenseRoomDoors
+	call_if_set FLAG_GEORGE_DEFEATED, PetalburgCity_Gym_EventScript_OpenRecoveryRoomDoors
+	call_if_set FLAG_JODY_DEFEATED, PetalburgCity_Gym_EventScript_OpenStrengthRoomDoors
+	call_if_set FLAG_BERKE_DEFEATED, PetalburgCity_Gym_EventScript_OpenOHKORoomDoors
+	end defeated
 
 PetalburgCity_Gym_EventScript_UnlockAllDoors::
 	setvar VAR_0x8005, 1
@@ -115,6 +115,7 @@ PetalburgCity_Gym_Movement_WallyExitGym:
 	step_end
 
 PetalburgCity_Gym_EventScript_NormanBattle::
+goto_if_set FLAG_BADGE05_GET, PetalburgCity_Gym_EventScript_Norman
 lockall
 setvar VAR_0x8008, LOCALID_NORMAN
 playse SE_PIN
@@ -431,6 +432,13 @@ PetalburgCity_Gym_EventScript_NormanDefeated::
 	setflag FLAG_BADGE05_GET
 	special ResetHealLocationFromDewford
 	setflag FLAG_HIDE_MAUVILLE_GYM_WATTSON
+	setflag FLAG_RANDALL_DEFEATED
+	setflag FLAG_MARY_DEFEATED
+	setflag FLAG_PARKER_DEFEATED
+	setflag FLAG_ALEXIA_DEFEATED
+	setflag FLAG_GEORGE_DEFEATED
+	setflag FLAG_JODY_DEFEATED
+	setflag FLAG_BERKE_DEFEATED
 	clearflag FLAG_HIDE_MAUVILLE_CITY_WATTSON
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
@@ -906,6 +914,7 @@ PetalburgCity_Gym_EventScript_RightGymLeadersRoomDoor::
 	end
 
 PetalburgCity_Gym_EventScript_Randall::
+goto_if_set FLAG_RANDALL_DEFEATED, PetalburgCity_Gym_EventScript_Randall2
 lockall
 setvar VAR_0x8008, LOCALID_RANDALL
 playse SE_PIN
@@ -932,8 +941,8 @@ PetalburgCity_Gym_EventScript_RandallVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_RandallPostBattle, MSGBOX_AUTOCLOSE
-call PetalburgCity_Gym_EventScript_UnlockAllDoors
-addvar VAR_PETALBURG_GYM_STATE, 1
+call PetalburgCity_Gym_EventScript_OpenSpeedRoomDoors
+setflag FLAG_RANDALL_DEFEATED
 end
 
 PetalburgCity_Gym_EventScript_Randall2::
@@ -953,6 +962,7 @@ PetalburgCity_Gym_EventScript_RandallPostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Parker::
+goto_if_set FLAG_PARKER_DEFEATED, PetalburgCity_Gym_EventScript_Parker2
 lockall
 setvar VAR_0x8008, LOCALID_PARKER
 playse SE_PIN
@@ -979,8 +989,8 @@ PetalburgCity_Gym_EventScript_ParkerVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_ParkerPostBattle, MSGBOX_AUTOCLOSE
-setvar VAR_PETALBURG_GYM_STATE, 8
-call PetalburgCity_Gym_EventScript_UnlockAllDoors
+call PetalburgCity_Gym_EventScript_OpenConfusionRoomDoors
+setflag FLAG_PARKER_DEFEATED
 end
 
 PetalburgCity_Gym_EventScript_Parker2::
@@ -1000,6 +1010,7 @@ PetalburgCity_Gym_EventScript_ParkerPostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_George::
+goto_if_set FLAG_GEORGE_DEFEATED, PetalburgCity_Gym_EventScript_George2
 lockall
 setvar VAR_0x8008, LOCALID_GEORGE
 playse SE_PIN
@@ -1026,8 +1037,8 @@ PetalburgCity_Gym_EventScript_GeorgeVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_GeorgePostBattle, MSGBOX_AUTOCLOSE
-setvar VAR_PETALBURG_GYM_STATE, 8
-call PetalburgCity_Gym_EventScript_UnlockAllDoors
+call PetalburgCity_Gym_EventScript_OpenRecoveryRoomDoors
+setflag FLAG_GEORGE_DEFEATED
 end
 
 PetalburgCity_Gym_EventScript_George2::
@@ -1047,6 +1058,7 @@ PetalburgCity_Gym_EventScript_GeorgePostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Berke::
+goto_if_set FLAG_BERKE_DEFEATED, PetalburgCity_Gym_EventScript_Berke2
 lockall
 setvar VAR_0x8008, LOCALID_BERKE
 playse SE_PIN
@@ -1073,8 +1085,8 @@ PetalburgCity_Gym_EventScript_BerkeVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_BerkePostBattle, MSGBOX_AUTOCLOSE
-call PetalburgCity_Gym_EventScript_UnlockAllDoors
-addvar VAR_PETALBURG_GYM_STATE, 1
+call PetalburgCity_Gym_EventScript_OpenOHKORoomDoors
+setflag FLAG_BERKE_DEFEATED
 end
 
 PetalburgCity_Gym_EventScript_Berke2::
@@ -1094,6 +1106,7 @@ PetalburgCity_Gym_EventScript_BerkePostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Mary::
+goto_if_set FLAG_MARY_DEFEATED, PetalburgCity_Gym_EventScript_Mary2
 lockall
 setvar VAR_0x8008, LOCALID_MARY
 playse SE_PIN
@@ -1120,8 +1133,8 @@ PetalburgCity_Gym_EventScript_MaryVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_MaryPostBattle, MSGBOX_AUTOCLOSE
-call PetalburgCity_Gym_EventScript_UnlockAllDoors
-addvar VAR_PETALBURG_GYM_STATE, 1
+call PetalburgCity_Gym_EventScript_OpenAccuracyRoomDoors
+setflag FLAG_MARY_DEFEATED
 end
 
 PetalburgCity_Gym_EventScript_Mary2::
@@ -1141,6 +1154,7 @@ PetalburgCity_Gym_EventScript_MaryPostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Alexia::
+goto_if_set FLAG_ALEXIA_DEFEATED, PetalburgCity_Gym_EventScript_Alexia2
 lockall
 setvar VAR_0x8008, LOCALID_ALEXIA
 playse SE_PIN
@@ -1167,8 +1181,8 @@ PetalburgCity_Gym_EventScript_AlexiaVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_AlexiaPostBattle, MSGBOX_AUTOCLOSE
-setvar VAR_PETALBURG_GYM_STATE, 8
-call PetalburgCity_Gym_EventScript_UnlockAllDoors
+call PetalburgCity_Gym_EventScript_OpenDefenseRoomDoors
+setflag FLAG_ALEXIA_DEFEATED
 end
 
 PetalburgCity_Gym_EventScript_Alexia2::
@@ -1188,6 +1202,7 @@ PetalburgCity_Gym_EventScript_AlexiaPostBadge::
 	end
 
 PetalburgCity_Gym_EventScript_Jody::
+goto_if_set FLAG_JODY_DEFEATED, PetalburgCity_Gym_EventScript_Jody2
 lockall
 setvar VAR_0x8008, LOCALID_JODY
 playse SE_PIN
@@ -1214,8 +1229,8 @@ PetalburgCity_Gym_EventScript_JodyVictory::
 applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 waitmovement 0
 msgbox PetalburgCity_Gym_Text_JodyPostBattle, MSGBOX_AUTOCLOSE
-call PetalburgCity_Gym_EventScript_UnlockAllDoors
-addvar VAR_PETALBURG_GYM_STATE, 1
+call PetalburgCity_Gym_EventScript_OpenStrengthRoomDoors
+setflag FLAG_JODY_DEFEATED
 end
 
 PetalburgCity_Gym_EventScript_Jody2::
@@ -1584,18 +1599,16 @@ PetalburgCity_Gym_Text_DadNoAmountOfTrainingIsEnough:
 
 PetalburgCity_Gym_Text_GymGuideAdvice:
 	.string "Hey, how's it going, kids?\p"
-	.string "Norman has decided to open every\n"
-	.string "door in the gym for you.\p"
-	.string "You will have to defeat three\n"
-	.string "trainers before facing Norman.\p"
+	.string "The doors in this GYM open when you\n"
+	.string "beat the awaiting TRAINERS.\p"
+	.string "Whoops! The doors in this room are\n"
+	.string "already open, so don't attack me!\p"
 	.string "The door at the left leads to\n"
 	.string "the SPEED ROOM.\p"
 	.string "The door at the right leads to\n"
 	.string "the ACCURACY ROOM.\p"
-	.string "Once you defeat either trainer, you\n"
-	.string "may progress through either room.\p"
-	.string "This means you can face any of the\n"
-	.string "three trainers in the next rooms.\p"
+	.string "The room's name will be on\n"
+	.string "the door, so choose carefully.\p"
 	.string "Every battle in the gym will be a\n"
 	.string "two vs one double battle.\p"
 	.string "Choose your doors carefully, and\n"

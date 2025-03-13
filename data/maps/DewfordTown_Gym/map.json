@@ -162,15 +162,6 @@
       "var": "VAR_DEWFORD_TOWN_STATE",
       "var_value": "2",
       "script": "DewfordTown_Gym_EventScript_LilithJocelyn"
-    },
-    {
-      "type": "trigger",
-      "x": 4,
-      "y": 4,
-      "elevation": 0,
-      "var": "VAR_DEWFORD_TOWN_STATE",
-      "var_value": "3",
-      "script": "DewfordTown_Gym_EventScript_Brawly2"
     }
   ],
   "bg_events": [
