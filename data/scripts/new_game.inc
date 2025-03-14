@@ -280,5 +280,7 @@ EventScript_ResetAllMapFlags::
 	clearflag FLAG_BERKE_DEFEATED    
 	clearflag FLAG_JODY_DEFEATED 
 	clearflag FLAG_CYCLING_ROAD_CLEAR
+	clearflag FLAG_HIDE_ROUTE_111_AQUA_1
+	setflag FLAG_HIDE_ROUTE_111_AQUA_2
 	call EventScript_ResetAllBerries
 	end
