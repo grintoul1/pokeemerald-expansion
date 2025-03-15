@@ -64,7 +64,6 @@ static void ItemUseOnFieldCB_Rod(u8);
 static void ItemUseOnFieldCB_Itemfinder(u8);
 static void ItemUseOnFieldCB_Berry(u8);
 static void ItemUseCB_PokeVial(u8);
-static void ItemUseCB_Repellent(u8);
 static void ItemUseOnFieldCB_WailmerPailBerry(u8);
 static void ItemUseOnFieldCB_WailmerPailSudowoodo(u8);
 static bool8 TryToWaterSudowoodo(void);
@@ -73,10 +72,8 @@ static void Task_ShowTMHMContainedMessage(u8);
 static void UseTMHMYesNo(u8);
 static void UseTMHM(u8);
 static void Task_StartUseRepel(u8);
-static void Task_StartUseRepellent(u8);
 static void Task_StartUseLure(u8 taskId);
 static void Task_UseRepel(u8);
-static void Task_UseRepellent(u8);
 static void Task_UseLure(u8 taskId);
 static void Task_CloseCantUseKeyItemMessage(u8);
 static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
@@ -703,25 +700,29 @@ void ItemUseCB_PokeVial(u8 taskId)
 
 void ItemUseOutOfBattle_Repellent(u8 taskId)
 {
-    if (!gTasks[taskId].tUsingRegisteredKeyItem)
+    bool8 repellentOn = FlagGet(OW_FLAG_NO_ENCOUNTER);
+    if (!repellentOn)
     {
-        sItemUseOnFieldCB = ItemUseCB_Repellent;
-        gFieldCallback = FieldCB_UseItemOnField;
-        gBagMenu->newScreenCallback = CB2_ReturnToField;
-        Task_FadeAndCloseBagMenu(taskId);
+        FlagToggle(OW_FLAG_NO_ENCOUNTER);
+        PlaySE(SE_REPEL);
+        if(gTasks[taskId].tUsingRegisteredKeyItem){
+            DisplayItemMessageOnField(taskId, gText_RepellentOn, Task_CloseCantUseKeyItemMessage);
+        }
+        else{
+            DisplayItemMessage(taskId, 1, gText_RepellentOn, CloseItemMessage);
+        }
     }
-    else{
-        sItemUseOnFieldCB = ItemUseCB_Repellent;
-        SetUpItemUseOnFieldCallback(taskId);
+    else
+    {
+        FlagToggle(OW_FLAG_NO_ENCOUNTER);
+        PlaySE(SE_PC_OFF);
+        if (gTasks[taskId].tUsingRegisteredKeyItem){
+            DisplayItemMessageOnField(taskId, gText_RepellentOff, Task_CloseCantUseKeyItemMessage);
+        }
+        else{
+            DisplayItemMessage(taskId, 1, gText_RepellentOff, CloseItemMessage);
+        }
     }
-}
-
-void ItemUseCB_Repellent(u8 taskId)
-{
-    if (REPEL_STEP_COUNT == 0)
-    gTasks[taskId].func = Task_StartUseRepellent;
-    else 
-    VarSet(VAR_REPEL_STEP_COUNT, 0);
 }
 
 static void CB2_OpenPokeblockFromBag(void)
@@ -996,18 +997,6 @@ static void Task_StartUseRepel(u8 taskId)
     }
 }
 
-static void Task_StartUseRepellent(u8 taskId)
-{
-    s16 *data = gTasks[taskId].data;
-
-    if (++data[8] > 7)
-    {
-        data[8] = 0;
-        PlaySE(SE_REPEL);
-        gTasks[taskId].func = Task_UseRepellent;
-    }
-}
-
 static void Task_UseRepel(u8 taskId)
 {
     if (!IsSEPlaying())
@@ -1017,21 +1006,6 @@ static void Task_UseRepel(u8 taskId)
         VarSet(VAR_LAST_REPEL_LURE_USED, gSpecialVar_ItemId);
     #endif
         RemoveUsedItem();
-        if (!InBattlePyramid())
-            DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
-        else
-            DisplayItemMessageInBattlePyramid(taskId, gStringVar4, Task_CloseBattlePyramidBagMessage);
-    }
-}
-
-static void Task_UseRepellent(u8 taskId)
-{
-    if (!IsSEPlaying())
-    {
-        VarSet(VAR_REPEL_STEP_COUNT, ItemId_GetHoldEffectParam(gSpecialVar_ItemId));
-    #if VAR_LAST_REPEL_LURE_USED != 0
-        VarSet(VAR_LAST_REPEL_LURE_USED, gSpecialVar_ItemId);
-    #endif
         if (!InBattlePyramid())
             DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
         else

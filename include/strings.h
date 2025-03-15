@@ -830,6 +830,8 @@ extern const u8 gText_RepelEffectsLingered[];
 extern const u8 gText_LureEffectsLingered[];
 extern const u8 gText_UsedVar2WildLured[];
 extern const u8 gText_UsedVar2WildRepelled[];
+extern const u8 gText_RepellentOn[];
+extern const u8 gText_RepellentOff[];
 extern const u8 gText_BoxFull[];
 extern const u8 gText_WontHaveEffect[];
 extern const u8 gText_NextFusionMon[];

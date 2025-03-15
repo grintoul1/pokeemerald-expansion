@@ -1,4 +1,8 @@
 .set LOCALID_HIDEOUT_GUARD, 5
+.set LOCALID_ERIC, 1
+.set LOCALID_DIANA, 4
+.set LOCALID_AUTUMN, 6
+.set LOCALID_JULIO, 7
 
 JaggedPass_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, JaggedPass_OnResume
@@ -8,7 +12,7 @@ JaggedPass_MapScripts::
 
 JaggedPass_OnResume:
 	setstepcallback STEP_CB_ASH
-	call_if_eq VAR_JAGGED_PASS_STATE, 0, JaggedPass_EventScript_CheckHasMagmaEmblem
+	call_if_eq VAR_JAGGED_PASS_STATE, 3, JaggedPass_EventScript_CheckHasMagmaEmblem
 	end
 
 JaggedPass_EventScript_CheckHasMagmaEmblem::
@@ -17,7 +21,7 @@ JaggedPass_EventScript_CheckHasMagmaEmblem::
 	return
 
 JaggedPass_EventScript_SetReadyToOpenHideout::
-	setvar VAR_JAGGED_PASS_STATE, 1
+	setvar VAR_JAGGED_PASS_STATE, 4
 	return
 
 JaggedPass_OnTransition:
@@ -30,7 +34,7 @@ JaggedPass_EventScript_SetWeatherAsh::
 	return
 
 JaggedPass_OnLoad:
-	goto_if_le VAR_JAGGED_PASS_STATE, 1, JaggedPass_EventScript_ConcealHideoutEntrance
+	goto_if_le VAR_JAGGED_PASS_STATE, 4, JaggedPass_EventScript_ConcealHideoutEntrance
 	end
 
 JaggedPass_EventScript_ConcealHideoutEntrance::
@@ -59,7 +63,7 @@ JaggedPass_EventScript_OpenMagmaHideout::
 	setmetatile 16, 18, METATILE_Lavaridge_CaveEntrance_Bottom, FALSE
 	special DrawWholeMapView
 	delay 30
-	setvar VAR_JAGGED_PASS_STATE, 2
+	setvar VAR_JAGGED_PASS_STATE, 4
 	waitse
 	releaseall
 	end
@@ -77,7 +81,14 @@ JaggedPass_EventScript_MagmaHideoutGuard::
 	waitmovement 0
 	msgbox JaggedPass_Text_GruntIntro, MSGBOX_DEFAULT
 	closemessage
-	trainerbattle_no_intro TRAINER_GRUNT_JAGGED_PASS, JaggedPass_Text_GruntDefeat
+	multi_2p_vs_1 TRAINER_GRUNT_JAGGED_PASS, JaggedPass_Text_GruntDefeat, PARTNER_EMMIE
+	switch VAR_RESULT
+	case 1, JaggedPass_EventScript_MagmaGruntVictory
+	fadescreen FADE_TO_BLACK
+	special SetCB2WhiteOut
+	waitstate
+
+JaggedPass_EventScript_MagmaGruntVictory::
 	setflag FLAG_BEAT_MAGMA_GRUNT_JAGGED_PASS
 	applymovement LOCALID_HIDEOUT_GUARD, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -94,15 +105,52 @@ JaggedPass_EventScript_GuardDefeated::
 	releaseall
 	end
 
+JaggedPass_EventScript_EricDiana::
+lockall
+setvar VAR_0x8008, LOCALID_ERIC
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox JaggedPass_Text_EricIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_DIANA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox JaggedPass_Text_DianaIntro MSGBOX_AUTOCLOSE
+goto JaggedPass_EventScript_EricDianaDoMultiBattle
+releaseall
+end
+
+JaggedPass_EventScript_EricDianaDoMultiBattle::
+playbgm MUS_PETALBURG_WOODS, TRUE
+multi_2p_vs_2 TRAINER_ERIC, JaggedPass_Text_EricDefeat, TRAINER_DIANA_1, JaggedPass_Text_DianaDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, JaggedPass_EventScript_EricDianaVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+JaggedPass_EventScript_EricDianaVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox JaggedPass_Text_EricPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox JaggedPass_Text_DianaPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_JAGGED_PASS_STATE, 1
+end
+
 JaggedPass_EventScript_Eric::
-	trainerbattle_single TRAINER_ERIC, JaggedPass_Text_EricIntro, JaggedPass_Text_EricDefeat
 	msgbox JaggedPass_Text_EricPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 JaggedPass_EventScript_Diana::
-	trainerbattle_single TRAINER_DIANA_1, JaggedPass_Text_DianaIntro, JaggedPass_Text_DianaDefeat, JaggedPass_EventScript_RegisterDiana
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, JaggedPass_EventScript_DianaRematch
 	msgbox JaggedPass_Text_DianaPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -140,12 +188,51 @@ JaggedPass_EventScript_EthanRematch::
 	end
 
 JaggedPass_EventScript_Julio::
-	trainerbattle_single TRAINER_JULIO, JaggedPass_Text_JulioIntro, JaggedPass_Text_JulioDefeat
 	msgbox JaggedPass_Text_JulioPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+JaggedPass_EventScript_AutumnJulio::
+lockall
+setvar VAR_0x8008, LOCALID_AUTUMN
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox JaggedPass_Text_AutumnIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_JULIO
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox JaggedPass_Text_JulioIntro MSGBOX_AUTOCLOSE
+goto JaggedPass_EventScript_AutumnJulioDoMultiBattle
+releaseall
+end
+
+JaggedPass_EventScript_AutumnJulioDoMultiBattle::
+playbgm MUS_PETALBURG_WOODS, TRUE
+multi_2p_vs_2 TRAINER_AUTUMN, JaggedPass_Text_AutumnDefeat, TRAINER_JULIO, JaggedPass_Text_JulioDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, JaggedPass_EventScript_AutumnJulioVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+JaggedPass_EventScript_AutumnJulioVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox JaggedPass_Text_AutumnPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox JaggedPass_Text_JulioPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_JAGGED_PASS_STATE, 1
+end
+
 JaggedPass_EventScript_Autumn::
-	trainerbattle_single TRAINER_AUTUMN, JaggedPass_Text_AutumnIntro, JaggedPass_Text_AutumnDefeat
 	msgbox JaggedPass_Text_AutumnPostBattle, MSGBOX_AUTOCLOSE
 	end
 

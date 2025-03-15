@@ -199,6 +199,8 @@ const u8 gText_ThePC[] = _("the PC");
 const u8 gText_PlayedPokeFluteCatchy[] = _("Played the POKé FLUTE.\pNow, that's a catchy tune!{PAUSE_UNTIL_PRESS}");
 const u8 gText_PlayedPokeFlute[] = _("Played the POKé FLUTE.");
 const u8 gText_PokeFluteAwakenedMon[] = _("The POKé FLUTE awakened sleeping\nPOKéMON.{PAUSE_UNTIL_PRESS}");
+const u8 gText_RepellentOn[] = _("The Repellent is now activated.\n Wild Pokemon will be repelled!{PAUSE_UNTIL_PRESS}");
+const u8 gText_RepellentOff[] = _("The Repellent is now deactivated.\n Wild Pokemon will appear!{PAUSE_UNTIL_PRESS}");
 
 const u8 *const gBagMenu_ReturnToStrings[] =
 {

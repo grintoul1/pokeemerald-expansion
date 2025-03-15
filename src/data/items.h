@@ -138,6 +138,9 @@ static const u8 sGenericMulchDesc[]   = _("A fertilizer that\n"
                                           "is unsuitable for\n"
                                           "local soil.");
 
+static const u8 sRepellentDesc[]      = _("Repels weak wild\n"
+                                        "Pokémon.");
+
 const struct Item gItemsInfo[] =
 {
     [ITEM_NONE] =
@@ -14130,10 +14133,7 @@ const struct Item gItemsInfo[] =
     {
         .name = _("Repellent"),
         .price = 0,
-        .holdEffectParam = 250,
-        .description = COMPOUND_STRING(
-            "Repels weak wild\n"
-            "Pokémon."),
+        .description = sRepellentDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_BAG_MENU,
