@@ -1,3 +1,14 @@
+.set LOCALID_ALIX, 20
+.set LOCALID_NOB, 3
+.set LOCALID_HECTOR, 9
+.set LOCALID_MARLENE, 21
+.set LOCALID_CYNDY, 7
+.set LOCALID_HELENE, 19
+.set LOCALID_JAIDEN, 18
+.set LOCALID_KYRA, 17
+.set LOCALID_KOICHI, 8
+.set LOCALID_TIMOTHY, 2
+
 Route115_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Route115_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, Route115_OnTransition
@@ -58,9 +69,6 @@ Route115_EventScript_Koichi::
 	end
 
 Route115_EventScript_Nob::
-	trainerbattle_single TRAINER_NOB_1, Route115_Text_NobIntro, Route115_Text_NobDefeat, Route115_EventScript_RegisterNob
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route115_EventScript_RematchNob
 	msgbox Route115_Text_NobPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -99,8 +107,48 @@ Route115_EventScript_RematchCyndy::
 	msgbox Route115_Text_CyndyPostRematch, MSGBOX_AUTOCLOSE
 	end
 
+Route115_EventScript_HectorMarlene::
+lockall
+setvar VAR_0x8008, LOCALID_HECTOR
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_SUSPICIOUS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route115_Text_HectorIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_MARLENE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route115_Text_MarleneIntro MSGBOX_AUTOCLOSE
+goto Route115_EventScript_HectorMarleneDoMultiBattle
+releaseall
+end
+
+Route115_EventScript_HectorMarleneDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_HECTOR, Route115_Text_HectorDefeat, TRAINER_MARLENE, Route115_Text_MarleneDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route115_EventScript_HectorMarleneVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route115_EventScript_HectorMarleneVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route115_Text_HectorPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route115_Text_MarlenePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE115_STATE, 1
+end
+
 Route115_EventScript_Hector::
-	trainerbattle_single TRAINER_HECTOR, Route115_Text_HectorIntro, Route115_Text_HectorDefeat
 	msgbox Route115_Text_HectorPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -114,8 +162,48 @@ Route115_EventScript_Jaiden::
 	msgbox Route115_Text_JaidenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route115_EventScript_AlixNob::
+lockall
+setvar VAR_0x8008, LOCALID_ALIX
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route115_Text_AlixIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_NOB
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route115_Text_NobIntro MSGBOX_AUTOCLOSE
+goto Route115_EventScript_AlixNobDoMultiBattle
+releaseall
+end
+
+Route115_EventScript_AlixNobDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_ALIX, Route115_Text_AlixDefeat, TRAINER_NOB_1, Route115_Text_NobDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route115_EventScript_AlixNobVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route115_EventScript_AlixNobVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route115_Text_AlixPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route115_Text_NobPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE115_STATE, 1
+end
+
 Route115_EventScript_Alix::
-	trainerbattle_single TRAINER_ALIX, Route115_Text_AlixIntro, Route115_Text_AlixDefeat
 	msgbox Route115_Text_AlixPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -125,7 +213,6 @@ Route115_EventScript_Helene::
 	end
 
 Route115_EventScript_Marlene::
-	trainerbattle_single TRAINER_MARLENE, Route115_Text_MarleneIntro, Route115_Text_MarleneDefeat
 	msgbox Route115_Text_MarlenePostBattle, MSGBOX_AUTOCLOSE
 	end
 

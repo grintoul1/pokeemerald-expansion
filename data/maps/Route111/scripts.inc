@@ -370,7 +370,7 @@ Route111_EventScript_BattleWinstrates::
 	setflag FLAG_HIDE_ROUTE_111_VICTORIA_WINSTRATE
 	setflag FLAG_HIDE_ROUTE_111_VIVI_WINSTRATE
 	setflag FLAG_HIDE_ROUTE_111_VICKY_WINSTRATE
-	setflag FLAG_HIDE_R111_AQUA_2
+	setflag FLAG_HIDE_ROUTE_111_AQUA_2
 	release
 	end
 
@@ -928,23 +928,23 @@ msgbox Route111_Text_BrandenPostBattle, MSGBOX_AUTOCLOSE
 addvar VAR_ROUTE111_STATE, 1
 end
 
-Route111_EventScript_AquaGrunt1:
+Route111_EventScript_AquaGrunt1::
 	msgbox Route111_Text_Aqua_1, MSGBOX_NPC
 	end
 
-Route111_EventScript_AquaGrunt2:
+Route111_EventScript_AquaGrunt2::
 	msgbox Route111_Text_Aqua_2, MSGBOX_NPC
 	end
 
-Route111_EventScript_AquaGrunt3:
+Route111_EventScript_AquaGrunt3::
 	msgbox Route111_Text_Aqua_3, MSGBOX_NPC
 	end
 
-Route111_EventScript_AquaGrunt4:
+Route111_EventScript_AquaGrunt4::
 	msgbox Route111_Text_Aqua_4, MSGBOX_NPC
 	end
 
-Route111_EventScript_AquaGrunt5:
+Route111_EventScript_AquaGrunt5::
 	msgbox Route111_Text_Aqua_5, MSGBOX_NPC
 	end
 
@@ -1120,15 +1120,15 @@ Route111_Text_Aqua_2:
 	.string "Nobody is getting past us!$"
 
 Route111_Text_Aqua_3:
-	.string "Shelly gave us strict orders to\n"
-	.string "let nobody through here!$"
+	.string "Shelly gave us strict orders to let\n"
+	.string "nobody through here!$"
 
 Route111_Text_Aqua_4:
-	.string "By order of Team Aqua, nobody is\n"
-	.string "allowed near Mt. Chimney!$"
+	.string "By order of Team Aqua, nobody is allowed\n"
+	.string "near Mt. Chimney!$"
 
 Route111_Text_Aqua_5:
-	.string "Team Magma's Tabitha just came\n"
-	.string "through and trounced us!\p"
+	.string "Team Magma's Tabitha just came through\n"
+	.string "here and trounced us!\p"
 	.string "He was making his way up to Mt.\n"
 	.string "Chimney.$"

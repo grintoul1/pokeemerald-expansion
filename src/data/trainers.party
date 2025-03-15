@@ -3647,10 +3647,10 @@ Slugma
 Level: 23
 IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
 
-=== TRAINER_BERNIE_1 ===
-Name: BERNIE
-Class: Kindler
-Pic: Kindler
+=== TRAINER_GRUNT_ROUTE_114_1 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt M
 Gender: Male
 Music: Hiker
 Double Battle: No
@@ -3795,11 +3795,11 @@ Nuzleaf
 Level: 18
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_SHANE ===
-Name: SHANE
-Class: Camper
-Pic: Camper
-Gender: Male
+=== TRAINER_GRUNT_ROUTE_114_6 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt F
+Gender: Female
 Music: Male
 Double Battle: No
 AI: Check Bad Move
@@ -8660,11 +8660,11 @@ Lombre
 Level: 17
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_NANCY ===
-Name: NANCY
-Class: Picnicker
-Pic: Picnicker
-Gender: Female
+=== TRAINER_GRUNT_ROUTE_114_5 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt M
+Gender: Male
 Music: Girl
 Double Battle: No
 AI: Check Bad Move
@@ -11120,6 +11120,7 @@ IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 Name: MAXIE
 Class: Magma Leader
 Pic: Magma Leader Maxie
+Mugshot: Blue
 Gender: Male
 Music: Magma
 Items: Super Potion / Super Potion
@@ -11579,11 +11580,11 @@ Geodude
 Level: 16
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_LENNY ===
-Name: LENNY
-Class: Hiker
-Pic: Hiker
-Gender: Male
+=== TRAINER_GRUNT_ROUTE_114_3 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt F
+Gender: Female
 Music: Hiker
 Double Battle: No
 AI: Check Bad Move
@@ -11596,10 +11597,10 @@ Machop
 Level: 18
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_LUCAS_1 ===
-Name: LUCAS
-Class: Hiker
-Pic: Hiker
+=== TRAINER_GRUNT_ROUTE_114_2 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt M
 Gender: Male
 Music: Hiker
 Double Battle: No
@@ -13297,10 +13298,10 @@ Aron
 Level: 18
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_ANGELINA ===
-Name: ANGELINA
-Class: Picnicker
-Pic: Picnicker
+=== TRAINER_GRUNT_ROUTE_114_4 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt F
 Gender: Female
 Music: Girl
 Double Battle: No

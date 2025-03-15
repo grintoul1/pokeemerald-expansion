@@ -1,3 +1,16 @@
+.set LOCALID_GRUNT_ROUTE_114_1, 17
+.set LOCALID_GRUNT_ROUTE_114_2, 4
+.set LOCALID_GRUNT_ROUTE_114_3, 3
+.set LOCALID_GRUNT_ROUTE_114_4, 25
+.set LOCALID_GRUNT_ROUTE_114_5, 6
+.set LOCALID_GRUNT_ROUTE_114_6, 5
+.set LOCALID_IVY, 22
+.set LOCALID_TYRA, 23
+.set LOCALID_KAI, 27
+.set LOCALID_CLAUDE, 16
+.set LOCALID_STEVE, 7
+.set LOCALID_CHARLOTTE, 24
+
 Route114_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route114_OnTransition
 	map_script MAP_SCRIPT_ON_LOAD, Route114_OnLoad
@@ -79,30 +92,146 @@ Route114_EventScript_LanettesHouseSign::
 	msgbox Route114_Text_LanettesHouse, MSGBOX_SIGN
 	end
 
-Route114_EventScript_Lenny::
-	trainerbattle_single TRAINER_LENNY, Route114_Text_LennyIntro, Route114_Text_LennyDefeat
-	msgbox Route114_Text_LennyPostBattle, MSGBOX_AUTOCLOSE
+Route114_EventScript_Grunt_Route_114_3Grunt_Route_114_4::
+lockall
+setvar VAR_0x8008, LOCALID_GRUNT_ROUTE_114_3
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_3Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_GRUNT_ROUTE_114_4
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_4Intro MSGBOX_AUTOCLOSE
+goto Route114_EventScript_Grunt_Route_114_3Grunt_Route_114_4DoMultiBattle
+releaseall
+end
+
+Route114_EventScript_Grunt_Route_114_3Grunt_Route_114_4DoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_ROUTE_114_3, Route114_Text_Grunt_Route_114_3Defeat, TRAINER_GRUNT_ROUTE_114_4, Route114_Text_Grunt_Route_114_4Defeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route114_EventScript_Grunt_Route_114_3Grunt_Route_114_4Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route114_EventScript_Grunt_Route_114_3Grunt_Route_114_4Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_3PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_4PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE114_STATE, 1
+end
+
+Route114_EventScript_Grunt_Route_114_3::
+	msgbox Route114_Text_Grunt_Route_114_3PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route114_EventScript_Lucas::
-	trainerbattle_single TRAINER_LUCAS_1, Route114_Text_LucasIntro, Route114_Text_LucasDefeat
-	msgbox Route114_Text_LucasPostBattle, MSGBOX_AUTOCLOSE
+Route114_EventScript_Grunt_Route_114_2::
+	msgbox Route114_Text_Grunt_Route_114_2PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route114_EventScript_Shane::
-	trainerbattle_single TRAINER_SHANE, Route114_Text_ShaneIntro, Route114_Text_ShaneDefeat
-	msgbox Route114_Text_ShanePostBattle, MSGBOX_AUTOCLOSE
+Route114_EventScript_Grunt_Route_114_6::
+	msgbox Route114_Text_Grunt_Route_114_6PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route114_EventScript_Nancy::
-	trainerbattle_single TRAINER_NANCY, Route114_Text_NancyIntro, Route114_Text_NancyDefeat
-	msgbox Route114_Text_NancyPostBattle, MSGBOX_AUTOCLOSE
+Route114_EventScript_Grunt_Route_114_5Grunt_Route_114_6::
+lockall
+setvar VAR_0x8008, LOCALID_GRUNT_ROUTE_114_5
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_5Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_GRUNT_ROUTE_114_6
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_6Intro MSGBOX_AUTOCLOSE
+goto Route114_EventScript_Grunt_Route_114_5Grunt_Route_114_6DoMultiBattle
+releaseall
+end
+
+Route114_EventScript_Grunt_Route_114_5Grunt_Route_114_6DoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_ROUTE_114_5, Route114_Text_Grunt_Route_114_5Defeat, TRAINER_GRUNT_ROUTE_114_6, Route114_Text_Grunt_Route_114_6Defeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route114_EventScript_Grunt_Route_114_5Grunt_Route_114_6Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route114_EventScript_Grunt_Route_114_5Grunt_Route_114_6Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_5PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_6PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE114_STATE, 1
+end
+
+Route114_EventScript_Grunt_Route_114_5::
+	msgbox Route114_Text_Grunt_Route_114_5PostBattle, MSGBOX_AUTOCLOSE
 	end
+
+Route114_EventScript_SteveCharlotte::
+lockall
+setvar VAR_0x8008, LOCALID_STEVE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_SUSPICIOUS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route114_Text_SteveIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_CHARLOTTE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route114_Text_CharlotteIntro MSGBOX_AUTOCLOSE
+goto Route114_EventScript_SteveCharlotteDoMultiBattle
+releaseall
+end
+
+Route114_EventScript_SteveCharlotteDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_STEVE_1, Route114_Text_SteveDefeat, TRAINER_CHARLOTTE, Route114_Text_CharlotteDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route114_EventScript_SteveCharlotteVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route114_EventScript_SteveCharlotteVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route114_Text_StevePostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route114_Text_CharlottePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE114_STATE, 1
+end
 
 Route114_EventScript_Steve::
-	trainerbattle_single TRAINER_STEVE_1, Route114_Text_SteveIntro, Route114_Text_SteveDefeat, Route114_EventScript_RegisterSteve
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route114_EventScript_RematchSteve
 	msgbox Route114_Text_StevePostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -120,11 +249,49 @@ Route114_EventScript_RematchSteve::
 	msgbox Route114_Text_StevePostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route114_EventScript_Bernie::
-	trainerbattle_single TRAINER_BERNIE_1, Route114_Text_BernieIntro, Route114_Text_BernieDefeat, Route114_EventScript_RegisterBernie
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route114_EventScript_RematchBernie
-	msgbox Route114_Text_BerniePostBattle, MSGBOX_DEFAULT
+Route114_EventScript_Grunt_Route_114_1Grunt_Route_114_2::
+lockall
+setvar VAR_0x8008, LOCALID_GRUNT_ROUTE_114_1
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_1Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_GRUNT_ROUTE_114_2
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_2Intro MSGBOX_AUTOCLOSE
+goto Route114_EventScript_Grunt_Route_114_1Grunt_Route_114_2DoMultiBattle
+releaseall
+end
+
+Route114_EventScript_Grunt_Route_114_1Grunt_Route_114_2DoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_ROUTE_114_1, Route114_Text_Grunt_Route_114_1Defeat, TRAINER_GRUNT_ROUTE_114_2, Route114_Text_Grunt_Route_114_2Defeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route114_EventScript_Grunt_Route_114_1Grunt_Route_114_2Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route114_EventScript_Grunt_Route_114_1Grunt_Route_114_2Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_1PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route114_Text_Grunt_Route_114_2PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE114_STATE, 1
+end
+
+Route114_EventScript_Grunt_Route_114_1::
+	msgbox Route114_Text_Grunt_Route_114_1PostBattle, MSGBOX_DEFAULT
 	release
 	end
 
@@ -132,17 +299,16 @@ Route114_EventScript_RegisterBernie::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox Route114_Text_BernieRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_BERNIE_1
+	register_matchcall TRAINER_BERNIE_2
 	release
 	end
 
 Route114_EventScript_RematchBernie::
-	trainerbattle_rematch TRAINER_BERNIE_1, Route114_Text_BernieRematchIntro, Route114_Text_BernieRematchDefeat
+	trainerbattle_rematch TRAINER_BERNIE_2, Route114_Text_BernieRematchIntro, Route114_Text_BernieRematchDefeat
 	msgbox Route114_Text_BerniePostRematch, MSGBOX_AUTOCLOSE
 	end
 
 Route114_EventScript_Claude::
-	trainerbattle_single TRAINER_CLAUDE, Route114_Text_ClaudeIntro, Route114_Text_ClaudeDefeat
 	msgbox Route114_Text_ClaudePostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -151,28 +317,94 @@ Route114_EventScript_Nolan::
 	msgbox Route114_Text_NolanPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route114_EventScript_IvyTyra::
+lockall
+setvar VAR_0x8008, LOCALID_IVY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_TWINS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route114_Text_IvyIntro MSGBOX_AUTOCLOSE
+goto Route114_EventScript_IvyTyraDoMultiBattle
+releaseall
+end
+
+Route114_EventScript_IvyTyraDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_1 TRAINER_TYRA_AND_IVY, Route114_Text_IvyDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route114_EventScript_IvyTyraVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route114_EventScript_IvyTyraVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route114_Text_IvyPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE114_STATE, 1
+end
+
 Route114_EventScript_Tyra::
-	trainerbattle_double TRAINER_TYRA_AND_IVY, Route114_Text_TyraIntro, Route114_Text_TyraDefeat, Route114_Text_TyraNotEnoughMons
 	msgbox Route114_Text_TyraPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route114_EventScript_Ivy::
-	trainerbattle_double TRAINER_TYRA_AND_IVY, Route114_Text_IvyIntro, Route114_Text_IvyDefeat, Route114_Text_IvyNotEnoughMons
 	msgbox Route114_Text_IvyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route114_EventScript_Angelina::
-	trainerbattle_single TRAINER_ANGELINA, Route114_Text_AngelinaIntro, Route114_Text_AngelinaDefeat
-	msgbox Route114_Text_AngelinaPostBattle, MSGBOX_AUTOCLOSE
+Route114_EventScript_Grunt_Route_114_4::
+	msgbox Route114_Text_Grunt_Route_114_4PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route114_EventScript_Charlotte::
-	trainerbattle_single TRAINER_CHARLOTTE, Route114_Text_CharlotteIntro, Route114_Text_CharlotteDefeat
 	msgbox Route114_Text_CharlottePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route114_EventScript_KaiClaude::
+lockall
+setvar VAR_0x8008, LOCALID_KAI
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route114_Text_KaiIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_CLAUDE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route114_Text_ClaudeIntro MSGBOX_AUTOCLOSE
+goto Route114_EventScript_KaiClaudeDoMultiBattle
+releaseall
+end
+
+Route114_EventScript_KaiClaudeDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_KAI, Route114_Text_KaiDefeat, TRAINER_CLAUDE, Route114_Text_ClaudeDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route114_EventScript_KaiClaudeVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route114_EventScript_KaiClaudeVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route114_Text_KaiPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route114_Text_ClaudePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE114_STATE, 1
+end
+
 Route114_EventScript_Kai::
-	trainerbattle_single TRAINER_KAI, Route114_Text_KaiIntro, Route114_Text_KaiDefeat
 	msgbox Route114_Text_KaiPostBattle, MSGBOX_AUTOCLOSE
 	end
 

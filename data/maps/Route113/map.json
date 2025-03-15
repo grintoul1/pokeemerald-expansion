@@ -336,27 +336,27 @@
       "x": 63,
       "y": 9,
       "elevation": 0,
-      "var": "VAR_TEMP_0",
+      "var": "VAR_ROUTE113_STATE",
       "var_value": "0",
-      "script": "NULL"
+      "script": "Route113_EventScript_LaoLung"
     },
     {
       "type": "trigger",
       "x": 46,
       "y": 8,
       "elevation": 0,
-      "var": "VAR_TEMP_0",
-      "var_value": "0",
-      "script": "NULL"
+      "var": "VAR_ROUTE113_STATE",
+      "var_value": "1",
+      "script": "Route113_EventScript_ToriTia"
     },
     {
       "type": "trigger",
       "x": 13,
       "y": 8,
       "elevation": 0,
-      "var": "VAR_TEMP_0",
-      "var_value": "0",
-      "script": "NULL"
+      "var": "VAR_ROUTE113_STATE",
+      "var_value": "2",
+      "script": "Route113_EventScript_CobySophie"
     },
     {
       "type": "weather",

@@ -1,3 +1,10 @@
+.set LOCALID_LAO, 5
+.set LOCALID_LUNG, 6
+.set LOCALID_TORI, 7
+.set LOCALID_TIA, 8
+.set LOCALID_COBY, 11
+.set LOCALID_SOPHIE, 10
+
 Route113_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route113_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, Route113_OnTransition
@@ -77,10 +84,48 @@ Route113_EventScript_RematchMadeline::
 	msgbox Route113_Text_MadelinePostRematch, MSGBOX_AUTOCLOSE
 	end
 
+Route113_EventScript_LaoLung::
+lockall
+setvar VAR_0x8008, LOCALID_LAO
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_SUSPICIOUS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route113_Text_LaoIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_LUNG
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_SUSPICIOUS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route113_Text_LungIntro MSGBOX_AUTOCLOSE
+goto Route113_EventScript_LaoLungDoMultiBattle
+releaseall
+end
+
+Route113_EventScript_LaoLungDoMultiBattle::
+playbgm MUS_ROUTE113, TRUE
+multi_2p_vs_2 TRAINER_LAO_1, Route113_Text_LaoDefeat, TRAINER_LUNG, Route113_Text_LungDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route113_EventScript_LaoLungVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route113_EventScript_LaoLungVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route113_Text_LaoPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route113_Text_LungPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE113_STATE, 1
+end
+
 Route113_EventScript_Lao::
-	trainerbattle_single TRAINER_LAO_1, Route113_Text_LaoIntro, Route113_Text_LaoDefeat, Route113_EventScript_RegisterLao
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route113_EventScript_RematchLao
 	msgbox Route113_Text_LaoPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -99,27 +144,93 @@ Route113_EventScript_RematchLao::
 	end
 
 Route113_EventScript_Lung::
-	trainerbattle_single TRAINER_LUNG, Route113_Text_LungIntro, Route113_Text_LungDefeat
 	msgbox Route113_Text_LungPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route113_EventScript_ToriTia::
+lockall
+setvar VAR_0x8008, LOCALID_TIA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_TWINS, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route113_Text_TiaIntro MSGBOX_AUTOCLOSE
+goto Route113_EventScript_ToriTiaDoMultiBattle
+releaseall
+end
+
+Route113_EventScript_ToriTiaDoMultiBattle::
+playbgm MUS_ROUTE113, TRUE
+multi_2p_vs_1 TRAINER_TORI_AND_TIA, Route113_Text_ToriDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route113_EventScript_ToriTiaVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route113_EventScript_ToriTiaVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route113_Text_ToriPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE113_STATE, 1
+end
+
 Route113_EventScript_Tori::
-	trainerbattle_double TRAINER_TORI_AND_TIA, Route113_Text_ToriIntro, Route113_Text_ToriDefeat, Route113_Text_ToriNotEnoughMons
 	msgbox Route113_Text_ToriPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route113_EventScript_Tia::
-	trainerbattle_double TRAINER_TORI_AND_TIA, Route113_Text_TiaIntro, Route113_Text_TiaDefeat, Route113_Text_TiaNotEnoughMons
 	msgbox Route113_Text_TiaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route113_EventScript_Sophie::
-	trainerbattle_single TRAINER_SOPHIE, Route113_Text_SophieIntro, Route113_Text_SophieDefeat
 	msgbox Route113_Text_SophiePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route113_EventScript_CobySophie::
+lockall
+setvar VAR_0x8008, LOCALID_COBY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route113_Text_CobyIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_SOPHIE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route113_Text_SophieIntro MSGBOX_AUTOCLOSE
+goto Route113_EventScript_CobySophieDoMultiBattle
+releaseall
+end
+
+Route113_EventScript_CobySophieDoMultiBattle::
+playbgm MUS_ROUTE113, TRUE
+multi_2p_vs_2 TRAINER_COBY, Route113_Text_CobyDefeat, TRAINER_SOPHIE, Route113_Text_SophieDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route113_EventScript_CobySophieVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route113_EventScript_CobySophieVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route113_Text_CobyPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route113_Text_SophiePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE113_STATE, 1
+end
+
 Route113_EventScript_Coby::
-	trainerbattle_single TRAINER_COBY, Route113_Text_CobyIntro, Route113_Text_CobyDefeat
 	msgbox Route113_Text_CobyPostBattle, MSGBOX_AUTOCLOSE
 	end
 

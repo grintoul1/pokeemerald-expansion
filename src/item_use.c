@@ -73,8 +73,10 @@ static void Task_ShowTMHMContainedMessage(u8);
 static void UseTMHMYesNo(u8);
 static void UseTMHM(u8);
 static void Task_StartUseRepel(u8);
+static void Task_StartUseRepellent(u8);
 static void Task_StartUseLure(u8 taskId);
 static void Task_UseRepel(u8);
+static void Task_UseRepellent(u8);
 static void Task_UseLure(u8 taskId);
 static void Task_CloseCantUseKeyItemMessage(u8);
 static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
@@ -699,8 +701,6 @@ void ItemUseCB_PokeVial(u8 taskId)
         DestroyTask(taskId);
 }
 
-extern u8 RepellentUse[];
-
 void ItemUseOutOfBattle_Repellent(u8 taskId)
 {
     if (!gTasks[taskId].tUsingRegisteredKeyItem)
@@ -719,7 +719,7 @@ void ItemUseOutOfBattle_Repellent(u8 taskId)
 void ItemUseCB_Repellent(u8 taskId)
 {
     if (REPEL_STEP_COUNT == 0)
-    gTasks[taskId].func = Task_StartUseRepel;
+    gTasks[taskId].func = Task_StartUseRepellent;
     else 
     VarSet(VAR_REPEL_STEP_COUNT, 0);
 }
@@ -996,6 +996,18 @@ static void Task_StartUseRepel(u8 taskId)
     }
 }
 
+static void Task_StartUseRepellent(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    if (++data[8] > 7)
+    {
+        data[8] = 0;
+        PlaySE(SE_REPEL);
+        gTasks[taskId].func = Task_UseRepellent;
+    }
+}
+
 static void Task_UseRepel(u8 taskId)
 {
     if (!IsSEPlaying())
@@ -1011,6 +1023,22 @@ static void Task_UseRepel(u8 taskId)
             DisplayItemMessageInBattlePyramid(taskId, gStringVar4, Task_CloseBattlePyramidBagMessage);
     }
 }
+
+static void Task_UseRepellent(u8 taskId)
+{
+    if (!IsSEPlaying())
+    {
+        VarSet(VAR_REPEL_STEP_COUNT, ItemId_GetHoldEffectParam(gSpecialVar_ItemId));
+    #if VAR_LAST_REPEL_LURE_USED != 0
+        VarSet(VAR_LAST_REPEL_LURE_USED, gSpecialVar_ItemId);
+    #endif
+        if (!InBattlePyramid())
+            DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, gStringVar4, Task_CloseBattlePyramidBagMessage);
+    }
+}
+
 void HandleUseExpiredRepel(struct ScriptContext *ctx)
 {
 #if VAR_LAST_REPEL_LURE_USED != 0

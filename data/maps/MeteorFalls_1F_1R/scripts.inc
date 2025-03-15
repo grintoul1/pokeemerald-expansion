@@ -90,6 +90,8 @@ MeteorFalls_1F_1R_EventScript_MagmaStealsMeteoriteScene::
 	removeobject LOCALID_AQUA_GRUNT_1
 	removeobject LOCALID_AQUA_GRUNT_2
 	setflag FLAG_HIDE_ROUTE_112_TEAM_MAGMA
+	setflag FLAG_HIDE_ROUTE_111_AQUA_1
+	clearflag FLAG_HIDE_ROUTE_111_AQUA_2
 	setflag FLAG_MET_ARCHIE_METEOR_FALLS
 	setflag FLAG_HIDE_FALLARBOR_TOWN_BATTLE_TENT_SCOTT
 	setvar VAR_METEOR_FALLS_STATE, 1
@@ -238,46 +240,52 @@ MeteorFalls_1F_1R_EventScript_MetCozmo::
 	end
 
 MeteorFalls_1F_1R_Text_WithThisMeteorite:
-	.string "Hehehe!\p"
-	.string "With this METEORITE, that thing in\n"
-	.string "MT. CHIMNEY will…$"
+	.string "Tabitha: Hehehe!\p"
+	.string "With this Meteorite, that thing in\n"
+	.string "Mt. Chimney will…$"
 
 MeteorFalls_1F_1R_Text_DontExpectMercyFromMagma:
-	.string "Heh?\p"
+	.string "Tabitha: Heh?\p"
 	.string "I don't know who you are, but if you get\n"
-	.string "in the way of TEAM MAGMA, don't\l"
+	.string "in the way of Team Magma, don't\l"
 	.string "expect any mercy!$"
 
 MeteorFalls_1F_1R_Text_HoldItRightThereMagma:
-	.string "Hold it right there, TEAM MAGMA!\p"
+	.string "Archie: Hold it right there, Team Magma!\n"
+	.string "Shelly said you were headed this way.\p" 
 	.string "You're badly mistaken if you think you\n"
 	.string "can have your way with the world!$"
 
 MeteorFalls_1F_1R_Text_BeSeeingYouTeamAqua:
 	.string "Hehehe!\n"
-	.string "Even TEAM AQUA joins us!\p"
+	.string "Even Team Aqua joins us!\p"
 	.string "But it's too much trouble to deal with\n"
 	.string "you all…\p"
 	.string "Heh, it doesn't matter!\p"
-	.string "We've got the METEORITE, so off to\n"
-	.string "MT. CHIMNEY we go!\p"
-	.string "Hehehe! Be seeing you, you TEAM\n"
-	.string "AQUA dingbats!$"
+	.string "We've got the Meteorite, so off to\n"
+	.string "Mt. Chimney we go!\p"
+	.string "Hehehe! Be seeing you, you Team\n"
+	.string "Aqua dingbats!$"
 
 MeteorFalls_1F_1R_Text_ArchieSeenYouBefore:
-	.string "ARCHIE: Didn't I see you before?\n"
-	.string "At SLATEPORT's MUSEUM?\p"
+	.string "Archie: Didn't I see you before?\n"
+	.string "At Slateport's museum?\p"
 	.string "Ah, so your name is {PLAYER}.\p"
 	.string "At the time, I thought you were one\n"
-	.string "of TEAM MAGMA's goons.\p"
+	.string "of Team Magma's goons.\p"
 	.string "Humph…\n"
 	.string "You're one odd kid.\p"
-	.string "TEAM MAGMA is a dangerous group of\n"
+	.string "Team Magma is a dangerous group of\n"
 	.string "total fanatics.\p"
 	.string "They engage in destruction, claiming\n"
 	.string "to expand the land mass.\p"
+	.string "Surely you can see this now.\p"
+	.string "Our actions in Slateport are only in\n"
+	.string "preparation for Team Magma realising\l"
+	.string "their disastrous vision.\p"
 	.string "They are the rivals to us,\n"
-	.string "the sea-loving TEAM AQUA!$"
+	.string "the sea-loving Team Aqua!$"
+
 
 MeteorFalls_1F_1R_Text_BossWeShouldChaseMagma:
 	.string "BOSS, we should give chase to\n"
@@ -291,7 +299,7 @@ MeteorFalls_1F_1R_Text_ArchieYesNoTellingWhatMagmaWillDo:
 
 MeteorFalls_1F_1R_Text_ArchieFarewell:
 	.string "ARCHIE: {PLAYER}, you should keep\n"
-	.string "an eye out for TEAM MAGMA, too.\p"
+	.string "an eye out for Team Magma, too.\p"
 	.string "Farewell!$"
 
 MeteorFalls_1F_1R_Text_MeetProfCozmo:

@@ -14130,6 +14130,7 @@ const struct Item gItemsInfo[] =
     {
         .name = _("Repellent"),
         .price = 0,
+        .holdEffectParam = 250,
         .description = COMPOUND_STRING(
             "Repels weak wild\n"
             "Pokémon."),
@@ -14141,3 +14142,4 @@ const struct Item gItemsInfo[] =
         .iconPalette = gItemIconPalette_MaxRepel,
     },
 }; 
+

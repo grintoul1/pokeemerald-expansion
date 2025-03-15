@@ -209,7 +209,7 @@
 #define TRAINER_AXLE                        203
 #define TRAINER_JACE                        204
 #define TRAINER_KEEGAN                      205
-#define TRAINER_BERNIE_1                    206
+#define TRAINER_GRUNT_ROUTE_114_1           206
 #define TRAINER_BERNIE_2                    207
 #define TRAINER_BERNIE_3                    208
 #define TRAINER_BERNIE_4                    209
@@ -217,7 +217,7 @@
 #define TRAINER_DREW                        211
 #define TRAINER_BEAU                        212
 #define TRAINER_LARRY                       213
-#define TRAINER_SHANE                       214
+#define TRAINER_GRUNT_ROUTE_114_6           214
 #define TRAINER_JUSTIN                      215
 #define TRAINER_ETHAN_1                     216
 #define TRAINER_AUTUMN                      217
@@ -475,7 +475,7 @@
 #define TRAINER_HEIDI                       469
 #define TRAINER_BECKY                       470
 #define TRAINER_CAROL                       471
-#define TRAINER_NANCY                       472
+#define TRAINER_GRUNT_ROUTE_114_5           472
 #define TRAINER_MARTHA                      473
 #define TRAINER_DIANA_1                     474
 #define TRAINER_CEDRIC                      475
@@ -631,8 +631,8 @@
 #define TRAINER_JAMES_5                     625
 #define TRAINER_BRICE                       626
 #define TRAINER_TRENT_1                     627
-#define TRAINER_LENNY                       628
-#define TRAINER_LUCAS_1                     629
+#define TRAINER_GRUNT_ROUTE_114_3           628
+#define TRAINER_GRUNT_ROUTE_114_2           629
 #define TRAINER_ALAN                        630
 #define TRAINER_CLARK                       631
 #define TRAINER_ERIC                        632
@@ -715,7 +715,7 @@
 #define TRAINER_COBY                        709
 #define TRAINER_LAWRENCE                    710
 #define TRAINER_WYATT                       711
-#define TRAINER_ANGELINA                    712
+#define TRAINER_GRUNT_ROUTE_114_4           712
 #define TRAINER_KAI                         713
 #define TRAINER_CHARLOTTE                   714
 #define TRAINER_DEANDRE                     715

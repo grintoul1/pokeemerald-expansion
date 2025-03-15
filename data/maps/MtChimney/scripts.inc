@@ -1,9 +1,9 @@
-.set LOCALID_ARCHIE, 1
+.set LOCALID_SHELLY, 1
 .set LOCALID_MAXIE, 2
 .set LOCALID_TABITHA, 3
 .set LOCALID_MAGMA_GRUNT_2, 22
 .set LOCALID_MAGMA_GRUNT_1, 29
-
+.set LOCALID_ARCHIE, 31
 
 MtChimney_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, MtChimney_OnResume
@@ -18,25 +18,58 @@ MtChimney_OnResume:
 	setstepcallback STEP_CB_ASH
 	end
 
-MtChimney_EventScript_Archie::
+MtChimney_EventScript_Shelly::
 	lock
 	faceplayer
-	call_if_unset FLAG_EVIL_LEADER_PLEASE_STOP, MtChimney_EventScript_ArchieGoStopTeamMagma
-	call_if_set FLAG_EVIL_LEADER_PLEASE_STOP, MtChimney_EventScript_ArchieBusyFighting
+	call_if_unset FLAG_EVIL_LEADER_PLEASE_STOP, MtChimney_EventScript_ShellyGoStopTeamMagma
+	call_if_set FLAG_EVIL_LEADER_PLEASE_STOP, MtChimney_EventScript_ShellyBusyFighting
 	closemessage
-	applymovement LOCALID_ARCHIE, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SHELLY, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	setflag FLAG_EVIL_LEADER_PLEASE_STOP
 	release
 	end
 
-MtChimney_EventScript_ArchieGoStopTeamMagma::
-	msgbox MtChimney_Text_ArchieGoStopTeamMagma, MSGBOX_DEFAULT
+MtChimney_EventScript_ShellyGoStopTeamMagma::
+	msgbox MtChimney_Text_ShellyGoStopTeamMagma, MSGBOX_DEFAULT
 	return
 
-MtChimney_EventScript_ArchieBusyFighting::
-	msgbox MtChimney_Text_ArchieIHaveMyHandsFull, MSGBOX_DEFAULT
+MtChimney_EventScript_ShellyBusyFighting::
+	msgbox MtChimney_Text_ShellyIHaveMyHandsFull, MSGBOX_DEFAULT
 	return
+
+MtChimney_EventScript_ArchieMaxieFight::
+	lockall
+	playbgm MUS_ENCOUNTER_MAGMA, TRUE
+	msgbox MtChimney_Text_ArchieDontDoThis, MSGBOX_DEFAULT
+	closemessage
+	playse SE_NOT_EFFECTIVE
+	applymovement LOCALID_ARCHIE, MtChimney_Movement_ArchieKnockback
+	waitmovement 0
+	msgbox Mtchimney_Text_MaxieCannotStopMe, MSGBOX_DEFAULT
+	closemessage
+	playse SE_PIN
+	applymovement LOCALID_ARCHIE, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_ARCHIE, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox MtChimney_Text_ArchiePleaseStopMaxie, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MAXIE, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	addvar VAR_MTCHIMNEY_STATE, 1
+	setobjectxyperm LOCALID_ARCHIE, 10, 6
+	setobjectmovementtype LOCALID_ARCHIE, MOVEMENT_TYPE_FACE_DOWN
+	setobjectmovementtype LOCALID_MAXIE, MOVEMENT_TYPE_FACE_RIGHT
+	releaseall
+	end
+
+MtChimney_EventScript_Archie::
+	lockall
+	msgbox MtChimney_Text_ArchiePleaseStopMaxie, MSGBOX_DEFAULT
+	closemessage
+	releaseall
+	end
 
 MtChimney_EventScript_Maxie::
 	lockall
@@ -50,7 +83,20 @@ MtChimney_EventScript_Maxie::
 	applymovement LOCALID_MAXIE, Common_Movement_Delay48
 	waitmovement 0
 	msgbox MtChimney_Text_MaxieIntro, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_MAXIE_MT_CHIMNEY, MtChimney_Text_MaxieDefeat
+	goto MtChimney_EventScript_MaxieDoMultiBattle
+	releaseall
+	end
+
+MtChimney_EventScript_MaxieDoMultiBattle::
+	playbgm MUS_ENCOUNTER_MAGMA, TRUE
+	multi_2p_vs_1 TRAINER_MAXIE_MT_CHIMNEY, MtChimney_Text_MaxieDefeat, PARTNER_EMMIE
+	switch VAR_RESULT
+	case 1, MtChimney_EventScript_MaxieVictory
+	fadescreen FADE_TO_BLACK
+	special SetCB2WhiteOut
+	waitstate
+
+MtChimney_EventScript_MaxieVictory::
 	msgbox MtChimney_Text_MaxieYouHaventSeenLastOfMagma, MSGBOX_DEFAULT
 	closemessage
 	delay 30
@@ -60,23 +106,26 @@ MtChimney_EventScript_Maxie::
 	removeobject LOCALID_TABITHA
 	removeobject LOCALID_MAGMA_GRUNT_2
 	setflag FLAG_HIDE_MT_CHIMNEY_TEAM_MAGMA
+	playbgm MUS_MT_CHIMNEY, TRUE
 	fadescreen FADE_FROM_BLACK
-	setobjectxyperm LOCALID_ARCHIE, 10, 12
-	addobject LOCALID_ARCHIE
 	call_if_eq VAR_FACING, DIR_EAST, MtChimney_EventScript_ArchieApproachPlayerEast
 	call_if_eq VAR_FACING, DIR_NORTH, MtChimney_EventScript_ArchieApproachPlayerNorth
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox MtChimney_Text_ArchieThankYou, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_FACING, DIR_EAST, MtChimney_EventScript_ArchieExitEast
-	call_if_eq VAR_FACING, DIR_NORTH, MtChimney_EventScript_ArchieExitNorth
+	giveitem ITEM_HM_SURF
+	playfanfare MUS_OBTAIN_TMHM
+	waitfanfare
+	fadescreen FADE_TO_BLACK
 	removeobject LOCALID_ARCHIE
 	setflag FLAG_HIDE_MT_CHIMNEY_TEAM_AQUA
+	setflag FLAG_HIDE_ROUTE_111_AQUA_2
 	setflag FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY
 	clearflag FLAG_HIDE_FALLARBOR_HOUSE_PROF_COZMO
 	setflag FLAG_HIDE_METEOR_FALLS_1F_1R_COZMO
 	clearflag FLAG_HIDE_MT_CHIMNEY_LAVA_COOKIE_LADY
+	fadescreen FADE_FROM_BLACK
 	releaseall
 	end
 
@@ -154,13 +203,16 @@ MtChimney_EventScript_NotEnoughMoney::
 	release
 	end
 
+MtChimney_Movement_ArchieKnockback:
+	lock_facing_direction
+	walk_fast_left
+	delay_16
+	delay_16
+	walk_slow_left
+	unlock_facing_direction
+	step_end
+
 MtChimney_Movement_ArchieApproachPlayerEast:
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
 	walk_right
 	step_end
 
@@ -176,11 +228,7 @@ MtChimney_Movement_ArchieExitEast:
 	step_end
 
 MtChimney_Movement_ArchieApproachPlayerNorth:
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
+	walk_down
 	walk_right
 	walk_right
 	step_end
@@ -413,12 +461,81 @@ MtChimney_EventScript_BusyAquaGrunt3::
 	end
 
 MtChimney_EventScript_Tabitha::
-	trainerbattle_single TRAINER_TABITHA_MT_CHIMNEY, MtChimney_Text_TabithaIntro, MtChimney_Text_TabithaDefeat
+lockall
+setvar VAR_0x8008, LOCALID_TABITHA
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtChimney_Text_TabithaIntro MSGBOX_AUTOCLOSE
+goto MtChimney_EventScript_TabithaDoMultiBattle
+releaseall
+end
+
+MtChimney_EventScript_TabithaDoMultiBattle::
+playbgm MUS_MT_CHIMNEY, TRUE
+multi_2p_vs_1 TRAINER_TABITHA_MT_CHIMNEY, MtChimney_Text_TabithaDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, MtChimney_EventScript_TabithaVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+MtChimney_EventScript_TabithaVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtChimney_Text_TabithaPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_MTCHIMNEY_STATE, 1
+end
+
+MtChimney_EventScript_Tabitha2::
 	msgbox MtChimney_Text_TabithaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+MtChimney_EventScript_Grunt1Grunt2::
+lockall
+setvar VAR_0x8008, LOCALID_MAGMA_GRUNT_1
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MtChimney_Text_Grunt1Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_MAGMA_GRUNT_2
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtChimney_Text_Grunt2Intro MSGBOX_AUTOCLOSE
+goto MtChimney_EventScript_Grunt1Grunt2DoMultiBattle
+releaseall
+end
+
+MtChimney_EventScript_Grunt1Grunt2DoMultiBattle::
+playbgm MUS_MT_CHIMNEY, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_MT_CHIMNEY_1, MtChimney_Text_Grunt1Defeat, TRAINER_GRUNT_MT_CHIMNEY_2, MtChimney_Text_Grunt2Defeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, MtChimney_EventScript_Grunt1Grunt2Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+MtChimney_EventScript_Grunt1Grunt2Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MtChimney_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtChimney_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_MTCHIMNEY_STATE, 1
+end
+
 MtChimney_EventScript_Grunt2::
-	trainerbattle_single TRAINER_GRUNT_MT_CHIMNEY_2, MtChimney_Text_Grunt2Intro, MtChimney_Text_Grunt2Defeat
 	msgbox MtChimney_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -523,7 +640,6 @@ MtChimney_EventScript_Shirley::
 	end
 
 MtChimney_EventScript_Grunt1::
-	trainerbattle_single TRAINER_GRUNT_MT_CHIMNEY_1, MtChimney_Text_Grunt1Intro, MtChimney_Text_Grunt1Defeat
 	msgbox MtChimney_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -672,22 +788,22 @@ MtChimney_Text_KeepMakingMoreLand:
 MtChimney_Text_Bufoh:
 	.string "Bufoh!$"
 
-MtChimney_Text_ArchieGoStopTeamMagma:
-	.string "ARCHIE: Grr, {PLAYER}!\n"
+MtChimney_Text_ShellyGoStopTeamMagma:
+	.string "Shelly: Grr, {PLAYER}!\n"
 	.string "I should've guessed you'd show up!\p"
 	.string "See for yourself what the fanatics\n"
-	.string "of TEAM MAGMA are up to!\p"
+	.string "of Team Magma are up to!\p"
 	.string "They're trying to inject the stolen\n"
-	.string "METEORITE's power into the volcano!\p"
+	.string "Meteorite's power into the volcano!\p"
 	.string "Doing something like that will cause\n"
 	.string "the volcano's eruption!$"
 
-MtChimney_Text_ArchieIHaveMyHandsFull:
-	.string "ARCHIE: Grrr…\p"
-	.string "I want to stop that MAXIE,\n"
-	.string "but I can't!\p"
-	.string "Not when I have my hands full battling\n"
-	.string "three opponents at once!$"
+MtChimney_Text_ShellyIHaveMyHandsFull:
+	.string "Shelly: Grrr…\n"
+	.string "The boss went on to stop Maxie!\p"
+	.string "Somebody needs to help him!\p"
+	.string "I can't when I have my hands full\n"
+	.string "battling three opponents at once!$"
 
 MtChimney_Text_ArchieThankYou:
 	.string "ARCHIE: {PLAYER}!\n"
@@ -699,6 +815,8 @@ MtChimney_Text_ArchieThankYou:
 	.string "Ah, it doesn't matter.\p"
 	.string "We will remain vigilant and keep up\n"
 	.string "our pursuit of TEAM MAGMA.\p"
+	.string "As thanks, please take the HM for\n"
+	.string "Surf.\p"
 	.string "{PLAYER}, we shall meet again!$"
 
 MtChimney_Text_MagmaOutnumbersUs:
@@ -859,3 +977,15 @@ MtChimney_Text_SawyerPostRematch:
 	.string "Actually, it really is hot here.\n"
 	.string "I'm overdressed for these parts.$"
 
+MtChimney_Text_ArchieDontDoThis:
+	.string "Archie: Maxie! You must not go\n"
+	.string "through with this!$"
+
+Mtchimney_Text_MaxieCannotStopMe:
+	.string "Maxie: Fufufu… Now, now Archie…\n"
+	.string "Is this really the best you can do?$"
+
+MtChimney_Text_ArchiePleaseStopMaxie:
+	.string "Archie: {PLAYER}, I warned you\n"
+	.string "about Team Magma.\p"
+	.string "Please, you must help me stop Maxie!$"
