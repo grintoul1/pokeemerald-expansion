@@ -1,9 +1,52 @@
+.set LOCALID_PYRE_MAGMAGRUNT1, 1
+.set LOCALID_PYRE_MAGMAGRUNT2, 3
+
 MtPyre_3F_MapScripts::
 	.byte 0
 
-MtPyre_3F_EventScript_William::
-	trainerbattle_single TRAINER_WILLIAM, MtPyre_3F_Text_WilliamIntro, MtPyre_3F_Text_WilliamDefeat
-	msgbox MtPyre_3F_Text_WilliamPostBattle, MSGBOX_AUTOCLOSE
+MtPyre_3F_EventScript_Pyre_MagmaGrunt1Pyre_MagmaGrunt2::
+lockall
+setvar VAR_0x8008, LOCALID_PYRE_MAGMAGRUNT1
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox MtPyre_3F_Text_Pyre_MagmaGrunt1Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_PYRE_MAGMAGRUNT2
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox MtPyre_3F_Text_Pyre_MagmaGrunt2Intro MSGBOX_AUTOCLOSE
+goto MtPyre_3F_EventScript_Pyre_MagmaGrunt1Pyre_MagmaGrunt2DoMultiBattle
+releaseall
+end
+
+MtPyre_3F_EventScript_Pyre_MagmaGrunt1Pyre_MagmaGrunt2DoMultiBattle::
+playbgm MUS_MT_PYRE, TRUE
+multi_2p_vs_2 TRAINER_PYRE_MAGMAGRUNT1, MtPyre_3F_Text_Pyre_MagmaGrunt1Defeat, TRAINER_PYRE_MAGMAGRUNT2, MtPyre_3F_Text_Pyre_MagmaGrunt2Defeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, MtPyre_3F_EventScript_Pyre_MagmaGrunt1Pyre_MagmaGrunt2Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+MtPyre_3F_EventScript_Pyre_MagmaGrunt1Pyre_MagmaGrunt2Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox MtPyre_3F_Text_Pyre_MagmaGrunt1PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox MtPyre_3F_Text_Pyre_MagmaGrunt2PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_MT_PYRE_STATE, 1
+end
+
+MtPyre_3F_EventScript_Pyre_MagmaGrunt1::
+	msgbox MtPyre_3F_Text_Pyre_MagmaGrunt1PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 MtPyre_3F_EventScript_Kayla::
@@ -11,11 +54,8 @@ MtPyre_3F_EventScript_Kayla::
 	msgbox MtPyre_3F_Text_KaylaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-MtPyre_3F_EventScript_Gabrielle::
-	trainerbattle_single TRAINER_GABRIELLE_1, MtPyre_3F_Text_GabrielleIntro, MtPyre_3F_Text_GabrielleDefeat, MtPyre_3F_EventScript_RegisterGabrielle
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, MtPyre_3F_EventScript_RematchGabrielle
-	msgbox MtPyre_3F_Text_GabriellePostBattle, MSGBOX_DEFAULT
+MtPyre_3F_EventScript_Pyre_MagmaGrunt2::
+	msgbox MtPyre_3F_Text_Pyre_MagmaGrunt2PostBattle, MSGBOX_DEFAULT
 	release
 	end
 
@@ -23,27 +63,24 @@ MtPyre_3F_EventScript_RegisterGabrielle::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox MtPyre_3F_Text_GabrielleRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_GABRIELLE_1
+	register_matchcall TRAINER_GABRIELLE_2
 	release
 	end
 
 MtPyre_3F_EventScript_RematchGabrielle::
-	trainerbattle_rematch TRAINER_GABRIELLE_1, MtPyre_3F_Text_GabrielleRematchIntro, MtPyre_3F_Text_GabrielleRematchDefeat
+	trainerbattle_rematch TRAINER_GABRIELLE_2, MtPyre_3F_Text_GabrielleRematchIntro, MtPyre_3F_Text_GabrielleRematchDefeat
 	msgbox MtPyre_3F_Text_GabriellePostRematch, MSGBOX_AUTOCLOSE
 	end
 
-MtPyre_3F_Text_WilliamIntro:
-	.string "The rich atmosphere of the mountain\n"
-	.string "has elevated my psychic power!\p"
-	.string "A mere child like you…\n"
-	.string "You dream of winning?$"
+MtPyre_3F_Text_Pyre_MagmaGrunt1Intro:
+	.string "Hehehe! I'm feeling good after we\n"
+	.string "battered Team Aqua downstairs!$"
 
-MtPyre_3F_Text_WilliamDefeat:
-	.string "I drown in self-pity…$"
+MtPyre_3F_Text_Pyre_MagmaGrunt1Defeat:
+	.string "Welp…$"
 
-MtPyre_3F_Text_WilliamPostBattle:
-	.string "My psychic powers have surely\n"
-	.string "grown several times, but…$"
+MtPyre_3F_Text_Pyre_MagmaGrunt1PostBattle:
+	.string "Thanks for bursting my bubble!$"
 
 MtPyre_3F_Text_KaylaIntro:
 	.string "Ahahahaha!\p"
@@ -60,20 +97,14 @@ MtPyre_3F_Text_KaylaPostBattle:
 	.string "summit…\p"
 	.string "Go, me!$"
 
-MtPyre_3F_Text_GabrielleIntro:
+MtPyre_3F_Text_Pyre_MagmaGrunt2Intro:
 	.string "Why have you come here?$"
 
-MtPyre_3F_Text_GabrielleDefeat:
-	.string "That was amazing!\n"
-	.string "You're a very special TRAINER.$"
+MtPyre_3F_Text_Pyre_MagmaGrunt2Defeat:
+	.string "So you just want to cause us problems?$"
 
-MtPyre_3F_Text_GabriellePostBattle:
-	.string "POKéMON no longer of this world.\n"
-	.string "POKéMON that are with you now.\p"
-	.string "And the POKéMON that you will meet\n"
-	.string "in the future…\p"
-	.string "They are all to be equally cherished.\n"
-	.string "Please remember that.$"
+MtPyre_3F_Text_Pyre_MagmaGrunt2PostBattle:
+	.string "Team Aqua and now you kids?$"
 
 MtPyre_3F_Text_GabrielleRegister:
 	.string "I would like to see your POKéMON\n"

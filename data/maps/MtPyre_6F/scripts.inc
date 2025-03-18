@@ -1,11 +1,52 @@
+.set LOCALID_PYRE_AQUAGRUNT3, 1
+.set LOCALID_PYRE_MAGMAGRUNT3, 3
+
 MtPyre_6F_MapScripts::
 	.byte 0
 
-MtPyre_6F_EventScript_Valerie::
-	trainerbattle_single TRAINER_VALERIE_1, MtPyre_6F_Text_ValerieIntro, MtPyre_6F_Text_ValerieDefeat, MtPyre_6F_EventScript_RegisterValerie
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, MtPyre_6F_EventScript_RematchValerie
-	msgbox MtPyre_6F_Text_ValeriePostBattle, MSGBOX_DEFAULT
+MtPyre_6F_EventScript_Pyre_AquaGrunt3Pyre_MagmaGrunt3::
+lockall
+setvar VAR_0x8008, LOCALID_PYRE_AQUAGRUNT3
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtPyre_6F_Text_Pyre_AquaGrunt3Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_PYRE_MAGMAGRUNT3
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MtPyre_6F_Text_Pyre_MagmaGrunt3Intro MSGBOX_AUTOCLOSE
+goto MtPyre_6F_EventScript_Pyre_AquaGrunt3Pyre_MagmaGrunt3DoMultiBattle
+releaseall
+end
+
+MtPyre_6F_EventScript_Pyre_AquaGrunt3Pyre_MagmaGrunt3DoMultiBattle::
+playbgm MUS_MT_PYRE, TRUE
+multi_2p_vs_2 TRAINER_PYRE_AQUAGRUNT3, MtPyre_6F_Text_Pyre_AquaGrunt3Defeat, TRAINER_PYRE_MAGMAGRUNT3, MtPyre_6F_Text_Pyre_MagmaGrunt3Defeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, MtPyre_6F_EventScript_Pyre_AquaGrunt3Pyre_MagmaGrunt3Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+MtPyre_6F_EventScript_Pyre_AquaGrunt3Pyre_MagmaGrunt3Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtPyre_6F_Text_Pyre_AquaGrunt3PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MtPyre_6F_Text_Pyre_MagmaGrunt3PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_MT_PYRE_STATE, 1
+end
+
+MtPyre_6F_EventScript_Pyre_AquaGrunt3::
+	msgbox MtPyre_6F_Text_Pyre_AquaGrunt3PostBattle, MSGBOX_DEFAULT
 	release
 	end
 
@@ -13,30 +54,28 @@ MtPyre_6F_EventScript_RegisterValerie::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0
 	msgbox MtPyre_6F_Text_ValerieRegister, MSGBOX_DEFAULT
-	register_matchcall TRAINER_VALERIE_1
+	register_matchcall TRAINER_VALERIE_3
 	release
 	end
 
 MtPyre_6F_EventScript_RematchValerie::
-	trainerbattle_rematch TRAINER_VALERIE_1, MtPyre_6F_Text_ValerieRematchIntro, MtPyre_6F_Text_ValerieRematchDefeat
+	trainerbattle_rematch TRAINER_VALERIE_3, MtPyre_6F_Text_ValerieRematchIntro, MtPyre_6F_Text_ValerieRematchDefeat
 	msgbox MtPyre_6F_Text_ValeriePostRematch, MSGBOX_AUTOCLOSE
 	end
 
-MtPyre_6F_EventScript_Cedric::
-	trainerbattle_single TRAINER_CEDRIC, MtPyre_6F_Text_CedricIntro, MtPyre_6F_Text_CedricDefeat
-	msgbox MtPyre_6F_Text_CedricPostBattle, MSGBOX_AUTOCLOSE
+MtPyre_6F_EventScript_Pyre_MagmaGrunt3::
+	msgbox MtPyre_6F_Text_Pyre_MagmaGrunt3PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-MtPyre_6F_Text_ValerieIntro:
-	.string "When I'm here…\n"
-	.string "A curious power flows into me…$"
+MtPyre_6F_Text_Pyre_AquaGrunt3Intro:
+	.string "Hey! You kids need to stay out of\n"
+	.string "this!$"
 
-MtPyre_6F_Text_ValerieDefeat:
-	.string "The power is ebbing away…$"
+MtPyre_6F_Text_Pyre_AquaGrunt3Defeat:
+	.string "Whoa, whoa… Enough already…$"
 
-MtPyre_6F_Text_ValeriePostBattle:
-	.string "Perhaps the power is from the spirits\n"
-	.string "of POKéMON in fitful sleep here…$"
+MtPyre_6F_Text_Pyre_AquaGrunt3PostBattle:
+	.string "Just what are you even doing here?$"
 
 MtPyre_6F_Text_ValerieRegister:
 	.string "Fufufu… I lost the match, but…\n"
@@ -55,15 +94,14 @@ MtPyre_6F_Text_ValeriePostRematch:
 	.string "The POKéMON at rest here…\n"
 	.string "Sometimes, they play…$"
 
-MtPyre_6F_Text_CedricIntro:
-	.string "Have you lost your bearings?\n"
-	.string "Have no fear for I am here!$"
+MtPyre_6F_Text_Pyre_MagmaGrunt3Intro:
+	.string "Can't you see we're in the middle\n"
+	.string "of something!$"
 
-MtPyre_6F_Text_CedricDefeat:
-	.string "Weren't you lost?$"
+MtPyre_6F_Text_Pyre_MagmaGrunt3Defeat:
+	.string "Well that's one way to end things…$"
 
-MtPyre_6F_Text_CedricPostBattle:
-	.string "I had this feeling that a lost TRAINER\n"
-	.string "would be panicked and easy to beat.\p"
-	.string "It's dirty and I won't try it again…$"
+MtPyre_6F_Text_Pyre_MagmaGrunt3PostBattle:
+	.string "You're not with either team…\n"
+	.string "What's your stake in all this?$"
 

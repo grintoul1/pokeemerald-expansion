@@ -663,11 +663,11 @@
 #define FLAG_PARKER_DEFEATED    0x268 // Petalburg Gym trainer
 #define FLAG_BERKE_DEFEATED     0x269 // Petalburg Gym trainer
 #define FLAG_JODY_DEFEATED      0x26A // Petalburg Gym trainer
-#define FLAG_HIDE_ROUTE_111_AQUA_1  0x26B // Unused Flag
-#define FLAG_HIDE_ROUTE_111_AQUA_2  0x26C // Unused Flag
-#define FLAG_UNUSED_0x26D  0x26D // Unused Flag
-#define FLAG_UNUSED_0x26E  0x26E // Unused Flag
-#define FLAG_UNUSED_0x26F  0x26F // Unused Flag
+#define FLAG_HIDE_ROUTE_111_AQUA_1  0x26B // Hides Aqua grunts blocking R112
+#define FLAG_HIDE_ROUTE_111_AQUA_2  0x26C // Hides single Aqua grunt that talks about Tabitha on way to Mt Chimney
+#define FLAG_HIDE_ROUTE_118_AQUA  0x26D // Hides single Aqua grunt that blocks R118 West (in case a skip found)
+#define FLAG_HIDE_ROUTE_121_TEAM_MAGMA_GRUNTS  0x26E // Hides R121 east exit Magma grunts
+#define FLAG_HIDE_MT_PYRE_1F_GRUNTS  0x26F // Hides grunts blocking exit to Mt Pyre exterior
 #define FLAG_UNUSED_0x270  0x270 // Unused Flag
 #define FLAG_UNUSED_0x271  0x271 // Unused Flag
 #define FLAG_UNUSED_0x272  0x272 // Unused Flag

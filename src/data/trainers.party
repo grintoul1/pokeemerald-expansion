@@ -189,10 +189,10 @@ Zubat
 Level: 36
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_GABRIELLE_1 ===
-Name: GABRIELLE
-Class: Pkmn Breeder
-Pic: Pokemon Breeder F
+=== TRAINER_PYRE_MAGMAGRUNT2 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt M
 Gender: Female
 Music: Female
 Double Battle: No
@@ -559,10 +559,10 @@ Golbat
 Level: 34
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-=== TRAINER_ZANDER ===
-Name: ZANDER
-Class: Black Belt
-Pic: Black Belt
+=== TRAINER_PYRE_AQUAGRUNT1 ===
+Name: Grunt
+Class: Team Aqua
+Pic: Aqua Grunt M
 Gender: Male
 Music: Intense
 Double Battle: No
@@ -645,10 +645,10 @@ Sharpedo
 Level: 43
 IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
 
-=== TRAINER_LEAH ===
-Name: LEAH
-Class: Hex Maniac
-Pic: Hex Maniac
+=== TRAINER_PYRE_AQUAGRUNT2 ===
+Name: Grunt
+Class: Team Aqua
+Pic: Aqua Grunt F
 Gender: Female
 Music: Suspicious
 Double Battle: No
@@ -2050,10 +2050,23 @@ Shuppet
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_VALERIE_1 ===
-Name: VALERIE
-Class: Hex Maniac
-Pic: Hex Maniac
+=== TRAINER_PYRE_AQUAGRUNT3 ===
+Name: Grunt
+Class: Team Aqua Mixed
+Pic: Aqua Grunt F
+Gender: Female
+Music: Suspicious
+Double Battle: No
+AI: Check Bad Move
+
+Sableye
+Level: 32
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+=== TRAINER_PYRE_AQUAGRUNT4 ===
+Name: Grunt
+Class: Team Aqua Mixed
+Pic: Aqua Grunt M
 Gender: Female
 Music: Suspicious
 Double Battle: No
@@ -2076,10 +2089,27 @@ Shuppet
 Level: 32
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
-=== TRAINER_VALERIE_2 ===
-Name: VALERIE
-Class: Hex Maniac
-Pic: Hex Maniac
+=== TRAINER_PYRE_MAGMAGRUNT5 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt F
+Gender: Female
+Music: Suspicious
+Double Battle: No
+AI: Check Bad Move
+
+Sableye
+Level: 31
+IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
+
+Spoink
+Level: 31
+IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
+
+=== TRAINER_PYRE_MAGMAGRUNT6 ===
+Name: Grunt
+Class: Team Magma Mixed
+Pic: Magma Grunt M
 Gender: Female
 Music: Suspicious
 Double Battle: No
@@ -4186,10 +4216,10 @@ Girafarig
 Level: 36
 IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
 
-=== TRAINER_WILLIAM ===
-Name: WILLIAM
-Class: Psychic
-Pic: Psychic M
+=== TRAINER_PYRE_MAGMAGRUNT1 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt M
 Gender: Male
 Music: Intense
 Double Battle: No
@@ -8715,10 +8745,10 @@ Swablu
 Level: 19
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_CEDRIC ===
-Name: CEDRIC
-Class: Psychic
-Pic: Psychic M
+=== TRAINER_PYRE_MAGMAGRUNT3 ===
+Name: Grunt
+Class: Team Magma Mixed
+Pic: Magma Grunt F
 Gender: Male
 Music: Intense
 Double Battle: No
@@ -11822,13 +11852,13 @@ Golem
 Level: 33
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
-=== TRAINER_DEZ_AND_LUKE ===
-Name: DEZ & LUKE
-Class: Young Couple
-Pic: Young Couple
+=== TRAINER_PYRE_MAGMAGRUNT4 ===
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt M
 Gender: Male
 Music: Girl
-Double Battle: Yes
+Double Battle: No
 AI: Check Bad Move
 
 Delcatty

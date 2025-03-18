@@ -36,6 +36,31 @@ Route121_EventScript_AquaGruntsMoveOut::
 	releaseall
 	end
 
+Route121_EventScript_AquaGrunt1::
+	msgbox Route121_Text_AquaGrunt1, MSGBOX_DEFAULT
+	closemessage
+	end
+
+Route121_EventScript_AquaGrunt2::
+	msgbox Route121_Text_AquaGrunt2, MSGBOX_DEFAULT
+	closemessage
+	end
+
+Route121_EventScript_AquaGrunt3::
+	msgbox Route121_Text_AquaGrunt3, MSGBOX_DEFAULT
+	closemessage
+	end
+
+Route121_EventScript_MagmaGrunt1::
+	msgbox Route121_Text_MagmaGrunt1, MSGBOX_DEFAULT
+	closemessage
+	end
+
+Route121_EventScript_MagmaGrunt2::
+	msgbox Route121_Text_MagmaGrunt2, MSGBOX_DEFAULT
+	closemessage
+	end
+
 Route121_Movement_Grunt1Exit:
 	walk_down
 	walk_down
@@ -190,3 +215,19 @@ Route121_Text_SafariZoneSign:
 	.string "“Filled with rare POKéMON!”\n"
 	.string "SAFARI ZONE$"
 
+Route121_Text_AquaGrunt1:
+	.string "Beat it kid!$"
+
+Route121_Text_AquaGrunt2:
+	.string "Team Aqua control this area!$"
+
+Route121_Text_AquaGrunt3:
+	.string "We're standing guard until the boss is\n"
+	.string "done at Mt. Pyre!$"
+
+Route121_Text_MagmaGrunt1:
+	.string "Team Magma have this area under control!$"
+
+Route121_Text_MagmaGrunt2:
+	.string "Nobody goes through this area while\n"
+	.string "Team Magma operate in Mt. Pyre!$"

@@ -282,5 +282,8 @@ EventScript_ResetAllMapFlags::
 	clearflag FLAG_CYCLING_ROAD_CLEAR
 	clearflag FLAG_HIDE_ROUTE_111_AQUA_1
 	setflag FLAG_HIDE_ROUTE_111_AQUA_2
+	clearflag FLAG_HIDE_ROUTE_118_AQUA
+	clearflag FLAG_HIDE_ROUTE_121_TEAM_MAGMA_GRUNTS
+	clearflag FLAG_HIDE_MT_PYRE_1F_GRUNTS
 	call EventScript_ResetAllBerries
 	end

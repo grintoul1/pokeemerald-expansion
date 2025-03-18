@@ -5,19 +5,28 @@
 .set LOCALID_GRUNT_3, 6
 .set LOCALID_GRUNT_4, 7
 .set LOCALID_MAXIE, 8
+.set LOCALID_MATT, 9
+.set LOCALID_TABITHA, 10
 
 MtPyre_Summit_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, MtPyre_Summit_OnTransition
 	.byte 0
 
 MtPyre_Summit_OnTransition:
-	call_if_eq VAR_MT_PYRE_STATE, 2, MtPyre_Summit_EventScript_SetArchieMaxiePositions
+	call_if_eq VAR_MT_PYRE_STATE, 10, MtPyre_Summit_EventScript_SetArchieMaxiePositions
+	call_if_lt VAR_MT_PYRE_STATE, 9, MtPyre_Summit_EventScript_SetArchieMaxieFightingPositions
 	end
 
 MtPyre_Summit_EventScript_SetArchieMaxiePositions::
 	setobjectxyperm LOCALID_MAXIE, 23, 6
 	setobjectxyperm LOCALID_ARCHIE, 22, 6
 	end
+
+MtPyre_Summit_EventScript_SetArchieMaxieFightingPositions::
+	setobjectxyperm LOCALID_MAXIE, 22, 6
+	setobjectxyperm LOCALID_ARCHIE, 24, 6
+	setobjectmovementtype LOCALID_ARCHIE, MOVEMENT_TYPE_WALK_IN_PLACE_LEFT
+	setobjectmovementtype LOCALID_MAXIE, MOVEMENT_TYPE_WALK_IN_PLACE_RIGHT
 
 MtPyre_Summit_EventScript_TeamAquaTrigger0::
 	lockall
@@ -410,24 +419,102 @@ MtPyre_Summit_Movement_MaxieApproachArchie2:
 	step_end
 
 MtPyre_Summit_EventScript_Grunt1::
-	trainerbattle_single TRAINER_GRUNT_MT_PYRE_1, MtPyre_Summit_Text_Grunt1Intro, MtPyre_Summit_Text_Grunt1Defeat
 	msgbox MtPyre_Summit_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 MtPyre_Summit_EventScript_Grunt2::
-	trainerbattle_single TRAINER_GRUNT_MT_PYRE_2, MtPyre_Summit_Text_Grunt2Intro, MtPyre_Summit_Text_Grunt2Defeat
 	msgbox MtPyre_Summit_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
 
+MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2::
+lockall
+setvar VAR_0x8008, LOCALID_GRUNT_1
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtPyre_Summit_Text_Grunt1Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_GRUNT_2
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MtPyre_Summit_Text_Grunt2Intro MSGBOX_AUTOCLOSE
+goto MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2DoMultiBattle
+releaseall
+end
+
+MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2DoMultiBattle::
+playbgm MUS_MT_PYRE_EXTERIOR, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_MT_PYRE_1, MtPyre_Summit_Text_Grunt1Defeat, TRAINER_GRUNT_MT_PYRE_2, MtPyre_Summit_Text_Grunt2Defeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtPyre_Summit_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MtPyre_Summit_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_MT_PYRE_STATE, 1
+end
+
 MtPyre_Summit_EventScript_Grunt3::
-	trainerbattle_single TRAINER_GRUNT_MT_PYRE_3, MtPyre_Summit_Text_Grunt3Intro, MtPyre_Summit_Text_Grunt3Defeat
 	msgbox MtPyre_Summit_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 MtPyre_Summit_EventScript_Grunt4::
-	trainerbattle_single TRAINER_GRUNT_MT_PYRE_4, MtPyre_Summit_Text_Grunt4Intro, MtPyre_Summit_Text_Grunt4Defeat
 	msgbox MtPyre_Summit_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
 	end
+
+MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4::
+lockall
+setvar VAR_0x8008, LOCALID_GRUNT_3
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtPyre_Summit_Text_Grunt3Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_GRUNT_4
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MAGMA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MtPyre_Summit_Text_Grunt4Intro MSGBOX_AUTOCLOSE
+goto MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4DoMultiBattle
+releaseall
+end
+
+MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4DoMultiBattle::
+playbgm MUS_MT_PYRE_EXTERIOR, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_MT_PYRE_3, MtPyre_Summit_Text_Grunt3Defeat, TRAINER_GRUNT_MT_PYRE_4, MtPyre_Summit_Text_Grunt4Defeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox MtPyre_Summit_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox MtPyre_Summit_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_MT_PYRE_STATE, 1
+end
 
 MtPyre_Summit_Text_Grunt1Intro:
 	.string "No! Those TEAM MAGMA goons got\n"

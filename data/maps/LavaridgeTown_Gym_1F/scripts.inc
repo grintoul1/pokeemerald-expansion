@@ -8,8 +8,6 @@ LavaridgeTown_Gym_1F_MapScripts::
 	.byte 0
 
 LavaridgeTown_Gym_1F_OnTransition:
-	call LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars
-	call LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers
 	end
 
 @ Unclear where/if these temp vars are getting checked
@@ -34,24 +32,57 @@ LavaridgeTown_Gym_1F_EventScript_EndSetTrainerTempVars::
 	return
 
 LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers::
-	goto_if_defeated TRAINER_COLE, LavaridgeTown_Gym_1F_EventScript_CheckBuryGerald
+	goto_if_gt VAR_LAVARIDGE_GYM_STATE, 0, LavaridgeTown_Gym_1F_EventScript_CheckBuryGerald
 	setobjectmovementtype LOCALID_COLE, MOVEMENT_TYPE_BURIED
 LavaridgeTown_Gym_1F_EventScript_CheckBuryGerald::
-	goto_if_defeated TRAINER_GERALD, LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle
+	goto_if_gt VAR_LAVARIDGE_GYM_STATE, 0, LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle
 	setobjectmovementtype LOCALID_GERALD, MOVEMENT_TYPE_BURIED
 LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle::
-	goto_if_defeated TRAINER_AXLE, LavaridgeTown_Gym_1F_EventScript_CheckBuryDanielle
+	goto_if_gt VAR_LAVARIDGE_GYM_STATE, 2, LavaridgeTown_Gym_1F_EventScript_CheckBuryDanielle
 	setobjectmovementtype LOCALID_AXLE, MOVEMENT_TYPE_BURIED
 LavaridgeTown_Gym_1F_EventScript_CheckBuryDanielle::
-	goto_if_defeated TRAINER_DANIELLE, LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers
+	goto_if_gt VAR_LAVARIDGE_GYM_STATE, 2, LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers
 	setobjectmovementtype LOCALID_DANIELLE, MOVEMENT_TYPE_BURIED
 LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers::
 	return
 
+LavaridgeTown_Gym_1F_EventScript_Flannery2::
+lockall
+playbgm MUS_ENCOUNTER_ELITE_FOUR, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox LavaridgeTown_Gym_1F_Text_FlanneryIntro MSGBOX_AUTOCLOSE
+msgbox LavaridgeTown_Gym_1F_Text_ReadyToFight MSGBOX_YESNO
+goto_if_eq VAR_RESULT, YES, LavaridgeTown_Gym_1F_EventScript_FlanneryDoMultiBattle
+msgbox LavaridgeTown_Gym_1F_Text_ComeBackWhenReady, MSGBOX_DEFAULT
+closemessage
+applymovement OBJ_EVENT_ID_PLAYER, LavaridgeTown_Gym_1F_Movement_Flannery_NotReady
+waitmovement 0
+playbgm MUS_GYM, TRUE
+releaseall
+end
+
+LavaridgeTown_Gym_1F_EventScript_FlanneryDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_1 TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, LavaridgeTown_Gym_1F_EventScript_FlanneryVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+LavaridgeTown_Gym_1F_EventScript_FlanneryVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+goto LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated
+end
+
+LavaridgeTown_Gym_1F_Movement_Flannery_NotReady:
+walk_down
+step_end
+
 LavaridgeTown_Gym_1F_EventScript_Flannery::
-	trainerbattle_single TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryIntro, LavaridgeTown_Gym_1F_Text_FlanneryDefeat, LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated, NO_MUSIC
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, LavaridgeTown_Gym_1F_EventScript_FlanneryRematch
+	goto_if_unset FLAG_BADGE04_GET, LavaridgeTown_Gym_1F_EventScript_Flannery2
 	goto_if_unset FLAG_RECEIVED_TM_OVERHEAT, LavaridgeTown_Gym_1F_EventScript_GiveOverheat2
 	msgbox LavaridgeTown_Gym_1F_Text_FlanneryPostBattle, MSGBOX_DEFAULT
 	release
@@ -65,19 +96,13 @@ LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated::
 	setflag FLAG_WHITEOUT_TO_LAVARIDGE
 	setflag FLAG_DEFEATED_LAVARIDGE_GYM
 	setflag FLAG_BADGE04_GET
+	setflag FLAG_HIDE_ROUTE_118_AQUA
 	setvar VAR_0x8008, 4
 	call Common_EventScript_SetGymTrainers
 	setflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY
 	setvar VAR_LAVARIDGE_TOWN_STATE, 1
 	call LavaridgeTown_Gym_1F_EventScript_GiveOverheat
 	closemessage
-	delay 30
-	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox LavaridgeTown_Gym_1F_Text_RegisteredFlannery, MSGBOX_DEFAULT
-	waitfanfare
-	closemessage
-	delay 30
-	setflag FLAG_ENABLE_FLANNERY_MATCH_CALL
 	release
 	end
 
@@ -101,8 +126,48 @@ LavaridgeTown_Gym_1F_EventScript_FlanneryRematch::
 	msgbox LavaridgeTown_Gym_1F_Text_FlanneryPostRematch, MSGBOX_AUTOCLOSE
 	end
 
+LavaridgeTown_Gym_1F_EventScript_GeraldCole::
+lockall
+setvar VAR_0x8008, LOCALID_GERALD
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_COOL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox LavaridgeTown_Gym_1F_Text_GeraldIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_COLE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox LavaridgeTown_Gym_1F_Text_ColeIntro MSGBOX_AUTOCLOSE
+goto LavaridgeTown_Gym_1F_EventScript_GeraldColeDoMultiBattle
+releaseall
+end
+
+LavaridgeTown_Gym_1F_EventScript_GeraldColeDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_2 TRAINER_GERALD, LavaridgeTown_Gym_1F_Text_GeraldDefeat, TRAINER_COLE, LavaridgeTown_Gym_1F_Text_ColeDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, LavaridgeTown_Gym_1F_EventScript_GeraldColeVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+LavaridgeTown_Gym_1F_EventScript_GeraldColeVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox LavaridgeTown_Gym_1F_Text_GeraldPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox LavaridgeTown_Gym_1F_Text_ColePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_LAVARIDGE_GYM_STATE, 1
+end
+
 LavaridgeTown_Gym_1F_EventScript_Cole::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_COLE, LOCALID_COLE, LavaridgeTown_Gym_1F_Text_ColeIntro, LavaridgeTown_Gym_1F_Text_ColeDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_ColePostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -114,22 +179,63 @@ LavaridgeTown_Gym_EventScript_CheckTrainerScript::
 	end
 
 LavaridgeTown_Gym_1F_EventScript_Axle::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_AXLE, LOCALID_AXLE, LavaridgeTown_Gym_1F_Text_AxleIntro, LavaridgeTown_Gym_1F_Text_AxleDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_AxlePostBattle, MSGBOX_AUTOCLOSE
 	end
 
 LavaridgeTown_Gym_B1F_EventScript_Keegan::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_KEEGAN, LOCALID_KEEGAN, LavaridgeTown_Gym_B1F_Text_KeeganIntro, LavaridgeTown_Gym_B1F_Text_KeeganDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_B1F_Text_KeeganPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+LavaridgeTown_Gym_1F_EventScript_DanielleAxle::
+lockall
+setvar VAR_0x8008, LOCALID_DANIELLE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox LavaridgeTown_Gym_1F_Text_DanielleIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_AXLE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox LavaridgeTown_Gym_1F_Text_AxleIntro MSGBOX_AUTOCLOSE
+goto LavaridgeTown_Gym_1F_EventScript_DanielleAxleDoMultiBattle
+releaseall
+end
+
+LavaridgeTown_Gym_1F_EventScript_DanielleAxleDoMultiBattle::
+playbgm MUS_GYM, TRUE
+multi_2p_vs_2 TRAINER_DANIELLE, LavaridgeTown_Gym_1F_Text_DanielleDefeat, TRAINER_AXLE, LavaridgeTown_Gym_1F_Text_AxleDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, LavaridgeTown_Gym_1F_EventScript_DanielleAxleVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+LavaridgeTown_Gym_1F_EventScript_DanielleAxleVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox LavaridgeTown_Gym_1F_Text_DaniellePostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox LavaridgeTown_Gym_1F_Text_AxlePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_LAVARIDGE_GYM_STATE, 1
+end
+
 LavaridgeTown_Gym_1F_EventScript_Danielle::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_DANIELLE, LOCALID_DANIELLE, LavaridgeTown_Gym_1F_Text_DanielleIntro, LavaridgeTown_Gym_1F_Text_DanielleDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_DaniellePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+LavaridgeTown_Gym_1F_EventScript_End::
+	releaseall
+	end
+
 LavaridgeTown_Gym_1F_EventScript_Gerald::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_GERALD, LOCALID_GERALD, LavaridgeTown_Gym_1F_Text_GeraldIntro, LavaridgeTown_Gym_1F_Text_GeraldDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_GeraldPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -139,7 +245,6 @@ LavaridgeTown_Gym_B1F_EventScript_Jace::
 	end
 
 LavaridgeTown_Gym_B1F_EventScript_Jeff::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_JEFF, LOCALID_JEFF, LavaridgeTown_Gym_B1F_Text_JeffIntro, LavaridgeTown_Gym_B1F_Text_JeffDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_B1F_Text_JeffPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -400,3 +505,9 @@ LavaridgeTown_Gym_1F_Text_FlanneryRematchNeedTwoMons:
 	.string "that can battle?\p"
 	.string "I hate to say this, but when you come\n"
 	.string "see me, bring at least two POKéMON.$"
+
+LavaridgeTown_Gym_1F_Text_ReadyToFight:
+	.string "Feeling tough?$"
+
+LavaridgeTown_Gym_1F_Text_ComeBackWhenReady:
+	.string "Hah! Come back when you're ready!$"

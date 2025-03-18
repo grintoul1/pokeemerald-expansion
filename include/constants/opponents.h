@@ -12,7 +12,7 @@
 #define TRAINER_GRUNT_SEAFLOOR_CAVERN_1       6
 #define TRAINER_GRUNT_SEAFLOOR_CAVERN_2       7
 #define TRAINER_GRUNT_SEAFLOOR_CAVERN_3       8
-#define TRAINER_GABRIELLE_1                   9
+#define TRAINER_PYRE_MAGMAGRUNT2              9
 #define TRAINER_GRUNT_PETALBURG_WOODS        10
 #define TRAINER_MARCEL                       11
 #define TRAINER_ALBERTO                      12
@@ -34,11 +34,11 @@
 #define TRAINER_GRUNT_AQUA_HIDEOUT_6         28
 #define TRAINER_FREDRICK                     29
 #define TRAINER_MATT                         30
-#define TRAINER_ZANDER                       31
+#define TRAINER_PYRE_AQUAGRUNT1              31
 #define TRAINER_SHELLY_WEATHER_INSTITUTE     32
 #define TRAINER_SHELLY_SEAFLOOR_CAVERN       33
 #define TRAINER_ARCHIE                       34
-#define TRAINER_LEAH                         35
+#define TRAINER_PYRE_AQUAGRUNT2              35
 #define TRAINER_DAISY                        36
 #define TRAINER_ROSE_1                       37
 #define TRAINER_FELIX                        38
@@ -111,9 +111,9 @@
 #define TRAINER_PATRICIA                    105
 #define TRAINER_KINDRA                      106
 #define TRAINER_TAMMY                       107
-#define TRAINER_VALERIE_1                   108
+#define TRAINER_PYRE_AQUAGRUNT3             108
 #define TRAINER_TASHA                       109
-#define TRAINER_VALERIE_2                   110
+#define TRAINER_PYRE_MAGMAGRUNT5            110
 #define TRAINER_VALERIE_3                   111
 #define TRAINER_VALERIE_4                   112
 #define TRAINER_VALERIE_5                   113
@@ -239,7 +239,7 @@
 #define TRAINER_PRESTON                     233
 #define TRAINER_VIRGIL                      234
 #define TRAINER_BLAKE                       235
-#define TRAINER_WILLIAM                     236
+#define TRAINER_PYRE_MAGMAGRUNT1            236
 #define TRAINER_JOSHUA                      237
 #define TRAINER_CAMERON_1                   238
 #define TRAINER_CAMERON_2                   239
@@ -478,7 +478,7 @@
 #define TRAINER_GRUNT_ROUTE_114_5           472
 #define TRAINER_MARTHA                      473
 #define TRAINER_DIANA_1                     474
-#define TRAINER_CEDRIC                      475
+#define TRAINER_PYRE_MAGMAGRUNT3            475
 #define TRAINER_IRENE                       476
 #define TRAINER_DIANA_2                     477
 #define TRAINER_DIANA_3                     478
@@ -643,7 +643,7 @@
 #define TRAINER_TRENT_3                     637
 #define TRAINER_TRENT_4                     638
 #define TRAINER_TRENT_5                     639
-#define TRAINER_DEZ_AND_LUKE                640
+#define TRAINER_PYRE_MAGMAGRUNT4            640
 #define TRAINER_LEA_AND_JED                 641
 #define TRAINER_KIRA_AND_DAN_1              642
 #define TRAINER_KIRA_AND_DAN_2              643
@@ -860,12 +860,14 @@
 #define TRAINER_MAY_PLACEHOLDER             854
 #define TRAINER_SHELLY_PETALBURG_WOODS      855
 #define TRAINER_MATT_PETALBURG_WOODS        856
+#define TRAINER_PYRE_AQUAGRUNT4             857
+#define TRAINER_PYRE_MAGMAGRUNT6            858
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      857
+#define TRAINERS_COUNT                      859
 #define MAX_TRAINERS_COUNT                  864
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 

@@ -1,4 +1,10 @@
-.set LOCALID_STEVEN, 19
+.set LOCALID_STEVEN, 13
+.set LOCALID_BARNY, 11
+.set LOCALID_WADE, 9
+.set LOCALID_ROSE, 8
+.set LOCALID_DEANDRE, 15
+.set LOCALID_CHESTER, 10
+.set LOCALID_DALTON, 12
 
 Route118_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route118_OnTransition
@@ -85,8 +91,6 @@ Route118_EventScript_StevenTrigger2::
 	setvar VAR_0x8008, 2
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceUp
 	waitmovement 0
-	applymovement LOCALID_STEVEN, Route118_Movement_StevenApproachLedge2
-	waitmovement 0
 	goto Route118_EventScript_StevenTrigger
 	end
 
@@ -100,7 +104,7 @@ Route118_EventScript_StevenTrigger::
 	call_if_eq VAR_0x8008, 0, Route118_EventScript_StevenExit0
 	call_if_eq VAR_0x8008, 1, Route118_EventScript_StevenExit1
 	call_if_eq VAR_0x8008, 2, Route118_EventScript_StevenExit2
-	setvar VAR_ROUTE118_STATE, 1
+	addvar VAR_ROUTE118_STATE, 1
 	removeobject LOCALID_STEVEN
 	releaseall
 	end
@@ -179,9 +183,6 @@ Route118_Movement_StevenExit2:
 	step_end
 
 Route118_EventScript_Rose::
-	trainerbattle_single TRAINER_ROSE_1, Route118_Text_RoseIntro, Route118_Text_RoseDefeat, Route118_EventScript_RegisterRose
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route118_EventScript_RematchRose
 	msgbox Route118_Text_RosePostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -200,19 +201,96 @@ Route118_EventScript_RematchRose::
 	end
 
 Route118_EventScript_Barny::
-	trainerbattle_single TRAINER_BARNY, Route118_Text_BarnyIntro, Route118_Text_BarnyDefeat
 	msgbox Route118_Text_BarnyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route118_EventScript_Wade::
-	trainerbattle_single TRAINER_WADE, Route118_Text_WadeIntro, Route118_Text_WadeDefeat
 	msgbox Route118_Text_WadePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route118_EventScript_BarnyWade::
+lockall
+setvar VAR_0x8008, LOCALID_BARNY
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route118_Text_BarnyIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_WADE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_HIKER, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route118_Text_WadeIntro MSGBOX_AUTOCLOSE
+goto Route118_EventScript_BarnyWadeDoMultiBattle
+releaseall
+end
+
+Route118_EventScript_BarnyWadeDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_BARNY, Route118_Text_BarnyDefeat, TRAINER_WADE, Route118_Text_WadeDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route118_EventScript_BarnyWadeVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route118_EventScript_BarnyWadeVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route118_Text_BarnyPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route118_Text_WadePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE118_STATE, 1
+end
+
+Route118_EventScript_ChesterDalton::
+lockall
+setvar VAR_0x8008, LOCALID_CHESTER
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route118_Text_ChesterIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_DALTON
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_INTENSE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route118_Text_DaltonIntro MSGBOX_AUTOCLOSE
+goto Route118_EventScript_ChesterDaltonDoMultiBattle
+releaseall
+end
+
+Route118_EventScript_ChesterDaltonDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_CHESTER, Route118_Text_ChesterDefeat, TRAINER_DALTON_1, Route118_Text_DaltonDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route118_EventScript_ChesterDaltonVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route118_EventScript_ChesterDaltonVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox Route118_Text_ChesterPostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox Route118_Text_DaltonPostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE118_STATE, 1
+end
+
 Route118_EventScript_Dalton::
-	trainerbattle_single TRAINER_DALTON_1, Route118_Text_DaltonIntro, Route118_Text_DaltonDefeat, Route118_EventScript_RegisterDalton
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, Route118_EventScript_RematchDalton
 	msgbox Route118_Text_DaltonPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -236,12 +314,51 @@ Route118_EventScript_Perry::
 	end
 
 Route118_EventScript_Chester::
-	trainerbattle_single TRAINER_CHESTER, Route118_Text_ChesterIntro, Route118_Text_ChesterDefeat
 	msgbox Route118_Text_ChesterPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route118_EventScript_DeandreRose::
+lockall
+setvar VAR_0x8008, LOCALID_DEANDRE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_MALE, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route118_Text_DeandreIntro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_ROSE
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_GIRL, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route118_Text_RoseIntro MSGBOX_AUTOCLOSE
+goto Route118_EventScript_DeandreRoseDoMultiBattle
+releaseall
+end
+
+Route118_EventScript_DeandreRoseDoMultiBattle::
+playbgm MUS_ROUTE110, TRUE
+multi_2p_vs_2 TRAINER_DEANDRE, Route118_Text_DeandreDefeat, TRAINER_ROSE_1, Route118_Text_RoseDefeat, PARTNER_EMMIE
+switch VAR_RESULT
+case 1, Route118_EventScript_DeandreRoseVictory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+Route118_EventScript_DeandreRoseVictory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox Route118_Text_DeandrePostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox Route118_Text_RosePostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_ROUTE118_STATE, 1
+end
+
 Route118_EventScript_Deandre::
-	trainerbattle_single TRAINER_DEANDRE, Route118_Text_DeandreIntro, Route118_Text_DeandreDefeat
 	msgbox Route118_Text_DeandrePostBattle, MSGBOX_AUTOCLOSE
 	end
 
