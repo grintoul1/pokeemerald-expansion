@@ -128,7 +128,7 @@
       "movement_range_y": 0,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "MtPyre_Summit_EventScript_Matt",
       "flag": "FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_AQUA"
     },
     {
@@ -141,8 +141,8 @@
       "movement_range_y": 1,
       "trainer_type": "NULL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_AQUA"
+      "script": "MtPyre_Summit_EventScript_Tabitha",
+      "flag": "FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_MAGMA"
     }
   ],
   "warp_events": [
@@ -248,7 +248,7 @@
       "elevation": 0,
       "var": "VAR_MT_PYRE_STATE",
       "var_value": "7",
-      "script": "NULL"
+      "script": "MtPyre_Summit_EventScript_MattTabitha"
     },
     {
       "type": "trigger",
@@ -266,7 +266,7 @@
       "elevation": 0,
       "var": "VAR_MT_PYRE_STATE",
       "var_value": "7",
-      "script": "NULL"
+      "script": "MtPyre_Summit_EventScript_MattTabitha"
     },
     {
       "type": "trigger",
@@ -275,7 +275,7 @@
       "elevation": 0,
       "var": "VAR_MT_PYRE_STATE",
       "var_value": "7",
-      "script": "NULL"
+      "script": "MtPyre_Summit_EventScript_MattTabitha"
     }
   ],
   "bg_events": [

@@ -893,7 +893,7 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_PYRE_1] =
     {
 #line 428
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 429
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 430
@@ -925,11 +925,11 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_PYRE_2] =
     {
 #line 441
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 442
         .trainerClass = TRAINER_CLASS_TEAM_AQUA,
 #line 443
-        .trainerPic = TRAINER_PIC_AQUA_GRUNT_M,
+        .trainerPic = TRAINER_PIC_AQUA_GRUNT_F,
         .encounterMusic_gender =
 #line 445
             TRAINER_ENCOUNTER_MUSIC_AQUA,
@@ -957,11 +957,11 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_PYRE_3] =
     {
 #line 454
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 455
-        .trainerClass = TRAINER_CLASS_TEAM_AQUA,
+        .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 456
-        .trainerPic = TRAINER_PIC_AQUA_GRUNT_M,
+        .trainerPic = TRAINER_PIC_MAGMA_GRUNT_F,
         .encounterMusic_gender =
 #line 458
             TRAINER_ENCOUNTER_MUSIC_AQUA,
@@ -1735,19 +1735,17 @@ F_TRAINER_FEMALE |
         },
     },
 #line 754
-    [TRAINER_ROSE_3] =
+    [TRAINER_MATT_MT_PYRE] =
     {
 #line 755
-        .trainerName = _("ROSE"),
+        .trainerName = _("Matt"),
 #line 756
-        .trainerClass = TRAINER_CLASS_AROMA_LADY,
+        .trainerClass = TRAINER_CLASS_AQUA_ADMIN_MIXED,
 #line 757
-        .trainerPic = TRAINER_PIC_AROMA_LADY,
+        .trainerPic = TRAINER_PIC_AQUA_ADMIN_M,
         .encounterMusic_gender =
-#line 758
-F_TRAINER_FEMALE | 
 #line 759
-            TRAINER_ENCOUNTER_MUSIC_FEMALE,
+            TRAINER_ENCOUNTER_MUSIC_MALE,
 #line 760
         .doubleBattle = FALSE,
 #line 761
@@ -1791,19 +1789,17 @@ F_TRAINER_FEMALE |
         },
     },
 #line 775
-    [TRAINER_ROSE_4] =
+    [TRAINER_TABITHA_MT_PYRE] =
     {
 #line 776
-        .trainerName = _("ROSE"),
+        .trainerName = _("Tabitha"),
 #line 777
-        .trainerClass = TRAINER_CLASS_AROMA_LADY,
+        .trainerClass = TRAINER_CLASS_MAGMA_ADMIN_MIXED,
 #line 778
-        .trainerPic = TRAINER_PIC_AROMA_LADY,
+        .trainerPic = TRAINER_PIC_MAGMA_ADMIN,
         .encounterMusic_gender =
-#line 779
-F_TRAINER_FEMALE | 
 #line 780
-            TRAINER_ENCOUNTER_MUSIC_FEMALE,
+            TRAINER_ENCOUNTER_MUSIC_MALE,
 #line 781
         .doubleBattle = FALSE,
 #line 782
@@ -26685,14 +26681,12 @@ F_TRAINER_FEMALE |
     [TRAINER_GRUNT_MT_PYRE_4] =
     {
 #line 10645
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Grunt"),
 #line 10646
-        .trainerClass = TRAINER_CLASS_TEAM_AQUA,
+        .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
 #line 10647
-        .trainerPic = TRAINER_PIC_AQUA_GRUNT_F,
+        .trainerPic = TRAINER_PIC_MAGMA_GRUNT_M,
         .encounterMusic_gender =
-#line 10648
-F_TRAINER_FEMALE | 
 #line 10649
             TRAINER_ENCOUNTER_MUSIC_AQUA,
 #line 10650

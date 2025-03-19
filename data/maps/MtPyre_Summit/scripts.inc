@@ -27,6 +27,7 @@ MtPyre_Summit_EventScript_SetArchieMaxieFightingPositions::
 	setobjectxyperm LOCALID_ARCHIE, 24, 6
 	setobjectmovementtype LOCALID_ARCHIE, MOVEMENT_TYPE_WALK_IN_PLACE_LEFT
 	setobjectmovementtype LOCALID_MAXIE, MOVEMENT_TYPE_WALK_IN_PLACE_RIGHT
+	end
 
 MtPyre_Summit_EventScript_TeamAquaTrigger0::
 	lockall
@@ -427,45 +428,45 @@ MtPyre_Summit_EventScript_Grunt2::
 	end
 
 MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2::
-lockall
-setvar VAR_0x8008, LOCALID_GRUNT_1
-playse SE_PIN
-applymovement VAR_0x8008, Common_Movement_ExclamationMark
-waitmovement 0
-playbgm MUS_ENCOUNTER_AQUA, TRUE
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-waitmovement 0
-msgbox MtPyre_Summit_Text_Grunt1Intro MSGBOX_AUTOCLOSE
-setvar VAR_0x8008, LOCALID_GRUNT_2
-playse SE_PIN
-applymovement VAR_0x8008, Common_Movement_ExclamationMark
-waitmovement 0
-playbgm MUS_ENCOUNTER_AQUA, TRUE
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-waitmovement 0
-msgbox MtPyre_Summit_Text_Grunt2Intro MSGBOX_AUTOCLOSE
-goto MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2DoMultiBattle
-releaseall
-end
+	lockall
+	setvar VAR_0x8008, LOCALID_GRUNT_1
+	playse SE_PIN
+	applymovement VAR_0x8008, Common_Movement_ExclamationMark
+	waitmovement 0
+	playbgm MUS_ENCOUNTER_AQUA, TRUE
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Grunt1Intro MSGBOX_AUTOCLOSE
+	setvar VAR_0x8008, LOCALID_GRUNT_2
+	playse SE_PIN
+	applymovement VAR_0x8008, Common_Movement_ExclamationMark
+	waitmovement 0
+	playbgm MUS_ENCOUNTER_AQUA, TRUE
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Grunt2Intro MSGBOX_AUTOCLOSE
+	goto MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2DoMultiBattle
+	releaseall
+	end
 
 MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2DoMultiBattle::
-playbgm MUS_MT_PYRE_EXTERIOR, TRUE
-multi_2p_vs_2 TRAINER_GRUNT_MT_PYRE_1, MtPyre_Summit_Text_Grunt1Defeat, TRAINER_GRUNT_MT_PYRE_2, MtPyre_Summit_Text_Grunt2Defeat, PARTNER_EMMIE
-switch VAR_RESULT
-case 1, MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2Victory
-fadescreen FADE_TO_BLACK
-special SetCB2WhiteOut
-waitstate
+	playbgm MUS_MT_PYRE_EXTERIOR, TRUE
+	multi_2p_vs_2 TRAINER_GRUNT_MT_PYRE_1, MtPyre_Summit_Text_Grunt1Defeat, TRAINER_GRUNT_MT_PYRE_2, MtPyre_Summit_Text_Grunt2Defeat, PARTNER_EMMIE
+	switch VAR_RESULT
+	case 1, MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2Victory
+	fadescreen FADE_TO_BLACK
+	special SetCB2WhiteOut
+	waitstate
 
 MtPyre_Summit_EventScript_Grunt_Mt_Pyre_1Grunt_Mt_Pyre_2Victory::
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-waitmovement 0
-msgbox MtPyre_Summit_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-waitmovement 0
-msgbox MtPyre_Summit_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_MT_PYRE_STATE, 1
-end
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
+	addvar VAR_MT_PYRE_STATE, 1
+	end
 
 MtPyre_Summit_EventScript_Grunt3::
 	msgbox MtPyre_Summit_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
@@ -476,105 +477,313 @@ MtPyre_Summit_EventScript_Grunt4::
 	end
 
 MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4::
-lockall
-setvar VAR_0x8008, LOCALID_GRUNT_3
-playse SE_PIN
-applymovement VAR_0x8008, Common_Movement_ExclamationMark
-waitmovement 0
-playbgm MUS_ENCOUNTER_MAGMA, TRUE
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-waitmovement 0
-msgbox MtPyre_Summit_Text_Grunt3Intro MSGBOX_AUTOCLOSE
-setvar VAR_0x8008, LOCALID_GRUNT_4
-playse SE_PIN
-applymovement VAR_0x8008, Common_Movement_ExclamationMark
-waitmovement 0
-playbgm MUS_ENCOUNTER_MAGMA, TRUE
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-waitmovement 0
-msgbox MtPyre_Summit_Text_Grunt4Intro MSGBOX_AUTOCLOSE
-goto MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4DoMultiBattle
-releaseall
-end
+	lockall
+	setvar VAR_0x8008, LOCALID_GRUNT_3
+	playse SE_PIN
+	applymovement VAR_0x8008, Common_Movement_ExclamationMark
+	waitmovement 0
+	playbgm MUS_ENCOUNTER_MAGMA, TRUE
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Grunt3Intro MSGBOX_AUTOCLOSE
+	setvar VAR_0x8008, LOCALID_GRUNT_4
+	playse SE_PIN
+	applymovement VAR_0x8008, Common_Movement_ExclamationMark
+	waitmovement 0
+	playbgm MUS_ENCOUNTER_MAGMA, TRUE
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Grunt4Intro MSGBOX_AUTOCLOSE
+	goto MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4DoMultiBattle
+	releaseall
+	end
 
 MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4DoMultiBattle::
-playbgm MUS_MT_PYRE_EXTERIOR, TRUE
-multi_2p_vs_2 TRAINER_GRUNT_MT_PYRE_3, MtPyre_Summit_Text_Grunt3Defeat, TRAINER_GRUNT_MT_PYRE_4, MtPyre_Summit_Text_Grunt4Defeat, PARTNER_EMMIE
-switch VAR_RESULT
-case 1, MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4Victory
-fadescreen FADE_TO_BLACK
-special SetCB2WhiteOut
-waitstate
+	playbgm MUS_MT_PYRE_EXTERIOR, TRUE
+	multi_2p_vs_2 TRAINER_GRUNT_MT_PYRE_3, MtPyre_Summit_Text_Grunt3Defeat, TRAINER_GRUNT_MT_PYRE_4, MtPyre_Summit_Text_Grunt4Defeat, PARTNER_EMMIE
+	switch VAR_RESULT
+	case 1, MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4Victory
+	fadescreen FADE_TO_BLACK
+	special SetCB2WhiteOut
+	waitstate
 
 MtPyre_Summit_EventScript_Grunt_Mt_Pyre_3Grunt_Mt_Pyre_4Victory::
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-waitmovement 0
-msgbox MtPyre_Summit_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-waitmovement 0
-msgbox MtPyre_Summit_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
-addvar VAR_MT_PYRE_STATE, 1
-end
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
+	addvar VAR_MT_PYRE_STATE, 1
+	end
+
+MtPyre_Summit_EventScript_MattTabitha::
+	lockall
+	setobjectmovementtype LOCALID_TABITHA, MOVEMENT_TYPE_FACE_LEFT
+	setobjectmovementtype LOCALID_MATT, MOVEMENT_TYPE_FACE_RIGHT
+	waitmovement 0
+	playbgm MUS_ENCOUNTER_MAGMA, TRUE
+	msgbox MtPyre_Summit_Text_TabithaAllYouGot, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_TABITHA, MtPyre_Summit_Movement_TabithaApproachMatt
+	waitmovement 0
+	playse SE_NOT_EFFECTIVE
+	applymovement LOCALID_MATT, MtPyre_Summit_Movement_MattKnockedBack
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_TabithaHehehe, MSGBOX_DEFAULT
+	closemessage
+	playbgm MUS_ENCOUNTER_AQUA, TRUE
+	msgbox MtPyre_Summit_Text_MattNotOver, MSGBOX_DEFAULT
+	applymovement LOCALID_MATT, MtPyre_Summit_Movement_MattApproachTabitha
+	waitmovement 0
+	playse SE_NOT_EFFECTIVE
+	applymovement LOCALID_TABITHA, MtPyre_Summit_Movement_TabithaKnockedBack
+	waitmovement 0
+	playse SE_PIN
+	applymovement LOCALID_MATT, Common_Movement_ExclamationMark
+	applymovement LOCALID_TABITHA, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_MATT, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_TABITHA, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_TabithaWhatDoWeHaveHere, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MATT, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_MattLastThingWeNeed, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MATT, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_TABITHA, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_TabithaDoWeHaveADeal, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MATT, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_MattSettleThisLater, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MATT, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_TABITHA, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	getplayerxy VAR_TEMP_2, VAR_TEMP_3
+	playse SE_PIN
+	call_if_eq VAR_TEMP_2, 22, MtPyre_Summit_EventScript_MattTabithaFight_A
+	call_if_eq VAR_TEMP_2, 23, MtPyre_Summit_EventScript_MattTabithaFight_B
+	call_if_eq VAR_TEMP_2, 24, MtPyre_Summit_EventScript_MattTabithaFight_C
+	end
+
+MtPyre_Summit_EventScript_MattTabithaFight_A::
+	applymovement LOCALID_MATT, MtPyre_Summit_Movement_MattApproachPlayer_A
+	applymovement LOCALID_TABITHA, MtPyre_Summit_Movement_TabithaApproachPlayer_A
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_CantBeatBothOfUs, MSGBOX_DEFAULT
+	closemessage
+	playbgm MUS_MT_PYRE_EXTERIOR, TRUE
+	multi_2p_vs_2 TRAINER_TABITHA_MT_PYRE, MtPyre_Summit_Text_Tabitha_Mt_PyreDefeat, TRAINER_MATT_MT_PYRE, MtPyre_Summit_Text_Matt_Mt_PyreDefeat, PARTNER_EMMIE
+	switch VAR_RESULT
+	case 1, MtPyre_Summit_EventScript_Matt_Mt_PyreTabitha_Mt_PyreVictory
+	fadescreen FADE_TO_BLACK
+	special SetCB2WhiteOut
+	waitstate
+
+MtPyre_Summit_EventScript_Matt_Mt_PyreTabitha_Mt_PyreVictory::
+	applymovement LOCALID_MATT, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Matt_Mt_PyrePostBattle, MSGBOX_AUTOCLOSE
+	applymovement LOCALID_TABITHA, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_Tabitha_Mt_PyrePostBattle, MSGBOX_AUTOCLOSE
+	addvar VAR_MT_PYRE_STATE, 1
+	end
+
+MtPyre_Summit_Movement_MattApproachPlayer_A:
+	delay_16
+	walk_down
+	step_end
+
+MtPyre_Summit_Movement_TabithaApproachPlayer_A:
+	walk_left
+	walk_down
+	step_end
+
+MtPyre_Summit_EventScript_MattTabithaFight_B::
+	applymovement LOCALID_MATT, MtPyre_Summit_Movement_MattApproachPlayer_B
+	applymovement LOCALID_TABITHA, MtPyre_Summit_Movement_TabithaApproachPlayer_B
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_CantBeatBothOfUs, MSGBOX_DEFAULT
+	closemessage
+	playbgm MUS_MT_PYRE_EXTERIOR, TRUE
+	multi_2p_vs_2 TRAINER_TABITHA_MT_PYRE, MtPyre_Summit_Text_Tabitha_Mt_PyreDefeat, TRAINER_MATT_MT_PYRE, MtPyre_Summit_Text_Matt_Mt_PyreDefeat, PARTNER_EMMIE
+	switch VAR_RESULT
+	case 1, MtPyre_Summit_EventScript_Matt_Mt_PyreTabitha_Mt_PyreVictory
+	fadescreen FADE_TO_BLACK
+	special SetCB2WhiteOut
+	waitstate
+
+MtPyre_Summit_Movement_MattApproachPlayer_B:
+	walk_down
+	step_end
+
+MtPyre_Summit_Movement_TabithaApproachPlayer_B:
+	walk_down
+	step_end
+
+
+MtPyre_Summit_EventScript_MattTabithaFight_C::
+	applymovement LOCALID_MATT, MtPyre_Summit_Movement_MattApproachPlayer_C
+	applymovement LOCALID_TABITHA, MtPyre_Summit_Movement_TabithaApproachPlayer_C
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_CantBeatBothOfUs, MSGBOX_DEFAULT
+	closemessage
+	playbgm MUS_MT_PYRE_EXTERIOR, TRUE
+	multi_2p_vs_2 TRAINER_TABITHA_MT_PYRE, MtPyre_Summit_Text_Tabitha_Mt_PyreDefeat, TRAINER_MATT_MT_PYRE, MtPyre_Summit_Text_Matt_Mt_PyreDefeat, PARTNER_EMMIE
+	switch VAR_RESULT
+	case 1, MtPyre_Summit_EventScript_Matt_Mt_PyreTabitha_Mt_PyreVictory
+	fadescreen FADE_TO_BLACK
+	special SetCB2WhiteOut
+	waitstate
+
+MtPyre_Summit_Movement_MattApproachPlayer_C:
+	walk_right
+	walk_down
+	step_end
+
+MtPyre_Summit_Movement_TabithaApproachPlayer_C:
+	delay_16
+	walk_down
+	step_end
+
+MtPyre_Summit_Movement_TabithaApproachMatt:
+	walk_fast_left
+	step_end
+
+MtPyre_Summit_Movement_MattKnockedBack:
+	lock_facing_direction
+	walk_fast_left
+	delay_16
+	delay_16
+	unlock_facing_direction
+	step_end
+
+MtPyre_Summit_Movement_MattApproachTabitha:
+	walk_fast_right 
+	step_end
+
+MtPyre_Summit_Movement_TabithaKnockedBack:
+	lock_facing_direction
+	walk_fast_right
+	walk_fast_right
+	delay_16
+	delay_16
+	walk_slow_left
+	unlock_facing_direction
+	step_end
+
+MtPyre_Summit_EventScript_Matt::
+	msgbox MtPyre_Summit_Text_Matt_Mt_PyrePostBattle, MSGBOX_DEFAULT
+	end
+
+MtPyre_Summit_EventScript_Tabitha::
+	msgbox MtPyre_Summit_Text_Tabitha_Mt_PyrePostBattle, MSGBOX_DEFAULT
+	end
+
+MtPyre_Summit_Text_TabithaAllYouGot:
+	.string "Tabitha: Hehehehe! Oh Matt, for someone\n"
+	.string "so built, you aren't half weak!\p"
+	.string "Is this the best you can do?$"
+
+MtPyre_Summit_Text_TabithaHehehe:
+	.string "Tabitha: Hehehehehe!$"
+
+MtPyre_Summit_Text_MattNotOver:
+	.string "Matt: Heh, this is far from over!$"
+
+MtPyre_Summit_Text_TabithaWhatDoWeHaveHere:
+	.string "Tabitha: Well, well, well… What do we\n"
+	.string "have here?$"
+
+MtPyre_Summit_Text_MattLastThingWeNeed:
+	.string "Matt: You again? The last thing Archie\n"
+	.string "needs is you kids getting in the way.$"
+
+MtPyre_Summit_Text_TabithaDoWeHaveADeal:
+	.string "Tabitha: Now then Matty, it looks like\n"
+	.string "our interests are momentarily aligned.\p"
+	.string "What say we call a two-minute truce?$"
+
+MtPyre_Summit_Text_MattSettleThisLater:
+	.string "Matt: Fine. But we're far from done.\p"
+	.string "We'll settle this afterwards!$"
+
+MtPyre_Summit_Text_CantBeatBothOfUs:
+	.string "You can't beat both of us!$"
+
+MtPyre_Summit_Text_Matt_Mt_PyreDefeat:
+	.string "How did I lose to you again?!$"
+
+MtPyre_Summit_Text_Tabitha_Mt_PyreDefeat:
+	.string "Hehe… You kids really are the real\n"
+	.string "deal…$"
+
+MtPyre_Summit_Text_Matt_Mt_PyrePostBattle:
+	.string "Matt: Archie will have claimed what\n"
+	.string "we came here for… Next time you\l"
+	.string "won't be so lucky.$"
+
+MtPyre_Summit_Text_Tabitha_Mt_PyrePostBattle:
+	.string "Tabitha: No matter! You won't stand\n"
+	.string "a change against Maxie this time!$"
 
 MtPyre_Summit_Text_Grunt1Intro:
-	.string "No! Those TEAM MAGMA goons got\n"
-	.string "here ahead of us!\p"
-	.string "We can't fall behind!$"
+	.string "The boss and Maxie are fighting it\n"
+	.string "out up ahead!$"
 
 MtPyre_Summit_Text_Grunt1Defeat:
-	.string "I thought you were one of the MAGMAS\n"
-	.string "who happened to come back…$"
+	.string "Interrupting them isn't smart…$"
 
 MtPyre_Summit_Text_Grunt1PostBattle:
-	.string "Yeah, so you are strong…\n"
-	.string "But there're a lot of us!$"
+	.string "Do what you like kids. It's chaos\n"
+	.string "up ahead!$"
 
 MtPyre_Summit_Text_Grunt2Intro:
-	.string "Hah!\n"
-	.string "Too bad for you!\p"
-	.string "If you came earlier, you only would've\n"
-	.string "had to battle the wimpy TEAM MAGMA.\p"
-	.string "But since you arrived now, you have\n"
-	.string "to take on us toughies!$"
+	.string "Matt and Tabitha are scrapping too!$"
 
 MtPyre_Summit_Text_Grunt2Defeat:
 	.string "Urgh… I should've let you take on\n"
-	.string "TEAM MAGMA first…$"
+	.string "Team Magma first…$"
 
 MtPyre_Summit_Text_Grunt2PostBattle:
-	.string "You don't know anything!\n"
-	.string "So why are you messing with us?$"
+	.string "I wouldn't want to find myself\n"
+	.string "in the middle of that!$"
 
 MtPyre_Summit_Text_Grunt3Intro:
 	.string "You…\n"
-	.string "We saw you at MT. CHIMNEY.\p"
-	.string "You don't belong to either TEAM,\n"
+	.string "We saw you at Mt Chimney.\p"
+	.string "You don't belong to either team,\n"
 	.string "so why would you be here?$"
 
 MtPyre_Summit_Text_Grunt3Defeat:
 	.string "If you're going to mess with anyone,\n"
-	.string "let it be TEAM MAGMA…$"
+	.string "let it be Team Aqua…$"
 
 MtPyre_Summit_Text_Grunt3PostBattle:
 	.string "Heh, it doesn't matter!\n"
 	.string "We bought ourselves some time!\p"
-	.string "The BOSS should have snatched what\n"
+	.string "The boss should have snatched what\n"
 	.string "he was after!$"
 
 MtPyre_Summit_Text_Grunt4Intro:
-	.string "Oh, I know!\n"
-	.string "You tried to join TEAM MAGMA,\l"
-	.string "but they wouldn't have you!\p"
-	.string "Well, don't think that we'll let you\n"
-	.string "join our TEAM AQUA!$"
+	.string "You're too late! We will be finished\n"
+	.string "here once the boss has wiped the floor\l"
+	.string "with Archie!$"
 
 MtPyre_Summit_Text_Grunt4Defeat:
-	.string "If you want to join TEAM AQUA that\n"
-	.string "badly, we can consider it…$"
+	.string "You cannot stop what is coming…$"
 
 MtPyre_Summit_Text_Grunt4PostBattle:
-	.string "We have a great combination going\n"
-	.string "with us members and our leader.$"
+	.string "I'm telling you, you're too late…$"
 
 MtPyre_Summit_Text_ArchieWeGotTheOrbLetsGo:
 	.string "ARCHIE: TEAM MAGMA's MAXIE got ahead\n"

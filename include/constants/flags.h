@@ -668,7 +668,7 @@
 #define FLAG_HIDE_ROUTE_118_AQUA  0x26D // Hides single Aqua grunt that blocks R118 West (in case a skip found)
 #define FLAG_HIDE_ROUTE_121_TEAM_MAGMA_GRUNTS  0x26E // Hides R121 east exit Magma grunts
 #define FLAG_HIDE_MT_PYRE_1F_GRUNTS  0x26F // Hides grunts blocking exit to Mt Pyre exterior
-#define FLAG_UNUSED_0x270  0x270 // Unused Flag
+#define FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_MAGMA  0x270 // Hides Team Magma on Mt Pyre summit
 #define FLAG_UNUSED_0x271  0x271 // Unused Flag
 #define FLAG_UNUSED_0x272  0x272 // Unused Flag
 #define FLAG_UNUSED_0x273  0x273 // Unused Flag

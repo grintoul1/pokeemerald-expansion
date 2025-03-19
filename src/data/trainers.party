@@ -425,7 +425,7 @@ Level: 32
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MT_PYRE_1 ===
-Name: GRUNT
+Name: Grunt
 Class: Team Aqua
 Pic: Aqua Grunt M
 Gender: Male
@@ -438,9 +438,9 @@ Level: 32
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MT_PYRE_2 ===
-Name: GRUNT
+Name: Grunt
 Class: Team Aqua
-Pic: Aqua Grunt M
+Pic: Aqua Grunt F
 Gender: Male
 Music: Aqua
 Double Battle: No
@@ -451,9 +451,9 @@ Level: 32
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MT_PYRE_3 ===
-Name: GRUNT
-Class: Team Aqua
-Pic: Aqua Grunt M
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt F
 Gender: Male
 Music: Aqua
 Double Battle: No
@@ -751,12 +751,12 @@ Roselia
 Level: 26
 IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
 
-=== TRAINER_ROSE_3 ===
-Name: ROSE
-Class: Aroma Lady
-Pic: Aroma Lady
-Gender: Female
-Music: Female
+=== TRAINER_MATT_MT_PYRE ===
+Name: Matt
+Class: Aqua Admin Mixed
+Pic: Aqua Admin M
+Gender: Male
+Music: Male
 Double Battle: No
 AI: Check Bad Move
 
@@ -772,12 +772,12 @@ Roselia
 Level: 28
 IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
 
-=== TRAINER_ROSE_4 ===
-Name: ROSE
-Class: Aroma Lady
-Pic: Aroma Lady
-Gender: Female
-Music: Female
+=== TRAINER_TABITHA_MT_PYRE ===
+Name: Tabitha
+Class: Magma Admin Mixed
+Pic: Magma Admin
+Gender: Male
+Music: Male
 Double Battle: No
 AI: Check Bad Move
 
@@ -10642,10 +10642,10 @@ Level: 31
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_MT_PYRE_4 ===
-Name: GRUNT
-Class: Team Aqua
-Pic: Aqua Grunt F
-Gender: Female
+Name: Grunt
+Class: Team Magma
+Pic: Magma Grunt M
+Gender: Male
 Music: Aqua
 Double Battle: No
 AI: Check Bad Move

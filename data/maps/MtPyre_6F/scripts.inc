@@ -8,6 +8,7 @@ MtPyre_6F_EventScript_Pyre_AquaGrunt3Pyre_MagmaGrunt3::
 lockall
 setvar VAR_0x8008, LOCALID_PYRE_AQUAGRUNT3
 playse SE_PIN
+setobjectmovementtype LOCALID_PYRE_AQUAGRUNT3, MOVEMENT_TYPE_FACE_RIGHT
 applymovement VAR_0x8008, Common_Movement_ExclamationMark
 waitmovement 0
 playbgm MUS_ENCOUNTER_AQUA, TRUE
@@ -15,6 +16,7 @@ applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 waitmovement 0
 msgbox MtPyre_6F_Text_Pyre_AquaGrunt3Intro MSGBOX_AUTOCLOSE
 setvar VAR_0x8008, LOCALID_PYRE_MAGMAGRUNT3
+setobjectmovementtype LOCALID_PYRE_MAGMAGRUNT3, MOVEMENT_TYPE_FACE_LEFT
 playse SE_PIN
 applymovement VAR_0x8008, Common_Movement_ExclamationMark
 waitmovement 0
