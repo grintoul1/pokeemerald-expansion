@@ -64,8 +64,8 @@
 #define TRAINER_AUSTINA                      58
 #define TRAINER_GWEN                         59
 #define TRAINER_LOLA_2                       60
-#define TRAINER_LOLA_3                       61
-#define TRAINER_LOLA_4                       62
+#define TRAINER_ARCHIE_MT_PYRE               61
+#define TRAINER_MAXIE_MT_PYRE                62
 #define TRAINER_LOLA_5                       63
 #define TRAINER_RICKY_1                      64
 #define TRAINER_SIMON                        65

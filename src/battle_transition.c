@@ -2600,10 +2600,15 @@ static void Mugshots_CreateTrainerPics(struct Task *task)
     task->tPlayerSpriteId = CreateTrainerSprite(PlayerGenderToFrontTrainerPicId(gSaveBlock2Ptr->playerGender),
                                                 DISPLAY_WIDTH + 32,
                                                 106,
-                                                0, gDecompressionBuffer);
-
-    task->tPartnerSpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_LEAF), DISPLAY_WIDTH + 240, 106, 0, gDecompressionBuffer),
-
+                                                0, gDecompressionBuffer); 
+    
+                                                
+    if (gPartnerTrainerId == TRAINER_PARTNER(PARTNER_ARCHIE))
+        task->tPartnerSpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_AQUA_LEADER_ARCHIE), DISPLAY_WIDTH + 240, 106, 0, gDecompressionBuffer);
+    else if (gPartnerTrainerId == TRAINER_PARTNER(PARTNER_MAXIE))
+        task->tPartnerSpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_MAGMA_LEADER_MAXIE), DISPLAY_WIDTH + 240, 106, 0, gDecompressionBuffer);
+    else 
+        task->tPartnerSpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_LEAF), DISPLAY_WIDTH + 240, 106, 0, gDecompressionBuffer);
 
     opponentSprite = &gSprites[task->tOpponentSpriteId];
     playerSprite = &gSprites[task->tPlayerSpriteId];

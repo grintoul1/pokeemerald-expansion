@@ -948,6 +948,22 @@ Route111_EventScript_AquaGrunt5::
 	msgbox Route111_Text_Aqua_5, MSGBOX_NPC
 	end
 
+Route111_EventScript_MagmaGrunt1::
+	msgbox Route111_Text_Magma_1, MSGBOX_NPC
+	end
+
+Route111_EventScript_MagmaGrunt2::
+	msgbox Route111_Text_Magma_2, MSGBOX_NPC
+	end
+
+Route111_EventScript_MagmaGrunt3::
+	msgbox Route111_Text_Magma_3, MSGBOX_NPC
+	end
+
+Route111_EventScript_MagmaGrunt4::
+	msgbox Route111_Text_Magma_4, MSGBOX_NPC
+	end
+
 Route111_EventScript_Branden::
 	msgbox Route111_Text_BrandenPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -1132,3 +1148,17 @@ Route111_Text_Aqua_5:
 	.string "here and trounced us!\p"
 	.string "He was making his way up to Mt.\n"
 	.string "Chimney.$"
+
+Route111_Text_Magma_1:
+	.string "Beat it kids!$"
+
+Route111_Text_Magma_2:
+	.string "Nobody is getting past us!$"
+
+Route111_Text_Magma_3:
+	.string "Tabitha gave us strict orders to let\n"
+	.string "nobody through here!$"
+
+Route111_Text_Magma_4:
+	.string "By order of Team Magma, nobody is allowed\n"
+	.string "near Mt. Chimney!$"
