@@ -20,9 +20,13 @@ MtPyre_Summit_OnTransition:
 MtPyre_Summit_EventScript_SetArchieMaxiePositions::
 	setobjectxyperm LOCALID_MAXIE, 23, 6
 	setobjectxyperm LOCALID_ARCHIE, 22, 6
+	setobjectmovementtype LOCALID_MAXIE, MOVEMENT_TYPE_FACE_UP
+	setobjectmovementtype LOCALID_ARCHIE, MOVEMENT_TYPE_FACE_UP
 	end
 
 MtPyre_Summit_EventScript_SetArchieMaxieFightingPositions::
+	setobjectmovementtype LOCALID_MAXIE, MOVEMENT_TYPE_FACE_RIGHT
+	setobjectmovementtype LOCALID_ARCHIE, MOVEMENT_TYPE_FACE_LEFT
 	setobjectxyperm LOCALID_MAXIE, 22, 6
 	setobjectxyperm LOCALID_ARCHIE, 24, 6
 	end
@@ -191,6 +195,7 @@ MtPyre_Summit_EventScript_ArchieDefeated::
 	setflag FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_MAGMA
 	clearflag FLAG_HIDE_ROUTE_111_TEAM_MAGMA
 	setflag FLAG_HIDE_ROUTE_121_TEAM_MAGMA_GRUNTS
+	setflag FLAG_MT_PYRE_ARCHIE_DEFEATED
 	fadedefaultbgm
 	fadescreen FADE_FROM_BLACK
 	setvar VAR_MT_PYRE_STATE, 9
@@ -381,6 +386,7 @@ MtPyre_Summit_EventScript_MaxieDefeated::
 	setflag FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_AQUA
 	clearflag FLAG_HIDE_ROUTE_111_TEAM_MAGMA
 	setflag FLAG_HIDE_ROUTE_121_TEAM_MAGMA_GRUNTS
+	clearflag FLAG_MT_PYRE_MAXIE_DEFEATED
 	fadedefaultbgm
 	fadescreen FADE_FROM_BLACK
 	setvar VAR_MT_PYRE_STATE, 9

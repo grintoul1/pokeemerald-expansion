@@ -670,8 +670,8 @@
 #define FLAG_HIDE_MT_PYRE_1F_GRUNTS  0x26F // Hides grunts blocking exit to Mt Pyre exterior
 #define FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_MAGMA  0x270 // Hides Team Magma on Mt Pyre summit
 #define FLAG_HIDE_ROUTE_111_TEAM_MAGMA  0x271 // Hides Magma grunts blocking R111
-#define FLAG_UNUSED_0x272  0x272 // Unused Flag
-#define FLAG_UNUSED_0x273  0x273 // Unused Flag
+#define FLAG_MT_PYRE_ARCHIE_DEFEATED  0x272 // Unused Flag
+#define FLAG_MT_PYRE_MAXIE_DEFEATED  0x273 // Unused Flag
 #define FLAG_UNUSED_0x274  0x274 // Unused Flag
 #define FLAG_UNUSED_0x275  0x275 // Unused Flag
 #define FLAG_UNUSED_0x276  0x276 // Unused Flag

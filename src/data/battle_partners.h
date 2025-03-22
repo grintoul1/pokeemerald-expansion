@@ -515,7 +515,7 @@ F_TRAINER_FEMALE |
 #line 232
         .trainerClass = TRAINER_CLASS_MAGMA_LEADER,
 #line 233
-        .trainerPic = TRAINER_BACK_PIC_STEVEN,
+        .trainerPic = TRAINER_BACK_PIC_MAGMA_LEADER_MAXIE,
         .encounterMusic_gender =
 #line 235
             TRAINER_ENCOUNTER_MUSIC_MALE,

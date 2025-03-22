@@ -290,5 +290,7 @@ EventScript_ResetAllMapFlags::
 	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_MAGMA
 	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_ARCHIE
 	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_MAXIE
+	clearflag FLAG_MT_PYRE_ARCHIE_DEFEATED
+	clearflag FLAG_MT_PYRE_MAXIE_DEFEATED
 	call EventScript_ResetAllBerries
 	end
