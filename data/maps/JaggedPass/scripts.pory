@@ -4,6 +4,7 @@ raw `
 .set LOCALID_DIANA, 4
 .set LOCALID_AUTUMN, 6
 .set LOCALID_JULIO, 7
+.set LOCALID_SHELLY, 8
 
 JaggedPass_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, JaggedPass_OnResume
@@ -13,7 +14,7 @@ JaggedPass_MapScripts::
 
 JaggedPass_OnResume:
 	setstepcallback STEP_CB_ASH
-	call_if_eq VAR_JAGGED_PASS_STATE, 3, JaggedPass_EventScript_CheckHasMagmaEmblem
+	call_if_eq VAR_JAGGED_PASS_STATE, 2, JaggedPass_EventScript_CheckHasMagmaEmblem
 	end
 
 JaggedPass_EventScript_CheckHasMagmaEmblem::
@@ -22,7 +23,7 @@ JaggedPass_EventScript_CheckHasMagmaEmblem::
 	return
 
 JaggedPass_EventScript_SetReadyToOpenHideout::
-	setvar VAR_JAGGED_PASS_STATE, 4
+	setvar VAR_JAGGED_PASS_STATE, 3
 	return
 
 JaggedPass_OnTransition:
@@ -35,12 +36,32 @@ JaggedPass_EventScript_SetWeatherAsh::
 	return
 
 JaggedPass_OnLoad:
-	goto_if_le VAR_JAGGED_PASS_STATE, 4, JaggedPass_EventScript_ConcealHideoutEntrance
+	goto_if_le VAR_JAGGED_PASS_STATE, 2, JaggedPass_EventScript_ConcealHideoutEntrance
+	call_if_eq VAR_JAGGED_PASS_STATE, 2, JaggedPass_EventScript_CheckHasMagmaEmblem
 	end
 
 JaggedPass_EventScript_ConcealHideoutEntrance::
 	setmetatile 16, 17, METATILE_Lavaridge_RockWall, TRUE
 	setmetatile 16, 18, METATILE_Lavaridge_RockWall, TRUE
+	end
+
+JaggedPass_EventScript_ShellyTrigger::
+	lockall
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox JaggedPass_Text_ShellyThanksForComing, MSGBOX_DEFAULT
+	closemessage
+	addvar VAR_JAGGED_PASS_STATE, 1
+	releaseall
+	end
+
+JaggedPass_EventScript_Shelly::
+	lockall
+	applymovement LOCALID_SHELLY, Common_Movement_FacePlayer
+	msgbox JaggedPass_Text_ShellyThanksForComing, MSGBOX_DEFAULT
+	closemessage
+	addvar VAR_JAGGED_PASS_STATE, 1
+	releaseall
 	end
 
 JaggedPass_EventScript_OpenMagmaHideout::
@@ -60,11 +81,17 @@ JaggedPass_EventScript_OpenMagmaHideout::
 	special ShakeCamera
 	waitstate
 	playse SE_EFFECTIVE
+	waitse
 	setmetatile 16, 17, METATILE_Lavaridge_CaveEntrance_Top, TRUE
 	setmetatile 16, 18, METATILE_Lavaridge_CaveEntrance_Bottom, FALSE
 	special DrawWholeMapView
 	delay 30
-	setvar VAR_JAGGED_PASS_STATE, 4
+	applymovement LOCALID_SHELLY, Common_Movement_FaceLeft
+	waitmovement 0
+	playse SE_PIN
+	applymovement LOCALID_SHELLY, Common_Movement_ExclamationMark
+	waitmovement 0
+	addvar VAR_JAGGED_PASS_STATE, 1
 	waitse
 	releaseall
 	end
@@ -236,6 +263,26 @@ end
 JaggedPass_EventScript_Autumn::
 	msgbox JaggedPass_Text_AutumnPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+JaggedPass_Text_ShellyThanksForComing:
+	.string "Shelly: Thanks for coming.\p"
+	.string "What's that? An emblem dropped by\n"
+	.string "Team Magma at Mt. Pyre?\p"
+	.string "I suppose that explains why I couldn't\n"
+	.string "find my own way in!\p"
+	.string "Anyway, this the Magma Hideout.\p"
+	.string "Team Aqua believes that the legendary\n"
+	.string "Pokémon Groudon has been found here.\p"
+	.string "After holding your own in the company\n"
+	.string "of Archie and Maxie on Mt. Pyre,\p"
+	.string "I'm confident we find out what's going\n"
+	.string "on in there if we work together.\p"
+	.string "Emmie, I understand that the two of\n"
+	.string "you are used to working as a team.\p"
+	.string "However, I'd appreciate it if you would\n"
+	.string "let me accompany {PLAYER} through the\l"
+	.string "hideout, and you wait at the entrance.\p"
+	.string "Anyway, I'll see you inside.$"
 
 JaggedPass_Text_EricIntro:
 	.string "MT. CHIMNEY's JAGGED PASS…\p"

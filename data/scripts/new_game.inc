@@ -292,5 +292,7 @@ EventScript_ResetAllMapFlags::
 	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_MAXIE
 	clearflag FLAG_MT_PYRE_ARCHIE_DEFEATED
 	clearflag FLAG_MT_PYRE_MAXIE_DEFEATED
+	setflag FLAG_HIDE_FORTREE_SHELLY
+	setflag FLAG_HIDE_JAGGED_PASS_SHELLY
 	call EventScript_ResetAllBerries
 	end

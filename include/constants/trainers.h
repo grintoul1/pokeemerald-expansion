@@ -120,6 +120,7 @@
 #define TRAINER_BACK_PIC_WALLY                  6
 #define TRAINER_BACK_PIC_STEVEN                 7
 #define TRAINER_BACK_PIC_MAGMA_LEADER_MAXIE     8
+#define TRAINER_BACK_PIC_AQUA_LEADER_ARCHIE     9
 
 #define FACILITY_CLASS_HIKER                 0x0
 #define FACILITY_CLASS_AQUA_GRUNT_M          0x1

@@ -1,4 +1,7 @@
 raw `
+.set LOCALID_SHELLY, 8
+
+
 FortreeCity_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, FortreeCity_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, FortreeCity_OnResume
@@ -11,6 +14,38 @@ FortreeCity_OnTransition:
 FortreeCity_OnResume:
 	setstepcallback STEP_CB_FORTREE_BRIDGE
 	end
+
+FortreeCity_EventScript_Shelly::
+	lockall 
+	delay 50
+	setfieldeffectargument 0, 1
+	dofieldeffect FLDEFF_NPCFLY_OUT
+	waitfieldeffect FLDEFF_NPCFLY_OUT
+	addobject LOCALID_SHELLY
+	applymovement LOCALID_SHELLY, FortreeCity_Movement_ShellyApproachPlayer
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	msgbox FortreeCity_Text_ShellyComeToJaggedPass, MSGBOX_DEFAULT
+	closemessage
+	giveitem ITEM_HM_FLY
+	closemessage
+	applymovement LOCALID_SHELLY, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	delay 50
+	setfieldeffectargument 0, 1
+	dofieldeffect FLDEFF_NPCFLY_OUT
+	delay 15
+	removeobject LOCALID_SHELLY
+	setflag FLAG_HIDE_FORTREE_SHELLY
+	clearflag FLAG_HIDE_JAGGED_PASS_SHELLY
+	addvar VAR_FORTREE_CITY_STATE, 1 
+	end
+
+FortreeCity_Movement_ShellyApproachPlayer:
+	walk_right
+	step_end
+
 
 FortreeCity_EventScript_Man::
 	msgbox FortreeCity_Text_SawGiganticPokemonInSky, MSGBOX_NPC
@@ -87,6 +122,28 @@ FortreeCity_EventScript_UseDevonScope::
 FortreeCity_Movement_KecleonFlee:
 	walk_right
 	step_end
+
+FortreeCity_Text_ShellyComeToJaggedPass:
+	.string "Shelly: Hey kid. Remember me?\p"
+	.string "Archie told me what happened at Mt.\n"
+	.string "Pyre.\p"
+	.string "Whatever your opinion on Team Aqua's\n"
+	.string "goals, you have so recognise the harm\l"
+	.string "Team Magma will cause to Hoenn.\p"
+	.string "I stuck around Mt. Chimney after you\n"
+	.string "left and believe I have located Team\l"
+	.string "Magma's hideout.\p"
+	.string "Archie doesn't trust you, perhaps with\n"
+	.string "good reason, but I trust that you also\l"
+	.string "don't want Team Magma to succeed.\p"
+	.string "I could use some help infiltrating the\n"
+	.string "Team Magma hideout, and I can't call on\l"
+	.string "Matt right now.\p"
+	.string "If you fancy doing something useful for\n"
+	.string "once, meet me on Jagged Pass near\l"
+	.string "Lavaridge Town.\p"
+	.string "Here, take this as well. I hope to see\n"
+	.string "you there.$"
 
 FortreeCity_Text_SawGiganticPokemonInSky:
 	.string "No one believes me, but I saw this\n"

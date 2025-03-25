@@ -455,9 +455,9 @@ Route120_EventScript_RemoveBridgeKecleonPostBattle::
 # 228 "data/maps/Route120/scripts.pory"
 Route120_EventScript_StevenGiveDeconScope::
 # 229 "data/maps/Route120/scripts.pory"
-	applymovement LOCALID_STEVEN, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_STEVEN, Common_Movement_WalkInPlaceFasterLeft
 # 230 "data/maps/Route120/scripts.pory"
-	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 # 231 "data/maps/Route120/scripts.pory"
 	waitmovement 0
 # 232 "data/maps/Route120/scripts.pory"

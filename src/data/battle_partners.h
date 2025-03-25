@@ -435,7 +435,7 @@ F_TRAINER_FEMALE |
 #line 195
         .trainerClass = TRAINER_CLASS_AQUA_LEADER,
 #line 196
-        .trainerPic = TRAINER_BACK_PIC_STEVEN,
+        .trainerPic = TRAINER_BACK_PIC_AQUA_LEADER_ARCHIE,
         .encounterMusic_gender =
 #line 198
             TRAINER_ENCOUNTER_MUSIC_MALE,
