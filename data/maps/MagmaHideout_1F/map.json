@@ -7,17 +7,17 @@
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_UNDERGROUND",
-  "allow_cycling": true,
-  "allow_escaping": true,
+  "allow_cycling": false,
+  "allow_escaping": false,
   "allow_running": true,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
+  "connections": 0,
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
       "x": 4,
-      "y": 5,
+      "y": 13,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 1,
@@ -42,8 +42,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
-      "x": 30,
-      "y": 20,
+      "x": 6,
+      "y": 13,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 1,
@@ -91,6 +91,19 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_StrengthBoulder",
       "flag": "FLAG_TEMP_13"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_F",
+      "x": 10,
+      "y": 34,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FOLLOW_PLAYER",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "FLAG_HIDE_MAGMA_HIDEOUT_SHELLY"
     }
   ],
   "warp_events": [
@@ -123,6 +136,45 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
-  "bg_events": []
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_MAGMAHIDEOUT_STATE",
+      "var_value": "8",
+      "script": "NULL"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 33,
+      "elevation": 0,
+      "var": "VAR_MAGMAHIDEOUT_SHELLY_STATE",
+      "var_value": "0",
+      "script": "MagmaHideout_1F_EventScript_AddShelly"
+    },
+    {
+      "type": "trigger",
+      "x": 25,
+      "y": 33,
+      "elevation": 0,
+      "var": "VAR_MAGMAHIDEOUT_SHELLY_STATE",
+      "var_value": "0",
+      "script": "MagmaHideout_1F_EventScript_AddShelly"
+    },
+    {
+      "type": "trigger",
+      "x": 31,
+      "y": 5,
+      "elevation": 0,
+      "var": "VAR_MAGMAHIDEOUT_SHELLY_STATE",
+      "var_value": "0",
+      "script": "MagmaHideout_1F_EventScript_AddShelly"
+    }
+  ],
+  "bg_events": [
+
+  ]
 }

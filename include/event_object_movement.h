@@ -452,6 +452,8 @@ bool8 CopyablePlayerMovement_WalkFaster(struct ObjectEvent *, struct Sprite *, u
 bool8 CopyablePlayerMovement_Slide(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 bool8 CopyablePlayerMovement_JumpInPlace(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 bool8 CopyablePlayerMovement_Jump(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+bool8 CopyablePlayerMovement_AcroBikeMove(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+bool8 CopyablePlayerMovement_MachBikeMove(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 
 u8 MovementType_FollowPlayer_Shadow(struct ObjectEvent *, struct Sprite *);
 u8 MovementType_FollowPlayer_Active(struct ObjectEvent *, struct Sprite *);
@@ -467,6 +469,10 @@ bool8 FollowablePlayerMovement_Slide(struct ObjectEvent *, struct Sprite *, u8, 
 bool8 FollowablePlayerMovement_JumpInPlace(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 bool8 FollowablePlayerMovement_GoSpeed4(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 bool8 FollowablePlayerMovement_Jump(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+bool8 FollowablePlayerMovement_GoSpeed4(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+bool8 FollowablePlayerMovement_Jump(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+bool8 FollowablePlayerMovement_AcroBikeMove(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+bool8 FollowablePlayerMovement_MachBikeMove(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 bool8 CopyablePlayerMovement_Jump2(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 u8 MovementType_CopyPlayerInGrass_Step1(struct ObjectEvent *, struct Sprite *);
 u8 MovementType_Buried_Step0(struct ObjectEvent *, struct Sprite *);

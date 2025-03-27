@@ -52,6 +52,7 @@ JaggedPass_EventScript_ShellyTrigger::
 	msgbox JaggedPass_Text_ShellyThanksForComing, MSGBOX_DEFAULT
 	closemessage
 	addvar VAR_JAGGED_PASS_STATE, 1
+	setflag FLAG_HIDE_MAGMA_HIDEOUT_SHELLY
 	releaseall
 	end
 

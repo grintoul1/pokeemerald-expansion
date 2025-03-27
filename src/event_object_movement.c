@@ -5276,6 +5276,48 @@ bool8 CopyablePlayerMovement_Jump2(struct ObjectEvent *objectEvent, struct Sprit
     return TRUE;
 }
 
+bool8 CopyablePlayerMovement_AcroBikeMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+{
+    u32 direction;
+    s16 x;
+    s16 y;
+
+    direction = playerDirection;
+    {
+        direction = GetCopyDirection(gInitialMovementTypeFacingDirections[objectEvent->movementType], objectEvent->directionSequenceIndex, direction);
+    }
+    ObjectEventMoveDestCoords(objectEvent, direction, &x, &y);
+    ObjectEventSetSingleMovement(objectEvent, sprite, GetPlayerRunMovementAction(direction));
+
+    if (GetCollisionAtCoords(objectEvent, x, y, direction) || (tileCallback != NULL && !tileCallback(MapGridGetMetatileBehaviorAt(x, y))))
+        ObjectEventSetSingleMovement(objectEvent, sprite, GetFaceDirectionMovementAction(direction));
+
+    objectEvent->singleMovementActive = TRUE;
+    sprite->sTypeFuncId = 2;
+    return TRUE;
+}
+
+bool8 CopyablePlayerMovement_MachBikeMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+{
+    u32 direction;
+    s16 x;
+    s16 y;
+
+    direction = playerDirection;
+    {
+        direction = GetCopyDirection(gInitialMovementTypeFacingDirections[objectEvent->movementType], objectEvent->directionSequenceIndex, direction);
+    }
+    ObjectEventMoveDestCoords(objectEvent, direction, &x, &y);
+    ObjectEventSetSingleMovement(objectEvent, sprite, GetWalkFasterMovementAction(direction));
+
+    if (GetCollisionAtCoords(objectEvent, x, y, direction) || (tileCallback != NULL && !tileCallback(MapGridGetMetatileBehaviorAt(x, y))))
+        ObjectEventSetSingleMovement(objectEvent, sprite, GetFaceDirectionMovementAction(direction));
+
+    objectEvent->singleMovementActive = TRUE;
+    sprite->sTypeFuncId = 2;
+    return TRUE;
+}
+
 static bool32 EndFollowerTransformEffect(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     if (!sprite)
@@ -5645,6 +5687,40 @@ bool8 FollowablePlayerMovement_Jump(struct ObjectEvent *objectEvent, struct Spri
     y = objectEvent->currentCoords.y;
     MoveCoordsInDirection(direction, &x, &y, 2, 2);
     ObjectEventSetSingleMovement(objectEvent, sprite, GetJump2MovementAction(direction));
+    objectEvent->singleMovementActive = TRUE;
+    sprite->sTypeFuncId = 2;
+    return TRUE;
+}
+
+bool8 FollowablePlayerMovement_AcroBikeMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+{
+    u32 direction;
+    s16 x;
+    s16 y;
+
+    direction = playerDirection;
+    direction = GetCopyDirection(gInitialMovementTypeFacingDirections[objectEvent->movementType], objectEvent->directionSequenceIndex, direction);
+    ObjectEventMoveDestCoords(objectEvent, direction, &x, &y);
+    ObjectEventSetSingleMovement(objectEvent, sprite, GetWalkFastMovementAction(direction));
+    if (GetCollisionAtCoords(objectEvent, x, y, direction) || (tileCallback != NULL && !tileCallback(MapGridGetMetatileBehaviorAt(x, y))))
+        ObjectEventSetSingleMovement(objectEvent, sprite, GetFaceDirectionMovementAction(direction));
+    objectEvent->singleMovementActive = TRUE;
+    sprite->sTypeFuncId = 2;
+    return TRUE;
+}
+
+bool8 FollowablePlayerMovement_MachBikeMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+{
+    u32 direction;
+    s16 x;
+    s16 y;
+
+    direction = playerDirection;
+    direction = GetCopyDirection(gInitialMovementTypeFacingDirections[objectEvent->movementType], objectEvent->directionSequenceIndex, direction);
+    ObjectEventMoveDestCoords(objectEvent, direction, &x, &y);
+    ObjectEventSetSingleMovement(objectEvent, sprite, GetWalkFasterMovementAction(direction));
+    if (GetCollisionAtCoords(objectEvent, x, y, direction) || (tileCallback != NULL && !tileCallback(MapGridGetMetatileBehaviorAt(x, y))))
+        ObjectEventSetSingleMovement(objectEvent, sprite, GetFaceDirectionMovementAction(direction));
     objectEvent->singleMovementActive = TRUE;
     sprite->sTypeFuncId = 2;
     return TRUE;
