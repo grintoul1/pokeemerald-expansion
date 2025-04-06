@@ -11,6 +11,7 @@ Route103_MapScripts::
 	.byte 0
 
 Route103_OnTransition:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, Common_EventScript_SetWeatherIntenseSun
 	call Common_EventScript_SetupRivalGfxId
 	call ProfBirch_EventScript_UpdateLocation
 	end

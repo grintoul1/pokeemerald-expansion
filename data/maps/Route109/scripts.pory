@@ -11,7 +11,12 @@ raw `
 
 
 Route109_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, Route109_OnTransition
 	.byte 0
+
+Route109_OnTransition:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, Common_EventScript_SetWeatherIntenseSun
+	end
 
 Route109_EventScript_StartDepartForDewford::
 	call EventScript_BackupMrBrineyLocation

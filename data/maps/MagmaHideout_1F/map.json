@@ -20,10 +20,10 @@
       "y": 13,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "2",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "NULL",
+      "trainer_sight_or_berry_tree_id": "0",
       "script": "MagmaHideout_1F_EventScript_Grunt1",
       "flag": "FLAG_HIDE_MAGMA_HIDEOUT_GRUNTS"
     },
@@ -46,10 +46,10 @@
       "y": 13,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "4",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "NULL",
+      "trainer_sight_or_berry_tree_id": "0",
       "script": "MagmaHideout_1F_EventScript_Grunt2",
       "flag": "FLAG_HIDE_MAGMA_HIDEOUT_GRUNTS"
     },
@@ -94,10 +94,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_F",
-      "x": 10,
-      "y": 34,
+      "x": 12,
+      "y": 31,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_FOLLOW_PLAYER",
+      "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -143,35 +143,8 @@
       "y": 13,
       "elevation": 0,
       "var": "VAR_MAGMAHIDEOUT_STATE",
-      "var_value": "8",
-      "script": "NULL"
-    },
-    {
-      "type": "trigger",
-      "x": 10,
-      "y": 33,
-      "elevation": 0,
-      "var": "VAR_MAGMAHIDEOUT_SHELLY_STATE",
       "var_value": "0",
-      "script": "MagmaHideout_1F_EventScript_AddShelly"
-    },
-    {
-      "type": "trigger",
-      "x": 25,
-      "y": 33,
-      "elevation": 0,
-      "var": "VAR_MAGMAHIDEOUT_SHELLY_STATE",
-      "var_value": "0",
-      "script": "MagmaHideout_1F_EventScript_AddShelly"
-    },
-    {
-      "type": "trigger",
-      "x": 31,
-      "y": 5,
-      "elevation": 0,
-      "var": "VAR_MAGMAHIDEOUT_SHELLY_STATE",
-      "var_value": "0",
-      "script": "MagmaHideout_1F_EventScript_AddShelly"
+      "script": "MagmaHideout_1F_EventScript_Grunt1Grunt2"
     }
   ],
   "bg_events": [

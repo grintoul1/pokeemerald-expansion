@@ -3,7 +3,12 @@ raw `
 .set LOCALID_NED, 4
 
 Route106_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, Route106_OnTransition
 	.byte 0
+
+Route106_OnTransition:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, Common_EventScript_SetWeatherIntenseSun
+	end
 
 Route106_EventScript_TrainerTipsSign::
 	msgbox Route106_Text_TrainerTips, MSGBOX_SIGN

@@ -13559,11 +13559,11 @@ Numel
 Level: 29
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
-=== TRAINER_GRUNT_MAGMA_HIDEOUT_13 ===
-Name: GRUNT
-Class: Team Magma
-Pic: Magma Grunt M
-Gender: Male
+=== TRAINER_COURTNEY_MAGMA_HIDEOUT ===
+Name: Courtney
+Class: Magma Admin
+Pic: Magma Admin F
+Gender: Female
 Music: Magma
 Double Battle: No
 AI: Check Bad Move

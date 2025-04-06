@@ -14,7 +14,6 @@ raw `
 .set LOCALID_JASMINE, 8
 .set LOCALID_JACOB, 26
 
-
 Route110_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route110_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, Route110_OnTransition
@@ -22,10 +21,12 @@ Route110_MapScripts::
 	.byte 0
 
 Route110_OnResume:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, Common_EventScript_SetWeatherIntenseSun
 	special UpdateCyclingRoadState
 	end
 
 Route110_OnTransition:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, Common_EventScript_SetWeatherIntenseSun
 	call Common_EventScript_SetupRivalGfxId
 	call Common_EventScript_SetupRivalOnBikeGfxId
 	call_if_eq VAR_CYCLING_CHALLENGE_STATE, 1, Route110_EventScript_SaveCyclingMusic
@@ -36,6 +37,7 @@ Route110_EventScript_SaveCyclingMusic::
 	return
 
 Route110_OnFrame:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, Common_EventScript_SetWeatherIntenseSun
 	map_script_2 VAR_CYCLING_CHALLENGE_STATE, 1, Route110_EventScript_BeginCylcingRoadChallenge
 	.2byte 0
 

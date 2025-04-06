@@ -21,6 +21,7 @@ Route123_MapScripts::
 	.byte 0
 
 Route123_OnTransition:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, Common_EventScript_SetWeatherIntenseSun
 	special SetRoute123Weather
 	end
 

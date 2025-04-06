@@ -16,6 +16,7 @@ DewfordTown_MapScripts::
 	.byte 0
 
 DewfordTown_OnTransition:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, Common_EventScript_SetWeatherIntenseSun
 	setflag FLAG_VISITED_DEWFORD_TOWN
 	end
 

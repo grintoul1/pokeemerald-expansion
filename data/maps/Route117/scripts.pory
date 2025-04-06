@@ -18,6 +18,7 @@ Route117_MapScripts::
 	.byte 0
 
 Route117_OnTransition:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, Common_EventScript_SetWeatherIntenseSun
 	call Route117_EventScript_TryMoveDayCareMan
 	@ set flags for OW daycare mons
 	setflag FLAG_TEMP_1

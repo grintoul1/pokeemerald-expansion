@@ -33994,15 +33994,17 @@ F_TRAINER_FEMALE |
         },
     },
 #line 13562
-    [TRAINER_GRUNT_MAGMA_HIDEOUT_13] =
+    [TRAINER_COURTNEY_MAGMA_HIDEOUT] =
     {
 #line 13563
-        .trainerName = _("GRUNT"),
+        .trainerName = _("Courtney"),
 #line 13564
-        .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
+        .trainerClass = TRAINER_CLASS_MAGMA_ADMIN,
 #line 13565
-        .trainerPic = TRAINER_PIC_MAGMA_GRUNT_M,
+        .trainerPic = TRAINER_PIC_MAGMA_ADMIN_F,
         .encounterMusic_gender =
+#line 13566
+F_TRAINER_FEMALE | 
 #line 13567
             TRAINER_ENCOUNTER_MUSIC_MAGMA,
 #line 13568

@@ -675,10 +675,10 @@
 #define FLAG_HIDE_FORTREE_SHELLY  0x274 // Hides Fortree Shelly
 #define FLAG_HIDE_JAGGED_PASS_SHELLY  0x275 // Hides Jagged Pass Shelly
 #define FLAG_HIDE_MAGMA_HIDEOUT_SHELLY  0x276 // Hides Magma Hideout Shelly
-#define FLAG_UNUSED_0x277  0x277 // Unused Flag
-#define FLAG_UNUSED_0x278  0x278 // Unused Flag
-#define FLAG_UNUSED_0x279  0x279 // Unused Flag
-#define FLAG_UNUSED_0x27A  0x27A // Unused Flag
+#define FLAG_HIDE_MAGMA_HIDEOUT_COURTNEY  0x277 // Hides Magma Hideout Courtney
+#define FLAG_HIDE_MAGMA_HIDEOUT_EMMIE  0x278 // Hides Magma Hideout Emmie
+#define FLAG_ABNORMAL_WEATHER_SUN  0x279 // Intense sun after MHO
+#define FLAG_HIDE_JAGGED_PASS_MAXIE  0x27A // Jagged Pass Maxie, Tabitha, Courtney
 #define FLAG_UNUSED_0x27B  0x27B // Unused Flag
 #define FLAG_UNUSED_0x27C  0x27C // Unused Flag
 #define FLAG_UNUSED_0x27D  0x27D // Unused Flag

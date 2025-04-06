@@ -10,6 +10,12 @@ LittlerootTown_MapScripts::
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, LittlerootTown_OnWarp
 	.byte 0
 
+LittlerootTown_EventScript_SetWeatherIntenseSun::
+	playbgm MUS_ABNORMAL_WEATHER, TRUE
+	setweather WEATHER_DROUGHT
+	doweather
+	return
+
 	@ State descriptions for VAR_LITTLEROOT_TOWN_STATE
 	@ 1: Met Rival
 	@ 2: Saving Birch
@@ -41,6 +47,7 @@ LittlerootTown_MapScripts::
 
 
 LittlerootTown_OnTransition:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, LittlerootTown_EventScript_SetWeatherIntenseSun
 	setflag FLAG_VISITED_LITTLEROOT_TOWN
 	call Common_EventScript_SetupRivalGfxId
 	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 2, LittlerootTown_EventScript_MoveMomToMaysDoor
@@ -108,6 +115,7 @@ LittlerootTown_EventScript_SetMomInFrontOfDoorFemale::
 	return
 
 LittlerootTown_OnFrame:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, LittlerootTown_EventScript_SetWeatherIntenseSun
 	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 1, LittlerootTown_EventScript_StepOffTruckMale
 	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 2, LittlerootTown_EventScript_StepOffTruckFemale
 	map_script_2 VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, LittlerootTown_EventScript_BeginDexUpgradeScene
@@ -226,6 +234,7 @@ LittlerootTown_EventScript_BeginDexUpgradeScene::
 	end
 
 LittlerootTown_OnWarp:
+	call_if_set FLAG_ABNORMAL_WEATHER_SUN, LittlerootTown_EventScript_SetWeatherIntenseSun
 	map_script_2 VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, LittlerootTown_EventScript_SetRivalBirchPosForDexUpgrade
 	.2byte 0
 

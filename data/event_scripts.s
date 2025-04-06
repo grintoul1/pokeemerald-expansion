@@ -753,6 +753,12 @@ Common_EventScript_SetAbnormalWeather::
 	setweather WEATHER_ABNORMAL
 	return
 
+Common_EventScript_SetWeatherIntenseSun::
+	playbgm MUS_ABNORMAL_WEATHER, TRUE
+	setweather WEATHER_DROUGHT
+	doweather
+	return
+
 Common_EventScript_PlayGymBadgeFanfare::
 	playfanfare MUS_OBTAIN_BADGE
 	waitfanfare
