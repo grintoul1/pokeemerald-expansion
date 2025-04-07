@@ -2281,7 +2281,7 @@ static void VBlankCB_Wave(void)
 #define tBottomBannerX      data[3]
 #define tTimer              data[3] // Re-used
 #define tFadeSpread         data[4]
-#define tOpponentSpriteId   data[12]
+#define tOpponentSpriteAId   data[12]
 #define tPlayerSpriteId     data[14]
 #define tPartnerSpriteId    data[13]
 
@@ -2424,12 +2424,12 @@ static bool8 Mugshot_StartOpponentSlide(struct Task *task)
     sTransitionData->BG0HOFS_Lower -= 8;
     sTransitionData->BG0HOFS_Upper += 8;
 
-    SetTrainerPicSlideDirection(task->tOpponentSpriteId, 0);
+    SetTrainerPicSlideDirection(task->tOpponentSpriteAId, 0);
     SetTrainerPicSlideDirection(task->tPlayerSpriteId, 1);
     SetTrainerPicSlideDirection(task->tPartnerSpriteId, 1);
 
     // Start opponent slide
-    IncrementTrainerPicState(task->tOpponentSpriteId);
+    IncrementTrainerPicState(task->tOpponentSpriteAId);
 
     PlaySE(SE_MUGSHOT);
 
@@ -2443,7 +2443,7 @@ static bool8 Mugshot_WaitStartPlayerSlide(struct Task *task)
     sTransitionData->BG0HOFS_Upper += 8;
 
     // Start player's slide in once the opponent is finished
-    if (IsTrainerPicSlideDone(task->tOpponentSpriteId))
+    if (IsTrainerPicSlideDone(task->tOpponentSpriteAId))
     {
         task->tState++;
         IncrementTrainerPicState(task->tPartnerSpriteId);
@@ -2585,13 +2585,13 @@ static void HBlankCB_Mugshots(void)
 
 static void Mugshots_CreateTrainerPics(struct Task *task)
 {
-    struct Sprite *opponentSprite, *playerSprite, *partnerSprite;
+    struct Sprite *opponentSpriteA, *playerSprite, *partnerSprite;
 
     u8 trainerPicId = GetTrainerPicFromId(gTrainerBattleOpponent_A);
     s16 opponentRotationScales = 0;
 
     gReservedSpritePaletteCount = 10;
-    task->tOpponentSpriteId = CreateTrainerSprite(trainerPicId,
+    task->tOpponentSpriteAId = CreateTrainerSprite(trainerPicId,
                                                   gTrainerSprites[trainerPicId].mugshotCoords.x - 32,
                                                   gTrainerSprites[trainerPicId].mugshotCoords.y + 42,
                                                   0, gDecompressionBuffer);
@@ -2610,37 +2610,37 @@ static void Mugshots_CreateTrainerPics(struct Task *task)
     else 
         task->tPartnerSpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_LEAF), DISPLAY_WIDTH + 240, 106, 0, gDecompressionBuffer);
 
-    opponentSprite = &gSprites[task->tOpponentSpriteId];
+    opponentSpriteA = &gSprites[task->tOpponentSpriteAId];
     playerSprite = &gSprites[task->tPlayerSpriteId];
     partnerSprite = &gSprites[task->tPartnerSpriteId];
 
-    opponentSprite->callback = SpriteCB_MugshotTrainerPic;
+    opponentSpriteA->callback = SpriteCB_MugshotTrainerPic;
     playerSprite->callback = SpriteCB_MugshotTrainerPic;
     partnerSprite->callback = SpriteCB_MugshotTrainerPicPartner;
 
-    opponentSprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+    opponentSpriteA->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
     playerSprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
     partnerSprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
 
-    opponentSprite->oam.matrixNum = AllocOamMatrix();
+    opponentSpriteA->oam.matrixNum = AllocOamMatrix();
     playerSprite->oam.matrixNum = AllocOamMatrix();
     partnerSprite->oam.matrixNum = AllocOamMatrix();
 
-    opponentSprite->oam.shape = SPRITE_SHAPE(64x32);
+    opponentSpriteA->oam.shape = SPRITE_SHAPE(64x32);
     playerSprite->oam.shape = SPRITE_SHAPE(64x32);
     partnerSprite->oam.shape = SPRITE_SHAPE(64x32);
 
-    opponentSprite->oam.size = SPRITE_SIZE(64x32);
+    opponentSpriteA->oam.size = SPRITE_SIZE(64x32);
     playerSprite->oam.size = SPRITE_SIZE(64x32);
     partnerSprite->oam.size = SPRITE_SIZE(64x32);
 
-    CalcCenterToCornerVec(opponentSprite, SPRITE_SHAPE(64x32), SPRITE_SIZE(64x32), ST_OAM_AFFINE_DOUBLE);
+    CalcCenterToCornerVec(opponentSpriteA, SPRITE_SHAPE(64x32), SPRITE_SIZE(64x32), ST_OAM_AFFINE_DOUBLE);
     CalcCenterToCornerVec(playerSprite, SPRITE_SHAPE(64x32), SPRITE_SIZE(64x32), ST_OAM_AFFINE_DOUBLE);
     CalcCenterToCornerVec(partnerSprite, SPRITE_SHAPE(64x32), SPRITE_SIZE(64x32), ST_OAM_AFFINE_DOUBLE);
 
     opponentRotationScales = gTrainerSprites[trainerPicId].mugshotRotation;
 
-    SetOamMatrixRotationScaling(opponentSprite->oam.matrixNum, opponentRotationScales, opponentRotationScales, 0);
+    SetOamMatrixRotationScaling(opponentSpriteA->oam.matrixNum, opponentRotationScales, opponentRotationScales, 0);
 
     SetOamMatrixRotationScaling(playerSprite->oam.matrixNum, -512, 512, 0);
     SetOamMatrixRotationScaling(partnerSprite->oam.matrixNum, -512, 512, 0);
@@ -2755,7 +2755,7 @@ static s16 IsTrainerPicSlideDone(s16 spriteId)
 #undef tBottomBannerX
 #undef tTimer
 #undef tFadeSpread
-#undef tOpponentSpriteId
+#undef tOpponentSpriteAId
 #undef tPlayerSpriteId
 #undef tPartnerSpriteId
 
