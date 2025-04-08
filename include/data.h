@@ -217,6 +217,8 @@ static inline const u8 *GetTrainerNameFromId(u16 trainerId)
 
 static inline const u8 GetTrainerPicFromId(u16 trainerId)
 {
+    if (trainerId > TRAINER_PARTNER(PARTNER_NONE))
+        return gBattlePartners[trainerId - TRAINER_PARTNER(PARTNER_NONE)].trainerPic;
     return gTrainers[SanitizeTrainerId(trainerId)].trainerPic;
 }
 
