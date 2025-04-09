@@ -923,7 +923,7 @@ MagmaHideout_4F_EventScript_CourtneyTabithaDoMultiBattle::
 # 462 "data/maps/MagmaHideout_4F/scripts.pory"
 	playbgm MUS_AQUA_MAGMA_HIDEOUT, TRUE
 # 463 "data/maps/MagmaHideout_4F/scripts.pory"
-	multi_2_vs_2 TRAINER_COURTNEY_MAGMA_HIDEOUT, MagmaHideout_4F_Text_CourtneyDefeat, TRAINER_TABITHA_MAGMA_HIDEOUT, MagmaHideout_4F_Text_TabithaDefeat, PARTNER_SHELLY
+	multi_2_vs_2 TRAINER_TABITHA_MAGMA_HIDEOUT, MagmaHideout_4F_Text_TabithaDefeat, TRAINER_COURTNEY_MAGMA_HIDEOUT, MagmaHideout_4F_Text_CourtneyDefeat, PARTNER_SHELLY
 # 464 "data/maps/MagmaHideout_4F/scripts.pory"
 	special LoadPlayerParty
 # 465 "data/maps/MagmaHideout_4F/scripts.pory"
