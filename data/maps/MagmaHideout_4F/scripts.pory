@@ -623,7 +623,7 @@ MagmaHideout_4F_EventScript_MaxieVictory::
 
 MagmaHideout_4F_Text_MaxieLetsGo:
 	.string "Maxie: Tabitha… Courtney… Let us step\n"
-	.string "outside and see our dreams in reality.$"
+	.string "outside and see our dream in reality.$"
 
 MagmaHideout_4F_Movement_AdminApproachMaxie:
 	walk_right

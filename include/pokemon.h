@@ -713,8 +713,8 @@ extern struct SpriteTemplate gMultiuseSpriteTemplate;
 extern u16 gFollowerSteps;
 
 extern const struct MoveInfo gMovesInfo[];
-extern const u8 gFacilityClassToPicIndex[];
-extern const u8 gFacilityClassToTrainerClass[];
+extern const u16 gFacilityClassToPicIndex[];
+extern const u16 gFacilityClassToTrainerClass[];
 extern const struct SpeciesInfo gSpeciesInfo[];
 extern const u32 gExperienceTables[][MAX_LEVEL + 1];
 extern const u8 gPPUpGetMask[];

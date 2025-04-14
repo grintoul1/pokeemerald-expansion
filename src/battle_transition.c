@@ -2618,7 +2618,7 @@ static void Mugshots_CreateTrainerPics(struct Task *task)
 
     u8 trainerAPicId = GetTrainerPicFromId(gTrainerBattleOpponent_A);
     u8 trainerBPicId = GetTrainerPicFromId(gTrainerBattleOpponent_B);
-    u8 partnerPicId = GetTrainerPicFromId(gPartnerTrainerId);
+    u8 partnerPicId = gTrainerPicToTrainerBackPic[GetTrainerPicFromId(gPartnerTrainerId)];
     s16 opponentARotationScales = 0;
     s16 opponentBRotationScales = 0;
 

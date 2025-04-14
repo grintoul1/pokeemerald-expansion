@@ -165,6 +165,7 @@ extern const union AnimCmd *const gAnims_MonPic[];
 extern const union AnimCmd *const sAnims_Trainer[];
 extern const struct TrainerSprite gTrainerSprites[];
 extern const struct TrainerBacksprite gTrainerBacksprites[];
+extern const u16 gTrainerPicToTrainerBackPic[];
 
 extern const struct Trainer gTrainers[];
 extern const struct Trainer gBattlePartners[];
