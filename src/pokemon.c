@@ -1297,6 +1297,84 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     GiveBoxMonInitialMoveset(boxMon);
 }
 
+void CreateMonPlayerParty(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
+{
+    u32 mail;
+    ZeroMonData(mon);
+    CreateBoxMonPlayerParty(&mon->box, species, level, fixedIV, hasFixedPersonality, fixedPersonality, otIdType, fixedOtId);
+    SetMonData(mon, MON_DATA_LEVEL, &level);
+    mail = MAIL_NONE;
+    SetMonData(mon, MON_DATA_MAIL, &mail);
+    CalculateMonStats(mon);
+}
+
+void CreateBoxMonPlayerParty(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
+{
+    u8 speciesName[POKEMON_NAME_LENGTH + 1];
+    s32 j;
+
+    ZeroBoxMonData(boxMon);
+
+    j = GetBoxMonData(boxMon, MON_DATA_PERSONALITY, NULL);
+    SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_OT_ID, NULL);
+    SetBoxMonData(boxMon, MON_DATA_OT_ID, &j);
+
+    j = GetBoxMonData(boxMon, MON_DATA_CHECKSUM, NULL);
+    SetBoxMonData(boxMon, MON_DATA_CHECKSUM, &j);
+    EncryptBoxMon(boxMon);
+    j = GetBoxMonData(boxMon, MON_DATA_IS_SHINY, NULL);
+    SetBoxMonData(boxMon, MON_DATA_IS_SHINY, &j);
+    StringCopy(speciesName, GetSpeciesName(species));
+    j = GetBoxMonData(boxMon, MON_DATA_NICKNAME, NULL);
+    SetBoxMonData(boxMon, MON_DATA_NICKNAME, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_LANGUAGE, NULL);
+    SetBoxMonData(boxMon, MON_DATA_LANGUAGE, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_OT_NAME, NULL);
+    SetBoxMonData(boxMon, MON_DATA_OT_NAME, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_SPECIES, NULL);
+    SetBoxMonData(boxMon, MON_DATA_SPECIES, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_EXP, NULL);
+    SetBoxMonData(boxMon, MON_DATA_EXP, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_FRIENDSHIP, NULL);
+    SetBoxMonData(boxMon, MON_DATA_FRIENDSHIP, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_MET_LOCATION, NULL);
+    SetBoxMonData(boxMon, MON_DATA_MET_LOCATION, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_MET_LEVEL, NULL);
+    SetBoxMonData(boxMon, MON_DATA_MET_LEVEL, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_MET_GAME, NULL);
+    SetBoxMonData(boxMon, MON_DATA_MET_GAME, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_POKEBALL, NULL);
+    SetBoxMonData(boxMon, MON_DATA_POKEBALL, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_OT_GENDER, NULL);
+    SetBoxMonData(boxMon, MON_DATA_OT_GENDER, &j);
+
+    j = GetBoxMonData(boxMon, MON_DATA_HP_IV, NULL);
+    SetBoxMonData(boxMon, MON_DATA_HP_IV, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_ATK_IV, NULL);
+    SetBoxMonData(boxMon, MON_DATA_ATK_IV, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_DEF_IV, NULL);
+    SetBoxMonData(boxMon, MON_DATA_DEF_IV, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_SPEED_IV, NULL);
+    SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_SPATK_IV, NULL);
+    SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_SPDEF_IV, NULL);
+    SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &j);
+
+    j = GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, NULL);
+    SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &j);
+    
+    j = GetBoxMonData(boxMon, MON_DATA_MOVE1, NULL);
+    SetBoxMonData(boxMon, MON_DATA_MOVE1, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_MOVE2, NULL);
+    SetBoxMonData(boxMon, MON_DATA_MOVE2, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_MOVE3, NULL);
+    SetBoxMonData(boxMon, MON_DATA_MOVE3, &j);
+    j = GetBoxMonData(boxMon, MON_DATA_MOVE4, NULL);
+    SetBoxMonData(boxMon, MON_DATA_MOVE4, &j);
+}
+
 void CreateMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 nature)
 {
     u32 personality;
