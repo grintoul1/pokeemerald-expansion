@@ -283,7 +283,7 @@ waitmovement 0
 # 142 "data/maps/AquaHideout_B1F/scripts.pory"
 playbgm MUS_ENCOUNTER_AQUA, TRUE
 # 143 "data/maps/AquaHideout_B1F/scripts.pory"
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 # 144 "data/maps/AquaHideout_B1F/scripts.pory"
 waitmovement 0
 # 145 "data/maps/AquaHideout_B1F/scripts.pory"
@@ -299,7 +299,7 @@ waitmovement 0
 # 150 "data/maps/AquaHideout_B1F/scripts.pory"
 playbgm MUS_ENCOUNTER_AQUA, TRUE
 # 151 "data/maps/AquaHideout_B1F/scripts.pory"
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 # 152 "data/maps/AquaHideout_B1F/scripts.pory"
 waitmovement 0
 # 153 "data/maps/AquaHideout_B1F/scripts.pory"
@@ -333,13 +333,13 @@ waitstate
 # 167 "data/maps/AquaHideout_B1F/scripts.pory"
 AquaHideout_B1F_EventScript_Grunt5Grunt3Victory::
 # 168 "data/maps/AquaHideout_B1F/scripts.pory"
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 # 169 "data/maps/AquaHideout_B1F/scripts.pory"
 waitmovement 0
 # 170 "data/maps/AquaHideout_B1F/scripts.pory"
 msgbox AquaHideout_B1F_Text_Grunt5PostBattle, MSGBOX_AUTOCLOSE
 # 171 "data/maps/AquaHideout_B1F/scripts.pory"
-applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 # 172 "data/maps/AquaHideout_B1F/scripts.pory"
 waitmovement 0
 # 173 "data/maps/AquaHideout_B1F/scripts.pory"
