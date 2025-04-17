@@ -25,7 +25,6 @@
 #include "metatile_behavior.h"
 #include "overworld.h"
 #include "palette.h"
-#include "party_menu.h"
 #include "pokemon.h"
 #include "pokeball.h"
 #include "random.h"
@@ -193,7 +192,6 @@ static void DoShadowFieldEffect(struct ObjectEvent *);
 static void SetJumpSpriteData(struct Sprite *, u8, u8, u8);
 static void SetWalkSlowSpriteData(struct Sprite *, u8);
 static bool8 UpdateWalkSlowAnim(struct Sprite *);
-static bool8 UpdateWalkSlowStairs(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 static u8 DoJumpSpriteMovement(struct Sprite *);
 static u8 DoJumpSpecialSpriteMovement(struct Sprite *);
 static void CreateLevitateMovementTask(struct ObjectEvent *);
@@ -202,6 +200,7 @@ static bool8 GetFollowerInfo(u32 *species, bool32 *shiny, bool32 *female);
 static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female);
 static const struct ObjectEventGraphicsInfo *SpeciesToGraphicsInfo(u32 species, bool32 shiny, bool32 female);
 static bool8 NpcTakeStep(struct Sprite *);
+static bool8 IsElevationMismatchAt(u8, s16, s16);
 static bool8 AreElevationsCompatible(u8, u8);
 static void CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(u16 graphicsId, u16 movementType, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
 
@@ -963,13 +962,6 @@ const u8 gFaceDirectionMovementActions[] = {
     [DIR_NORTHWEST] = MOVEMENT_ACTION_FACE_LEFT,
     [DIR_NORTHEAST] = MOVEMENT_ACTION_FACE_RIGHT
 };
-static const u8 gWalkSlowStairsMovementActions[] = {
-    [DIR_NONE]  = MOVEMENT_ACTION_WALK_SLOW_STAIRS_DOWN,
-    [DIR_SOUTH] = MOVEMENT_ACTION_WALK_SLOW_STAIRS_DOWN,
-    [DIR_NORTH] = MOVEMENT_ACTION_WALK_SLOW_STAIRS_UP,
-    [DIR_WEST]  = MOVEMENT_ACTION_WALK_SLOW_STAIRS_LEFT,
-    [DIR_EAST]  = MOVEMENT_ACTION_WALK_SLOW_STAIRS_RIGHT,
-};
 const u8 gWalkSlowMovementActions[] = {
     [DIR_NONE] = MOVEMENT_ACTION_WALK_SLOW_DOWN,
     [DIR_SOUTH] = MOVEMENT_ACTION_WALK_SLOW_DOWN,
@@ -1435,8 +1427,8 @@ static u8 InitObjectEventStateFromTemplate(const struct ObjectEventTemplate *tem
     objectEvent->previousCoords.y = y;
     objectEvent->currentElevation = template->elevation;
     objectEvent->previousElevation = template->elevation;
-    objectEvent->range.rangeX = template->movementRangeX;
-    objectEvent->range.rangeY = template->movementRangeY;
+    objectEvent->rangeX = template->movementRangeX;
+    objectEvent->rangeY = template->movementRangeY;
     objectEvent->trainerType = template->trainerType;
     objectEvent->mapNum = mapNum;
     objectEvent->trainerRange_berryTreeId = template->trainerRange_berryTreeId;
@@ -1444,10 +1436,10 @@ static u8 InitObjectEventStateFromTemplate(const struct ObjectEventTemplate *tem
     SetObjectEventDirection(objectEvent, objectEvent->previousMovementDirection);
     if (sMovementTypeHasRange[objectEvent->movementType])
     {
-        if (objectEvent->range.rangeX == 0)
-            objectEvent->range.rangeX++;
-        if (objectEvent->range.rangeY == 0)
-            objectEvent->range.rangeY++;
+        if (objectEvent->rangeX == 0)
+            objectEvent->rangeX++;
+        if (objectEvent->rangeY == 0)
+            objectEvent->rangeY++;
     }
     return objectEventId;
 }
@@ -2034,16 +2026,11 @@ static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female)
         // Check if pal data must be decompressed
         if (IsLZ77Data(spritePalette.data, PLTT_SIZE_4BPP, PLTT_SIZE_4BPP))
         {
-            struct CompressedSpritePalette compSpritePalette;
-
-            compSpritePalette.data = (const void *) spritePalette.data;
-            compSpritePalette.tag = spritePalette.tag;
-            paletteNum = LoadCompressedSpritePalette(&compSpritePalette);
+            // IsLZ77Data guarantees word-alignment, so casting this is safe
+            LZ77UnCompWram((u32*)spritePalette.data, gDecompressionBuffer);
+            spritePalette.data = (void*)gDecompressionBuffer;
         }
-        else
-        {
-            paletteNum = LoadSpritePalette(&spritePalette);
-        }
+        paletteNum = LoadSpritePalette(&spritePalette);
     }
     else
 #endif //OW_POKEMON_OBJECT_EVENTS == TRUE && OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -2132,24 +2119,21 @@ static void RefreshFollowerGraphics(struct ObjectEvent *objEvent)
     }
 }
 
-u16 GetOverworldWeatherSpecies(u16 species)
+static u16 GetOverworldCastformSpecies(void)
 {
-    u32 i;
-    u32 weather = GetCurrentWeather();
-    const struct FormChange *formChanges = GetSpeciesFormChanges(species);
-
-    for (i = 0; formChanges != NULL && formChanges[i].method != FORM_CHANGE_TERMINATOR; i++)
+    switch (GetCurrentWeather())
     {
-        // Unlike other form change checks, we don't do the "species != formChanges[i].targetSpecies" check
-        if (formChanges[i].method == FORM_CHANGE_OVERWORLD_WEATHER)
-        {
-            if (formChanges[i].param1 == weather)
-                return formChanges[i].targetSpecies;
-            else if (formChanges[i].param1 == WEATHER_NONE) // Set the default form for weather not defined in form change table
-                species = formChanges[i].targetSpecies;
-        }
+    case WEATHER_SUNNY_CLOUDS:
+    case WEATHER_DROUGHT:
+        return SPECIES_CASTFORM_SUNNY;
+    case WEATHER_RAIN:
+    case WEATHER_RAIN_THUNDERSTORM:
+    case WEATHER_DOWNPOUR:
+        return SPECIES_CASTFORM_RAINY;
+    case WEATHER_SNOW:
+        return SPECIES_CASTFORM_SNOWY;
     }
-    return species;
+    return SPECIES_CASTFORM_NORMAL;
 }
 
 static bool8 GetMonInfo(struct Pokemon *mon, u32 *species, bool32 *shiny, bool32 *female)
@@ -2169,8 +2153,8 @@ static bool8 GetMonInfo(struct Pokemon *mon, u32 *species, bool32 *shiny, bool32
     case SPECIES_UNOWN:
         *species = GetUnownSpecies(mon);
         break;
-    default:
-        *species = GetOverworldWeatherSpecies(*species);
+    case SPECIES_CASTFORM: // form is based on overworld weather
+        *species = GetOverworldCastformSpecies();
         break;
     }
     return TRUE;
@@ -2196,7 +2180,6 @@ void UpdateFollowingPokemon(void)
     // 3. flag is set
     if (OW_POKEMON_OBJECT_EVENTS == FALSE
      || OW_FOLLOWERS_ENABLED == FALSE
-     || FlagGet(B_FLAG_FOLLOWERS_DISABLED)
      || !GetFollowerInfo(&species, &shiny, &female)
      || SpeciesToGraphicsInfo(species, shiny, female) == NULL
      || (gMapHeader.mapType == MAP_TYPE_INDOOR && SpeciesToGraphicsInfo(species, shiny, female)->oam->size > ST_OAM_SIZE_2)
@@ -5350,20 +5333,14 @@ static bool32 EndFollowerTransformEffect(struct ObjectEvent *objectEvent, struct
 static bool32 TryStartFollowerTransformEffect(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     u32 multi;
-    struct Pokemon *mon;
-    u32 ability;
-    if (DoesSpeciesHaveFormChangeMethod(OW_SPECIES(objectEvent), FORM_CHANGE_OVERWORLD_WEATHER)
-        && OW_SPECIES(objectEvent) != (multi = GetOverworldWeatherSpecies(OW_SPECIES(objectEvent))))
+    if (GET_BASE_SPECIES_ID(OW_SPECIES(objectEvent)) == SPECIES_CASTFORM
+        && OW_SPECIES(objectEvent) != (multi = GetOverworldCastformSpecies()))
     {
         sprite->data[7] = TRANSFORM_TYPE_WEATHER << 8;
-        PlaySE(SE_M_MINIMIZE);
         return TRUE;
     }
-
-    if (OW_FOLLOWERS_COPY_WILD_PKMN
-        && (MonKnowsMove(mon = GetFirstLiveMon(), MOVE_TRANSFORM)
-         || (ability = GetMonAbility(mon)) == ABILITY_IMPOSTER || ability == ABILITY_ILLUSION)
-        && (Random() & 0xFFFF) < 18 && GetLocalWildMon(FALSE))
+    else if ((Random() & 0xFFFF) < 18 && GetLocalWildMon(FALSE)
+            && (OW_SPECIES(objectEvent) == SPECIES_MEW || OW_SPECIES(objectEvent) == SPECIES_DITTO))
     {
         sprite->data[7] = TRANSFORM_TYPE_RANDOM_WILD << 8;
         PlaySE(SE_M_MINIMIZE);
@@ -5397,7 +5374,7 @@ static bool8 UpdateFollowerTransformEffect(struct ObjectEvent *objectEvent, stru
             break;
         case TRANSFORM_TYPE_WEATHER:
             multi = objectEvent->graphicsId;
-            objectEvent->graphicsId = GetOverworldWeatherSpecies(OW_SPECIES(objectEvent));
+            objectEvent->graphicsId = GetOverworldCastformSpecies();
             if (!objectEvent->graphicsId)
             {
                 objectEvent->graphicsId = multi;
@@ -5578,13 +5555,13 @@ bool8 FollowablePlayerMovement_Step(struct ObjectEvent *objectEvent, struct Spri
     direction = GetDirectionToFace(x, y, targetX, targetY);
     // During a script, if player sidesteps or backsteps,
     // mirror player's direction instead
-    if (ArePlayerFieldControlsLocked() &&
-        gObjectEvents[gPlayerAvatar.objectEventId].facingDirection != gObjectEvents[gPlayerAvatar.objectEventId].movementDirection)
+    if (ArePlayerFieldControlsLocked()
+     && gObjectEvents[gPlayerAvatar.objectEventId].facingDirection != gObjectEvents[gPlayerAvatar.objectEventId].movementDirection)
     {
         direction = gObjectEvents[gPlayerAvatar.objectEventId].movementDirection;
         objectEvent->facingDirectionLocked = TRUE;
     }
-    
+
     MoveCoords(direction, &x, &y);
     GetCollisionAtCoords(objectEvent, x, y, direction); // Sets directionOverwrite for stairs
     if (GetLedgeJumpDirection(x, y, direction) != DIR_NONE)
@@ -5592,12 +5569,12 @@ bool8 FollowablePlayerMovement_Step(struct ObjectEvent *objectEvent, struct Spri
         // InitJumpRegular will set the proper speed
         ObjectEventSetSingleMovement(objectEvent, sprite, GetJump2MovementAction(direction));
     }
-    else if (playerAction >= MOVEMENT_ACTION_WALK_SLOW_STAIRS_DOWN && playerAction <= MOVEMENT_ACTION_WALK_SLOW_STAIRS_RIGHT)
+    else if (playerAction >= MOVEMENT_ACTION_WALK_SLOW_DOWN && playerAction <= MOVEMENT_ACTION_WALK_SLOW_RIGHT)
     {
         if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_DASH)) // on sideways stairs
             objectEvent->movementActionId = GetWalkNormalMovementAction(direction);
         else
-            ObjectEventSetSingleMovement(objectEvent, sprite, GetWalkSlowStairsMovementAction(direction));
+            ObjectEventSetSingleMovement(objectEvent, sprite, GetWalkSlowMovementAction(direction));
     }
     else if (PlayerGetCopyableMovement() == COPY_MOVE_JUMP2)
     {
@@ -6051,15 +6028,9 @@ u8 GetDirectionToFace(s16 x, s16 y, s16 targetX, s16 targetY)
 // Uses the above, but script accessible, and uses localIds
 void GetDirectionToFaceScript(struct ScriptContext *ctx)
 {
-    u32 varId = ScriptReadHalfword(ctx);
+    u16 *var = GetVarPointer(ScriptReadHalfword(ctx));
     u8 sourceId = GetObjectEventIdByLocalId(ScriptReadByte(ctx));
     u8 targetId = GetObjectEventIdByLocalId(ScriptReadByte(ctx));
-
-    Script_RequestEffects(SCREFF_V1);
-    Script_RequestWriteVar(varId);
-
-    u16 *var = GetVarPointer(varId);
-
     if (var == NULL)
         return;
     if (sourceId >= OBJECT_EVENTS_COUNT || targetId >= OBJECT_EVENTS_COUNT)
@@ -6075,12 +6046,7 @@ void GetDirectionToFaceScript(struct ScriptContext *ctx)
 // Intended to be called before the field effect itself
 void IsFollowerFieldMoveUser(struct ScriptContext *ctx)
 {
-    u32 varId = ScriptReadHalfword(ctx);
-
-    Script_RequestEffects(SCREFF_V1);
-    Script_RequestWriteVar(varId);
-
-    u16 *var = GetVarPointer(varId);
+    u16 *var = GetVarPointer(ScriptReadHalfword(ctx));
     u16 userIndex = gFieldEffectArguments[0]; // field move user index
     struct Pokemon *follower = GetFirstLiveMon();
     struct ObjectEvent *obj = GetFollowerObject();
@@ -6283,18 +6249,18 @@ static bool8 IsCoordOutsideObjectEventMovementRange(struct ObjectEvent *objectEv
     s16 top;
     s16 bottom;
 
-    if (objectEvent->range.rangeX != 0)
+    if (objectEvent->rangeX != 0)
     {
-        left = objectEvent->initialCoords.x - objectEvent->range.rangeX;
-        right = objectEvent->initialCoords.x + objectEvent->range.rangeX;
+        left = objectEvent->initialCoords.x - objectEvent->rangeX;
+        right = objectEvent->initialCoords.x + objectEvent->rangeX;
 
         if (left > x || right < x)
             return TRUE;
     }
-    if (objectEvent->range.rangeY != 0)
+    if (objectEvent->rangeY != 0)
     {
-        top = objectEvent->initialCoords.y - objectEvent->range.rangeY;
-        bottom = objectEvent->initialCoords.y + objectEvent->range.rangeY;
+        top = objectEvent->initialCoords.y - objectEvent->rangeY;
+        bottom = objectEvent->initialCoords.y + objectEvent->rangeY;
 
         if (top > y || bottom < y)
             return TRUE;
@@ -6483,13 +6449,13 @@ static u8 TryUpdateMovementActionOnStairs(struct ObjectEvent *objectEvent, u8 mo
     switch (movementActionId)
     {
         case MOVEMENT_ACTION_WALK_NORMAL_DOWN:
-            return MOVEMENT_ACTION_WALK_SLOW_STAIRS_DOWN;
+            return MOVEMENT_ACTION_WALK_SLOW_DOWN;
         case MOVEMENT_ACTION_WALK_NORMAL_UP:
-            return MOVEMENT_ACTION_WALK_SLOW_STAIRS_UP;
+            return MOVEMENT_ACTION_WALK_SLOW_UP;
         case MOVEMENT_ACTION_WALK_NORMAL_LEFT:
-            return MOVEMENT_ACTION_WALK_SLOW_STAIRS_LEFT;
+            return MOVEMENT_ACTION_WALK_SLOW_LEFT;
         case MOVEMENT_ACTION_WALK_NORMAL_RIGHT:
-            return MOVEMENT_ACTION_WALK_SLOW_STAIRS_RIGHT;
+            return MOVEMENT_ACTION_WALK_SLOW_RIGHT;
         default:
             return movementActionId;
     }
@@ -6618,7 +6584,6 @@ u8 name(u32 idx)\
 }
 
 dirn_to_anim(GetFaceDirectionMovementAction, gFaceDirectionMovementActions);
-dirn_to_anim(GetWalkSlowStairsMovementAction, gWalkSlowStairsMovementActions);
 dirn_to_anim(GetWalkSlowMovementAction, gWalkSlowMovementActions);
 dirn_to_anim(GetPlayerRunSlowMovementAction, gRunSlowMovementActions);
 dirn_to_anim(GetWalkNormalMovementAction, gWalkNormalMovementActions);
@@ -9673,7 +9638,7 @@ static void SetObjectEventSpriteOamTableForLongGrass(struct ObjectEvent *objEven
         sprite->subspriteTableNum = 5;
 }
 
-bool8 IsElevationMismatchAt(u8 elevation, s16 x, s16 y)
+static bool8 IsElevationMismatchAt(u8 elevation, s16 x, s16 y)
 {
     u8 mapElevation;
 
@@ -10403,22 +10368,6 @@ static bool8 UpdateWalkSlowAnim(struct Sprite *sprite)
         return FALSE;
 }
 
-bool8 UpdateWalkSlowStairsAnim(struct Sprite *sprite)
-{
-    if (++sprite->sTimer < 3)
-    {
-        Step1(sprite, sprite->sDirection);
-        sprite->sNumSteps++;
-    }
-    else
-        sprite->sTimer = 0;
-
-    if (sprite->sNumSteps > 15)
-        return TRUE;
-    else
-        return FALSE;
-}
-
 #undef sTimer
 #undef sNumSteps
 
@@ -11105,13 +11054,6 @@ void GetDaycareGraphics(struct ScriptContext *ctx)
     bool32 shiny;
     bool32 female;
     s32 i;
-
-    Script_RequestEffects(SCREFF_V1);
-    Script_RequestWriteVar(varGfx[0]);
-    Script_RequestWriteVar(varGfx[1]);
-    Script_RequestWriteVar(varForm[0]);
-    Script_RequestWriteVar(varForm[1]);
-
     for (i = 0; i < 2; i++)
     {
         GetMonInfo((struct Pokemon *) &gSaveBlock1Ptr->daycare.mons[i].mon, &specGfx, &shiny, &female);
@@ -11171,88 +11113,6 @@ bool8 MovementActionFunc_RunSlow_Step1(struct ObjectEvent *objectEvent, struct S
     if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->sActionFuncId = 2;
-        return TRUE;
-    }
-    return FALSE;
-}
-
-static bool8 UpdateWalkSlowStairs(struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    if (UpdateWalkSlowStairsAnim(sprite))
-    {
-        ShiftStillObjectEventCoords(objectEvent);
-        objectEvent->triggerGroundEffectsOnStop = TRUE;
-        sprite->animPaused = TRUE;
-        return TRUE;
-    }
-    return FALSE;
-}
-
-bool8 MovementAction_WalkSlowStairsUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    InitWalkSlow(objectEvent, sprite, DIR_NORTH);
-    return MovementAction_WalkSlowStairsUp_Step1(objectEvent, sprite);
-}
-
-bool8 MovementAction_WalkSlowStairsUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    if (UpdateWalkSlowStairs(objectEvent, sprite))
-    {
-        sprite->data[2] = 2;
-        return TRUE;
-    }
-    return FALSE;
-}
-
-bool8 MovementAction_WalkSlowStairsDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    InitWalkSlow(objectEvent, sprite, DIR_SOUTH);
-    return MovementAction_WalkSlowStairsDown_Step1(objectEvent, sprite);
-}
-
-bool8 MovementAction_WalkSlowStairsDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    if (UpdateWalkSlowStairs(objectEvent, sprite))
-    {
-        sprite->data[2] = 2;
-        return TRUE;
-    }
-    return FALSE;
-}
-
-bool8 MovementAction_WalkSlowStairsLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    if (objectEvent->directionOverwrite)
-        InitWalkSlow(objectEvent, sprite, objectEvent->directionOverwrite);
-    else
-        InitWalkSlow(objectEvent, sprite, DIR_WEST);
-    return MovementAction_WalkSlowStairsLeft_Step1(objectEvent, sprite);
-}
-
-bool8 MovementAction_WalkSlowStairsLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    if (UpdateWalkSlowStairs(objectEvent, sprite))
-    {
-        sprite->data[2] = 2;
-        return TRUE;
-    }
-    return FALSE;
-}
-
-bool8 MovementAction_WalkSlowStairsRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    if (objectEvent->directionOverwrite)
-        InitWalkSlow(objectEvent, sprite, objectEvent->directionOverwrite);
-    else
-        InitWalkSlow(objectEvent, sprite, DIR_EAST);
-    return MovementAction_WalkSlowStairsRight_Step1(objectEvent, sprite);
-}
-
-bool8 MovementAction_WalkSlowStairsRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
-{
-    if (UpdateWalkSlowStairs(objectEvent, sprite))
-    {
-        sprite->data[2] = 2;
         return TRUE;
     }
     return FALSE;
