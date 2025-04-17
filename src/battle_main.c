@@ -24,6 +24,7 @@
 #include "event_data.h"
 #include "evolution_scene.h"
 #include "field_weather.h"
+#include "follower_npc.h"
 #include "generational_changes.h"
 #include "graphics.h"
 #include "gpu_regs.h"
@@ -442,8 +443,20 @@ void CB2_InitBattle(void)
     AllocateMonSpritesGfx();
     RecordedBattle_ClearFrontierPassFlag();
 
-    if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+    #if T_SHOULD_RUN_MOVE_ANIM
+    gLoadFail = FALSE;
+#endif // T_SHOULD_RUN_MOVE_ANIM
+
+#if OW_ENABLE_NPC_FOLLOWERS
+    if (gSaveBlock3Ptr->NPCfollower.battlePartner && OW_NPC_FOLLOWER_PARTY_PREVIEW == FALSE)
     {
+        CB2_InitBattleInternal();
+        gBattleCommunication[MULTIUSE_STATE] = 0;
+    }
+    else 
+#endif
+    if (gBattleTypeFlags & BATTLE_TYPE_MULTI && gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+        {
         if (gBattleTypeFlags & BATTLE_TYPE_RECORDED)
         {
             CB2_InitBattleInternal();

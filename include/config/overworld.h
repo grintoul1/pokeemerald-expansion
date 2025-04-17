@@ -42,6 +42,14 @@
 #define OW_BERRY_DRAIN_RATE            GEN_6_ORAS // If OW_BERRY_MOISTURE is enabled, this setting changes how fast the soil dries out. GEN_4 uses a Berry-dependent drain rate, GEN_6_XY dries out in 24 hours (4 hours with the relevant Mulch) and GEN_6_ORAS dries out in 4 hours. Other values are illegal.
 #define OW_BERRY_IMMORTAL              FALSE      // If enabled, once a Berry tree has grown a Berry, the tree will not disappear until picked by the player.
 
+// NPC Followers
+#define OW_ENABLE_NPC_FOLLOWERS             TRUE // Enables the use of script macros to designate NPCs to follow behind the player, DPP style. Slightly increases the size of the saveblock (SaveBlock3).
+#define OW_FLAG_HEAL_AFTER_FOLLOWER_BATTLE  0     // Replace the 0 with a flag in order to use that flag to toggle whether the Player's party will be automatically healed after every follower partner battle. If you want this to always be active without using a flag, replace 0 with FNPC_ALWAYS.
+#define OW_FLAG_PARTNER_WILD_BATTLES        0     // Replace the 0 with a flag in order to use that flag to toggle whether the follower partner will join you for wild battles. If you want this to always be active without using a flag, replace 0 with FNPC_ALWAYS.
+#define OW_NPC_FOLLOWER_WILD_BATTLE_VS_2    TRUE  // If set to TRUE, two wild Pokemon will show up to the partner battle instead of just one.
+#define OW_NPC_FOLLOWER_PARTY_PREVIEW       TRUE  // If set to TRUE, a preview of the player's and partner's teams will be shown before every trainer battle.
+#define OW_FACE_NPC_FOLLOWER_ON_DOOR_EXIT   TRUE  // If set to TRUE, the player will turn to face the follower when they exit a doorway.
+
 // Overworld Pokémon
 #define OW_POKEMON_OBJECT_EVENTS       TRUE       // Adds Object Event fields for every species. Can be used for NPCs using the OBJ_EVENT_GFX_SPECIES macro (eg. OBJ_EVENT_GFX_SPECIES(BULBASAUR))
 #define OW_SUBSTITUTE_PLACEHOLDER      TRUE       // Use a substitute OW for Pokémon that are missing overworld sprites
@@ -55,11 +63,11 @@
 #define OW_MON_WANDER_WALK             TRUE       // If true, OW pokemon with MOVEMENT_TYPE_WANDER will walk-in-place in between steps.
 // Follower Pokémon
 #define OW_FOLLOWERS_ENABLED           FALSE      // Enables follower Pokémon, HGSS style. Requires OW_POKEMON_OBJECT_EVENTS. Note that additional scripting may be required for them to be fully supported!
-#define OW_FOLLOWERS_BOBBING           FALSE       // If true, follower pokemon will bob up and down during their idle & walking animations
+#define OW_FOLLOWERS_BOBBING           FALSE      // If true, follower pokemon will bob up and down during their idle & walking animations
 #define OW_FOLLOWERS_POKEBALLS         TRUE       // Followers will emerge from the pokeball they are stored in, instead of a normal pokeball
 
 
-#define OW_FOLLOWERS_SCRIPT_MOVEMENT   TRUE       // TRUE: Script collisions hide follower, FLAG_SAFE_FOLLOWER_MOVEMENT on by default
+#define OW_FOLLOWERS_SCRIPT_MOVEMENT   FALSE       // TRUE: Script collisions hide follower, FLAG_SAFE_FOLLOWER_MOVEMENT on by default
                                                   // FALSE: Script collisions unhandled, FLAG_SAFE_FOLLOWER_MOVEMENT off by default
 
 // If set, the only pokemon allowed to follow you

@@ -206,6 +206,9 @@ void NewGameInitData(void)
     ResetTrainerHillResults();
     ResetContestLinkResults();
     ResetItemFlags();
+    #if OW_ENABLE_NPC_FOLLOWERS
+    memset(&gSaveBlock3Ptr->NPCfollower, 0, sizeof(gSaveBlock3Ptr->NPCfollower));
+#endif
 }
 
 static void ResetMiniGamesRecords(void)
