@@ -88,9 +88,6 @@ EWRAM_DATA struct SpriteTemplate gMultiuseSpriteTemplate = {0};
 EWRAM_DATA static struct MonSpritesGfxManager *sMonSpritesGfxManagers[MON_SPR_GFX_MANAGERS_COUNT] = {NULL};
 EWRAM_DATA static u8 sTriedEvolving = 0;
 EWRAM_DATA u16 gFollowerSteps = 0;
-EWRAM_DATA bool32 removeHeldItem = 0;
-EWRAM_DATA u32 removeBagItem = 0;
-EWRAM_DATA u32 removeBagItemCount = 0;
 
 #include "data/moves_info.h"
 #include "data/abilities.h"
@@ -3526,11 +3523,7 @@ u8 GetMonsStateToDoubles_2(void)
     s32 aliveCount = 0;
     s32 i;
 
-    if (OW_DOUBLE_APPROACH_WITH_ONE_MON
-#if OW_ENABLE_NPC_FOLLOWERS
-     || gSaveBlock3Ptr->NPCfollower.battlePartner
-#endif
-     )
+    if (OW_DOUBLE_APPROACH_WITH_ONE_MON)
         return PLAYER_HAS_TWO_USABLE_MONS;
 
     for (i = 0; i < PARTY_SIZE; i++)
@@ -4511,18 +4504,6 @@ u8 GetNatureFromPersonality(u32 personality)
     return personality % NUM_NATURES;
 }
 
-void DoRemoveItems(struct Pokemon *mon)
-{
-    if (removeHeldItem)
-    {
-        u32 heldItem = ITEM_NONE;
-        SetMonData(mon, MON_DATA_HELD_ITEM, &heldItem);
-    }
-
-    if (removeBagItem != ITEM_NONE && removeBagItemCount != 0)
-        RemoveBagItem(removeBagItem, removeBagItemCount);
-}
-
 u32 GetGMaxTargetSpecies(u32 species)
 {
     const struct FormChange *formChanges = GetSpeciesFormChanges(species);
@@ -4547,7 +4528,7 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
     u8 beauty = GetMonData(mon, MON_DATA_BEAUTY, 0);
     u16 upperPersonality = personality >> 16;
     u32 holdEffect, currentMap, partnerSpecies, partnerHeldItem, partnerHoldEffect;
-    removeHeldItem = FALSE;
+    bool32 consumeItem = FALSE;
     u16 evolutionTracker = GetMonData(mon, MON_DATA_EVOLUTION_TRACKER, 0);
     const struct Evolution *evolutions = GetSpeciesEvolutions(species);
 
@@ -4628,14 +4609,14 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 if (GetTimeOfDay() == TIME_NIGHT && heldItem == evolutions[i].param)
                 {
                     targetSpecies = evolutions[i].targetSpecies;
-                    removeHeldItem = TRUE;
+                    consumeItem = TRUE;
                 }
                 break;
             case EVO_ITEM_HOLD_DAY:
                 if (GetTimeOfDay() != TIME_NIGHT && heldItem == evolutions[i].param)
                 {
                     targetSpecies = evolutions[i].targetSpecies;
-                    removeHeldItem = TRUE;
+                    consumeItem = TRUE;
                 }
                 break;
             case EVO_LEVEL_DUSK:
@@ -4815,7 +4796,7 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 if (heldItem == evolutions[i].param)
                 {
                     targetSpecies = evolutions[i].targetSpecies;
-                    removeHeldItem = TRUE;
+                    consumeItem = TRUE;
                 }
                 break;
             case EVO_USE_MOVE_TWENTY_TIMES:
@@ -4856,8 +4837,7 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 if (CheckBagHasItem(evolutions[i].param, 999))
                 {
                     targetSpecies = evolutions[i].targetSpecies;
-                    removeBagItem = evolutions[i].param;
-                    removeBagItemCount = 999;
+                    RemoveBagItem(evolutions[i].param, 999);
                 }
                 break;
             }
@@ -4878,7 +4858,7 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 if (evolutions[i].param == heldItem)
                 {
                     targetSpecies = evolutions[i].targetSpecies;
-                    removeHeldItem = TRUE;
+                    consumeItem = TRUE;
                 }
                 break;
             case EVO_TRADE_SPECIFIC_MON:
@@ -4962,22 +4942,6 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
                 if (evolutionItem == EVO_WATER_SCROLL)
                     targetSpecies = evolutions[i].targetSpecies;
                 break;
-            case EVO_ITEM_HOLD_SPIN_DAY_LESS_THAN_5_SECS_CLOCKWISE:
-            case EVO_ITEM_HOLD_SPIN_DAY_LESS_THAN_5_SECS_COUNTER_CLOCKWISE:
-            case EVO_ITEM_HOLD_SPIN_NIGHT_LESS_THAN_5_SECS_CLOCKWISE:
-            case EVO_ITEM_HOLD_SPIN_NIGHT_LESS_THAN_5_SECS_COUNTER_CLOCKWISE:
-            case EVO_ITEM_HOLD_SPIN_DAY_MORE_THAN_5_SECS_CLOCKWISE:
-            case EVO_ITEM_HOLD_SPIN_DAY_MORE_THAN_5_SECS_COUNTER_CLOCKWISE:
-            case EVO_ITEM_HOLD_SPIN_NIGHT_MORE_THAN_5_SECS_CLOCKWISE:
-            case EVO_ITEM_HOLD_SPIN_NIGHT_MORE_THAN_5_SECS_COUNTER_CLOCKWISE:
-            case EVO_ITEM_HOLD_SPIN_DUSK_MORE_THAN_10_SECS:
-                if (evolutions[i].param == heldItem && evolutionItem == evolutions[i].method)
-                {
-                    targetSpecies = evolutions[i].targetSpecies;
-                    removeHeldItem = TRUE;
-                }
-                    
-                break;
             }
         }
         break;
@@ -4991,6 +4955,12 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, enum EvolutionMode mode, u16 
      && GetGMaxTargetSpecies(targetSpecies) == targetSpecies)
     {
         return SPECIES_NONE;
+    }
+
+    if (consumeItem)
+    {
+        heldItem = ITEM_NONE;
+        SetMonData(mon, MON_DATA_HELD_ITEM, &heldItem);
     }
 
     return targetSpecies;

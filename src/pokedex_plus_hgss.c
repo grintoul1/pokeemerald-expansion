@@ -5294,7 +5294,7 @@ static void PrintStatsScreen_Moves_Bottom(u8 taskId)
         PrintStatsScreenTextSmall(WIN_STATS_MOVES_BOTTOM, gStringVar1, moves_x + 45, moves_y);
         //Physical/Special/Status Category
         DestroyCategoryIcon();
-        ShowCategoryIcon(GetMoveCategory(move));
+        ShowCategoryIcon(GetBattleMoveCategory(move));
         //Accuracy
         if (gMovesInfo[move].accuracy == 0)
             StringCopy(gStringVar1, gText_ThreeDashes);
@@ -6156,7 +6156,7 @@ static void Task_HandleEvolutionScreenInput(u8 taskId)
             u16 dexNum          = SpeciesToNationalPokedexNum(targetSpecies);
             if (sPokedexView->isSearchResults && sPokedexView->originalSearchSelectionNum == 0)
                 sPokedexView->originalSearchSelectionNum = sPokedexListItem->dexNum;
-
+                
             sPokedexListItem->dexNum = dexNum;
             sPokedexListItem->seen   = GetSetPokedexFlag(dexNum, FLAG_GET_SEEN);
             sPokedexListItem->owned  = GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT);

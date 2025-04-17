@@ -205,12 +205,7 @@ void NewGameInitData(void)
     WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
-    SetCurrentDifficultyLevel(DIFFICULTY_NORMAL);
     ResetItemFlags();
-    ResetDexNav();
-#if OW_ENABLE_NPC_FOLLOWERS
-    memset(&gSaveBlock3Ptr->NPCfollower, 0, sizeof(gSaveBlock3Ptr->NPCfollower));
-#endif
 }
 
 static void ResetMiniGamesRecords(void)

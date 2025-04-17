@@ -549,8 +549,8 @@ static void OpponentHandleChooseMove(u32 battler)
         }
         else
         {
-            chosenMoveId = gAiBattleData->moveOrAction[battler];
-            gBattlerTarget = gAiBattleData->chosenTarget[battler];
+            chosenMoveId = gBattleStruct->aiMoveOrAction[battler];
+            gBattlerTarget = gBattleStruct->aiChosenTarget[battler];
             switch (chosenMoveId)
             {
             case AI_CHOICE_WATCH:

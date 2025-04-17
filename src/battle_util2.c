@@ -18,7 +18,6 @@ void AllocateBattleResources(void)
         InitTrainerHillBattleStruct();
 
     gBattleStruct = AllocZeroed(sizeof(*gBattleStruct));
-    gAiBattleData = AllocZeroed(sizeof(*gAiBattleData));
 
 #if B_FLAG_SKY_BATTLE
     gBattleStruct->isSkyBattle = FlagGet(B_FLAG_SKY_BATTLE);
@@ -57,7 +56,6 @@ void FreeBattleResources(void)
     if (gBattleResources != NULL)
     {
         FREE_AND_SET_NULL(gBattleStruct);
-        FREE_AND_SET_NULL(gAiBattleData);
 
         FREE_AND_SET_NULL(gBattleResources->secretBase);
         FREE_AND_SET_NULL(gBattleResources->flags);

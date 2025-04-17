@@ -351,9 +351,8 @@ static void PlayerPartnerHandleChooseMove(u32 battler)
     u8 chosenMoveId;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
 
-    chosenMoveId = gAiBattleData->moveOrAction[battler];
-    gBattlerTarget = gAiBattleData->chosenTarget[battler];
-    u32 moveTarget = GetBattlerMoveTargetType(battler, moveInfo->moves[chosenMoveId]);
+    chosenMoveId = gBattleStruct->aiMoveOrAction[battler];
+    gBattlerTarget = gBattleStruct->aiChosenTarget[battler];
 
     if (gMovesInfo[moveInfo->moves[chosenMoveId]].target & (MOVE_TARGET_USER | MOVE_TARGET_USER_OR_SELECTED))
         gBattlerTarget = battler;
