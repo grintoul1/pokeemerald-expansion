@@ -1180,6 +1180,7 @@ static bool16 ShouldDroughtMusicPlayAtLocation(struct WarpData *warp)
             case MAP_NUM(MT_CHIMNEY):
             case MAP_NUM(MT_PYRE_EXTERIOR):
             case MAP_NUM(MT_PYRE_SUMMIT):
+            return TRUE;
         }
     }
     return FALSE;

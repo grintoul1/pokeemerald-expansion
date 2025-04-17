@@ -1871,7 +1871,6 @@ static bool8 WaterfallFieldEffect_ShowMon(struct Task *task, struct ObjectEvent 
     {
         ObjectEventClearHeldMovementIfFinished(objectEvent);
         gFieldEffectArguments[0] = task->tMonId;
-        FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
         task->tState++;
     }
     return FALSE;
@@ -1879,10 +1878,6 @@ static bool8 WaterfallFieldEffect_ShowMon(struct Task *task, struct ObjectEvent 
 
 static bool8 WaterfallFieldEffect_WaitForShowMon(struct Task *task, struct ObjectEvent *objectEvent)
 {
-    if (FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
-    {
-        return FALSE;
-    }
     task->tState++;
     return TRUE;
 }
@@ -1942,7 +1937,6 @@ static bool8 DiveFieldEffect_ShowMon(struct Task *task)
 {
     LockPlayerFieldControls();
     gFieldEffectArguments[0] = task->data[15];
-    FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
     task->data[0]++;
     return FALSE;
 }
@@ -3057,8 +3051,7 @@ static void SurfFieldEffect_ShowMon(struct Task *task)
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     if (ObjectEventCheckHeldMovementStatus(objectEvent))
     {
-        gFieldEffectArguments[0] = task->tMonId | SHOW_MON_CRY_NO_DUCKING;
-        FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
+        gFieldEffectArguments[0] = task->tMonId;
         task->tState++;
     }
 }
@@ -3231,23 +3224,19 @@ static void FlyOutFieldEffect_ShowMon(struct Task *task)
     {
         task->tState++;
         gFieldEffectArguments[0] = task->tMonId;
-        FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
     }
 }
 
 static void FlyOutFieldEffect_BirdLeaveBall(struct Task *task)
 {
-    if (!FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
+    struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if (task->tAvatarFlags & PLAYER_AVATAR_FLAG_SURFING)
     {
-        struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
-        if (task->tAvatarFlags & PLAYER_AVATAR_FLAG_SURFING)
-        {
-            SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, BOB_JUST_MON);
-            SetSurfBlob_DontSyncAnim(objectEvent->fieldEffectSpriteId, FALSE);
-        }
-        task->tBirdSpriteId = CreateFlyBirdSprite(); // Does "leave ball" animation by default
-        task->tState++;
+        SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, BOB_JUST_MON);
+        SetSurfBlob_DontSyncAnim(objectEvent->fieldEffectSpriteId, FALSE);
     }
+    task->tBirdSpriteId = CreateFlyBirdSprite(); // Does "leave ball" animation by default
+    task->tState++;
 }
 
 static void FlyOutFieldEffect_WaitBirdLeave(struct Task *task)

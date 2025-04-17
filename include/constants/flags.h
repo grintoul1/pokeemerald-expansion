@@ -681,7 +681,7 @@
 #define FLAG_HIDE_JAGGED_PASS_MAXIE  0x27A // Jagged Pass Maxie, Tabitha, Courtney
 #define FLAG_HIDE_AQUA_HIDEOUT_TABITHA  0x27B // Hides AHO Tabitha
 #define FLAG_FOLLOWER_AQUA_HIDEOUT_TABITHA  0x27C // Unused Flag
-#define FLAG_UNUSED_0x27D  0x27D // Unused Flag
+#define FLAG_HIDE_AQUA_HIDEOUT_SHELLY  0x27D // Hides AHO Shelly
 #define FLAG_UNUSED_0x27E  0x27E // Unused Flag
 #define FLAG_UNUSED_0x27F  0x27F // Unused Flag
 #define FLAG_UNUSED_0x280  0x280 // Unused Flag

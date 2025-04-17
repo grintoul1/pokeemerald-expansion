@@ -300,6 +300,7 @@ EventScript_ResetAllMapFlags::
 	setflag FLAG_HIDE_MAGMA_HIDEOUT_EMMIE
 	setflag FLAG_HIDE_MAGMA_HIDEOUT_4F_GROUDON
 	setflag FLAG_HIDE_AQUA_HIDEOUT_TABITHA
+	setflag FLAG_HIDE_AQUA_HIDEOUT_SHELLY
 	clearflag FLAG_ABNORMAL_WEATHER_SUN
 	call EventScript_ResetAllBerries
 	end

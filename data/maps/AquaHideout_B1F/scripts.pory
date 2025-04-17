@@ -1,4 +1,10 @@
 raw `
+.set LOCALID_GRUNT3, 2
+.set LOCALID_GRUNT5, 4
+.set LOCALID_GRUNT2, 1
+.set LOCALID_GRUNT7, 9
+
+
 AquaHideout_B1F_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, AquaHideout_B1F_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, AquaHideout_B1F_OnTransition
@@ -75,8 +81,48 @@ AquaHideout_B1F_EventScript_DefeatedElectrode2::
 	goto Common_EventScript_RemoveStaticPokemon
 	end
 
+AquaHideout_B1F_EventScript_Grunt7Grunt2::
+lockall
+setvar VAR_0x8008, LOCALID_GRUNT7
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox AquaHideout_B1F_Text_Grunt7Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_GRUNT2
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox AquaHideout_B1F_Text_Grunt2Intro MSGBOX_AUTOCLOSE
+goto AquaHideout_B1F_EventScript_Grunt7Grunt2DoMultiBattle
+releaseall
+end
+
+AquaHideout_B1F_EventScript_Grunt7Grunt2DoMultiBattle::
+playbgm MUS_AQUA_MAGMA_HIDEOUT, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_AQUA_HIDEOUT_7, AquaHideout_B1F_Text_Grunt7Defeat, TRAINER_GRUNT_AQUA_HIDEOUT_2, AquaHideout_B1F_Text_Grunt2Defeat, PARTNER_TABITHA
+switch VAR_RESULT
+case 1, AquaHideout_B1F_EventScript_Grunt7Grunt2Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+AquaHideout_B1F_EventScript_Grunt7Grunt2Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox AquaHideout_B1F_Text_Grunt7PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox AquaHideout_B1F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_AQUAHIDEOUT_STATE, 1
+end
+
 AquaHideout_B1F_EventScript_Grunt2::
-	trainerbattle_single TRAINER_GRUNT_AQUA_HIDEOUT_2, AquaHideout_B1F_Text_Grunt2Intro, AquaHideout_B1F_Text_Grunt2Defeat, AquaHideout_B1F_EventScript_Grunt2Defeated
 	msgbox AquaHideout_B1F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -87,8 +133,48 @@ AquaHideout_B1F_EventScript_Grunt2Defeated::
 	release
 	end
 
+AquaHideout_B1F_EventScript_Grunt5Grunt3::
+lockall
+setvar VAR_0x8008, LOCALID_GRUNT5
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox AquaHideout_B1F_Text_Grunt5Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_GRUNT3
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox AquaHideout_B1F_Text_Grunt3Intro MSGBOX_AUTOCLOSE
+goto AquaHideout_B1F_EventScript_Grunt5Grunt3DoMultiBattle
+releaseall
+end
+
+AquaHideout_B1F_EventScript_Grunt5Grunt3DoMultiBattle::
+playbgm MUS_AQUA_MAGMA_HIDEOUT, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_AQUA_HIDEOUT_5, AquaHideout_B1F_Text_Grunt5Defeat, TRAINER_GRUNT_AQUA_HIDEOUT_3, AquaHideout_B1F_Text_Grunt3Defeat, PARTNER_TABITHA
+switch VAR_RESULT
+case 1, AquaHideout_B1F_EventScript_Grunt5Grunt3Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+AquaHideout_B1F_EventScript_Grunt5Grunt3Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+waitmovement 0
+msgbox AquaHideout_B1F_Text_Grunt5PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+waitmovement 0
+msgbox AquaHideout_B1F_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_AQUAHIDEOUT_STATE, 1
+end
+
 AquaHideout_B1F_EventScript_Grunt3::
-	trainerbattle_single TRAINER_GRUNT_AQUA_HIDEOUT_3, AquaHideout_B1F_Text_Grunt3Intro, AquaHideout_B1F_Text_Grunt3Defeat, AquaHideout_B1F_EventScript_Grunt3Defeated
 	msgbox AquaHideout_B1F_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -98,12 +184,10 @@ AquaHideout_B1F_EventScript_Grunt3Defeated::
 	end
 
 AquaHideout_B1F_EventScript_Grunt5::
-	trainerbattle_single TRAINER_GRUNT_AQUA_HIDEOUT_5, AquaHideout_B1F_Text_Grunt5Intro, AquaHideout_B1F_Text_Grunt5Defeat
 	msgbox AquaHideout_B1F_Text_Grunt5PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 AquaHideout_B1F_EventScript_Grunt7::
-	trainerbattle_single TRAINER_GRUNT_AQUA_HIDEOUT_7, AquaHideout_B1F_Text_Grunt7Intro, AquaHideout_B1F_Text_Grunt7Defeat
 	msgbox AquaHideout_B1F_Text_Grunt7PostBattle, MSGBOX_AUTOCLOSE
 	end
 

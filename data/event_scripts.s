@@ -754,7 +754,6 @@ Common_EventScript_SetAbnormalWeather::
 	return
 
 Common_EventScript_SetWeatherIntenseSun::
-	playbgm MUS_ABNORMAL_WEATHER, TRUE
 	setweather WEATHER_DROUGHT
 	doweather
 	return

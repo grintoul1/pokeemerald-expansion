@@ -52,7 +52,6 @@ JaggedPass_EventScript_SetWeatherAsh::
 	return
 
 JaggedPass_EventScript_SetWeatherIntenseSun::
-	playbgm MUS_ABNORMAL_WEATHER, TRUE
 	setweather WEATHER_DROUGHT
 	doweather
 	return
@@ -73,12 +72,14 @@ JaggedPass_EventScript_GroudonReleased::
 JaggedPass_EventScript_MaxieSpeech::
 	lockall
 	delay 20
-	applymovement LOCALID_MAXIE, Common_Movement_WalkInPlaceFasterRight
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_EMMIE, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_MAXIE, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox JaggedPass_Text_MaxieTabithaGoToLilycove, MSGBOX_DEFAULT
 	closemessage
 	delay 4
-	applymovement LOCALID_TABITHA, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_TABITHA, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox JaggedPass_Text_TabithaYouGotIt, MSGBOX_DEFAULT
 	closemessage
@@ -91,11 +92,13 @@ JaggedPass_EventScript_MaxieSpeech::
 	waitfieldeffect FLDEFF_NPCFLY_OUT
 	removeobject LOCALID_TABITHA
 	delay 16
-	applymovement LOCALID_COURTNEY, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_COURTNEY, Common_Movement_WalkUp
+	waitmovement 0
+	applymovement LOCALID_COURTNEY, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox JaggedPass_Text_CourtneyWeShouldGo, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_MAXIE, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_MAXIE, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox JaggedPass_Text_MaxieYoureRight, MSGBOX_DEFAULT
 	closemessage
@@ -108,7 +111,7 @@ JaggedPass_EventScript_MaxieSpeech::
 	waitfieldeffect FLDEFF_NPCFLY_OUT
 	removeobject LOCALID_COURTNEY
 	delay 16
-	applymovement LOCALID_MAXIE, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_MAXIE, Common_Movement_WalkLeft
 	waitmovement 0
 	msgbox JaggedPass_Text_MaxieYouLose, MSGBOX_DEFAULT
 	closemessage

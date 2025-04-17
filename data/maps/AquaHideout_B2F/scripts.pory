@@ -1,6 +1,11 @@
 raw `
 .set LOCALID_MATT, 1
 .set LOCALID_SUBMARINE, 4
+.set LOCALID_GRUNT1, 7
+.set LOCALID_GRUNT4, 2
+.set LOCALID_GRUNT8, 6
+.set LOCALID_GRUNT6, 5
+.set LOCALID_SHELLY, 8
 
 AquaHideout_B2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, AquaHideout_B2F_OnTransition
@@ -27,6 +32,8 @@ AquaHideout_B2F_EventScript_MattNoticePlayer::
 	end
 
 AquaHideout_B2F_EventScript_Matt::
+	lockall
+	msgbox AquaHideout_B2F_Text_MattIntro MSGBOX_AUTOCLOSE
 	trainerbattle_single TRAINER_MATT, AquaHideout_B2F_Text_MattIntro, AquaHideout_B2F_Text_MattDefeat, AquaHideout_B2F_EventScript_SubmarineEscape
 	msgbox AquaHideout_B2F_Text_MattPostBattle, MSGBOX_DEFAULT
 	release
@@ -70,8 +77,48 @@ AquaHideout_B2F_Movement_SumbarineDepartRight:
 	walk_right
 	step_end
 
+AquaHideout_B2F_EventScript_Grunt4Grunt1::
+lockall
+setvar VAR_0x8008, LOCALID_GRUNT4
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox AquaHideout_B2F_Text_Grunt4Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_GRUNT1
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox AquaHideout_1F_Text_Grunt1Intro MSGBOX_AUTOCLOSE
+goto AquaHideout_B2F_EventScript_Grunt4Grunt1DoMultiBattle
+releaseall
+end
+
+AquaHideout_B2F_EventScript_Grunt4Grunt1DoMultiBattle::
+playbgm MUS_AQUA_MAGMA_HIDEOUT, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_AQUA_HIDEOUT_4, AquaHideout_B2F_Text_Grunt4Defeat, TRAINER_GRUNT_AQUA_HIDEOUT_1, AquaHideout_1F_Text_Grunt1Defeat, PARTNER_TABITHA
+switch VAR_RESULT
+case 1, AquaHideout_B2F_EventScript_Grunt4Grunt1Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+AquaHideout_B2F_EventScript_Grunt4Grunt1Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox AquaHideout_B2F_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox AquaHideout_1F_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_AQUAHIDEOUT_STATE, 1
+end
+
 AquaHideout_B2F_EventScript_Grunt4::
-	trainerbattle_single TRAINER_GRUNT_AQUA_HIDEOUT_4, AquaHideout_B2F_Text_Grunt4Intro, AquaHideout_B2F_Text_Grunt4Defeat, AquaHideout_B2F_EventScript_Grunt4Defeated
 	msgbox AquaHideout_B2F_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -80,25 +127,61 @@ AquaHideout_B2F_EventScript_Grunt4Defeated::
 	release
 	end
 
+AquaHideout_B2F_EventScript_Grunt6Grunt8::
+lockall
+setvar VAR_0x8008, LOCALID_GRUNT6
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox AquaHideout_B2F_Text_Grunt6Intro MSGBOX_AUTOCLOSE
+setvar VAR_0x8008, LOCALID_GRUNT8
+playse SE_PIN
+applymovement VAR_0x8008, Common_Movement_ExclamationMark
+waitmovement 0
+playbgm MUS_ENCOUNTER_AQUA, TRUE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox AquaHideout_B2F_Text_Grunt8Intro MSGBOX_AUTOCLOSE
+goto AquaHideout_B2F_EventScript_Grunt6Grunt8DoMultiBattle
+releaseall
+end
+
+AquaHideout_B2F_EventScript_Grunt6Grunt8DoMultiBattle::
+playbgm MUS_AQUA_MAGMA_HIDEOUT, TRUE
+multi_2p_vs_2 TRAINER_GRUNT_AQUA_HIDEOUT_6, AquaHideout_B2F_Text_Grunt6Defeat, TRAINER_GRUNT_AQUA_HIDEOUT_8, AquaHideout_B2F_Text_Grunt8Defeat, PARTNER_TABITHA
+switch VAR_RESULT
+case 1, AquaHideout_B2F_EventScript_Grunt6Grunt8Victory
+fadescreen FADE_TO_BLACK
+special SetCB2WhiteOut
+waitstate
+
+AquaHideout_B2F_EventScript_Grunt6Grunt8Victory::
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+waitmovement 0
+msgbox AquaHideout_B2F_Text_Grunt6PostBattle, MSGBOX_AUTOCLOSE
+applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+waitmovement 0
+msgbox AquaHideout_B2F_Text_Grunt8PostBattle, MSGBOX_AUTOCLOSE
+addvar VAR_AQUAHIDEOUT_STATE, 1
+end
+
 AquaHideout_B2F_EventScript_Grunt6::
-	trainerbattle_single TRAINER_GRUNT_AQUA_HIDEOUT_6, AquaHideout_B2F_Text_Grunt6Intro, AquaHideout_B2F_Text_Grunt6Defeat
 	msgbox AquaHideout_B2F_Text_Grunt6PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 AquaHideout_B2F_EventScript_Grunt8::
-	trainerbattle_single TRAINER_GRUNT_AQUA_HIDEOUT_8, AquaHideout_B2F_Text_Grunt8Intro, AquaHideout_B2F_Text_Grunt8Defeat
 	msgbox AquaHideout_B2F_Text_Grunt8PostBattle, MSGBOX_AUTOCLOSE
 	end
 
 AquaHideout_B2F_Text_MattIntro:
-	.string "Hehehe…\p"
-	.string "Got here already, did you?\n"
+	.string "What a surprise this isn't.\p"
+	.string "You got here pretty quickly.\n"
 	.string "We underestimated you!\p"
-	.string "But this is it!\p"
-	.string "I'm a cut above the GRUNTS you've seen\n"
-	.string "so far.\p"
-	.string "I'm not stalling for time.\n"
-	.string "I'm going to pulverize you!$"
+	.string "What I am surprised by is the company\n"
+	.string "you're keeping…$"
 
 AquaHideout_B2F_Text_MattDefeat:
 	.string "Hehehe…\n"
